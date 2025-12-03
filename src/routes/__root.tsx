@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import {
     createRootRoute,
     HeadContent,
@@ -5,6 +6,8 @@ import {
     Scripts,
 } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+
+import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
     head: () => ({
@@ -16,6 +19,7 @@ export const Route = createRootRoute({
             },
             { title: 'Budget Control Application' },
         ],
+        links: [{ rel: 'stylesheet', href: appCss }],
     }),
     component: RootComponent,
 })
