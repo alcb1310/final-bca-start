@@ -1,35 +1,38 @@
 {
-  "name": "final-bca-start",
-  "version": "1.0.0",
-  "description": "Budget Control Application Migration to Tanstack Start",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "Tanstack",
-    "Start",
-    "Query",
-    "Form",
-    "Table",
-    "Buget"
-  ],
-  "author": "Andres Court",
-  "license": "MIT",
-  "packageManager": "pnpm@10.19.0",
-  "dependencies": {
-    "@tanstack/react-router": "^1.139.14",
-    "@tanstack/react-start": "^1.139.14",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "^24.10.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
-    "typescript": "^5.9.3",
-    "vite": "^7.2.6",
-    "vite-tsconfig-paths": "^5.1.4"
-  }
+    "name": "final-bca-start",
+    "version": "1.0.0",
+    "description": "Budget Control Application Migration to Tanstack Start",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "vite dev",
+        "build": "vite build",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "Tanstack",
+        "Start",
+        "Query",
+        "Form",
+        "Table",
+        "Buget"
+    ],
+    "author": "Andres Court",
+    "license": "MIT",
+    "packageManager": "pnpm@10.19.0",
+    "dependencies": {
+        "@tanstack/react-router": "^1.139.14",
+        "@tanstack/react-start": "^1.139.14",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "^24.10.1",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.3",
+        "@vitejs/plugin-react": "^5.1.1",
+        "typescript": "^5.9.3",
+        "vite": "^7.2.6",
+        "vite-tsconfig-paths": "^5.1.4"
+    }
 }
