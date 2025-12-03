@@ -6,6 +6,10 @@
         "target": "ESNext",
         "strict": true,
         "skipLibCheck": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
     }
 }
