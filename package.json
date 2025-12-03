@@ -6,8 +6,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["Tanstack", "Start", "Query", "Form", "Table", "Buget"],
+  "keywords": [
+    "Tanstack",
+    "Start",
+    "Query",
+    "Form",
+    "Table",
+    "Buget"
+  ],
   "author": "Andres Court",
   "license": "MIT",
-  "packageManager": "pnpm@10.19.0"
+  "packageManager": "pnpm@10.19.0",
+  "dependencies": {
+    "@tanstack/react-router": "^1.139.14",
+    "@tanstack/react-start": "^1.139.14",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
 }
