@@ -12,6 +12,10 @@
 **Framework:** `Tanstack Start`<br />
 **Router:** `Tanstack Router`
 
+**Database:**<br/>
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Drizzle](https://img.shields.io/badge/Drizzle-%23000000?style=for-the-badge&logo=drizzle&logoColor=C5F74F)
+
 **Styling:**<br/>
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Shadcn/ui](https://img.shields.io/badge/shadcn/ui-%23000000?style=for-the-badge&logo=shadcnui&logoColor=white)
@@ -24,6 +28,26 @@ pnpm install
 
 # 2. Run the app
 pnpm dev
+```
+
+## Database Schema
+
+To generate the database schema, run the following command:
+
+```bash
+pnpm dlx @better-auth/cli generate --output ./src/db/schema.ts
+```
+
+Generate migration file:
+
+```bash
+pnpm db:generate
+```
+
+Apply migrations to database:
+
+```bash
+pnpm db:migrate
 ```
 
 ## 🛠️ Tools
