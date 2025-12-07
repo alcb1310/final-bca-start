@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react'
 import { useFormContext } from '@/hooks/formHook'
 import { Button } from '../ui/button'
 
-interface FormButtonProps extends ComponentProps<'button'> {
+interface FormButtonProps extends ComponentProps<typeof Button> {
     label: string
 }
 
