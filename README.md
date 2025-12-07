@@ -50,6 +50,16 @@ Apply migrations to database:
 pnpm db:migrate
 ```
 
+## Creating a user
+
+To create the first user, run the following command:
+
+```bash
+curl -X POST -H "Content-Type: application/json" \
+-d '{"email":"a@b.com","name":"name","password":"password"}' \
+http://localhost:3000/api/auth/sign-up/email
+```
+
 ## 🛠️ Tools
 
 ![tmux](https://img.shields.io/badge/tmux-%23000000?style=for-the-badge&logo=tmux&logoColor=%231BB91F)
