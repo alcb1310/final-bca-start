@@ -1,13 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
+import z from 'zod'
 import {
     Field,
     FieldDescription,
     FieldGroup,
     FieldLegend,
-    FieldSeparator,
     FieldSet,
 } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
+
+const formSchema = z.object({
+    email: z.string({ message: 'Ingrese un correo' }),
+    password: z.string({ message: 'Ingrese una contraseña' }).min(8),
+})
 
 export const Route = createFileRoute('/login')({
     component: RouteComponent,
@@ -15,6 +20,9 @@ export const Route = createFileRoute('/login')({
 
 function RouteComponent() {
     const form = useAppForm({
+        validators: {
+            onSubmit: formSchema,
+        },
         onSubmit: ({ value }) => {
             console.log(value)
         },
