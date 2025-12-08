@@ -14,17 +14,43 @@ const formSchema = z.object({
     password: z.string({ message: 'Ingrese una contraseña' }).min(8),
 })
 
+type FormSchema = z.infer<typeof formSchema>
+
 export const Route = createFileRoute('/login')({
     component: RouteComponent,
 })
 
 function RouteComponent() {
     const form = useAppForm({
+        defaultValues: {
+            email: '',
+            password: '',
+        } satisfies FormSchema as FormSchema,
         validators: {
             onSubmit: formSchema,
         },
-        onSubmit: ({ value }) => {
+        onSubmit: async ({ value }) => {
             console.log(value)
+
+            const res = await fetch('/api/auth/sign-in/email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: value.email,
+                    password: value.password,
+                }),
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                console.error(data, res.status)
+                return
+            }
+
+            console.log(data)
         },
     })
 
