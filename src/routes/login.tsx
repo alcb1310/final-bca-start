@@ -8,6 +8,7 @@ import {
     FieldSet,
 } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
     email: z.string({ message: 'Ingrese un correo' }),
@@ -43,14 +44,15 @@ function RouteComponent() {
                 }),
             })
 
-            const data = await res.json()
-
             if (!res.ok) {
-                console.error(data, res.status)
+                toast.error('Credenciales incorrectas', {
+                    richColors: true,
+                    position: 'top-center',
+                })
                 return
             }
 
-            console.log(data)
+            toast.success('Bienvenido')
         },
     })
 

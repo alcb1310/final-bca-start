@@ -42,7 +42,7 @@ function RootDocument({ children }: { children: ReactNode }) {
             <body>
                 {children}
                 <Scripts />
-                <Toaster position='top-center' />
+                <Toaster position='bottom-right' />
             </body>
         </html>
     )
