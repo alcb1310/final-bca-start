@@ -6,6 +6,7 @@ import {
     Scripts,
 } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+import { Toaster } from '@/components/ui/sonner'
 
 import appCss from '../styles.css?url'
 
@@ -41,6 +42,7 @@ function RootDocument({ children }: { children: ReactNode }) {
             <body>
                 {children}
                 <Scripts />
+                <Toaster position='top-center' />
             </body>
         </html>
     )
