@@ -19,4 +19,4 @@ export const auth = betterAuth({
     plugins: [tanstackStartCookies()],
 })
 
-export const { signIn, signUp, useSession } = createAuthClient()
+export const authClient = createAuthClient()
