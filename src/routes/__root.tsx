@@ -6,10 +6,9 @@ import {
     Scripts,
 } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
-import { Toaster } from '@/components/ui/sonner'
-
-import appCss from '../styles.css?url'
 import { SidebarProvider } from '@/components/ui/sidebar'
+import { Toaster } from '@/components/ui/sonner'
+import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
     head: () => ({
