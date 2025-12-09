@@ -2,6 +2,7 @@ import { createFileRoute, Outlet } from '@tanstack/react-router'
 import SideBar from '@/components/nav/SideBar'
 import TopBar from '@/components/nav/TopBar'
 import { authMiddleware } from '@/middleware/auth'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
 export const Route = createFileRoute('/_authed')({
     component: RouteComponent,
@@ -12,12 +13,14 @@ export const Route = createFileRoute('/_authed')({
 
 function RouteComponent() {
     return (
-        <div className='flex gap-3'>
+        <SidebarProvider>
             <SideBar />
-            <div className='flex flex-col h-screen gap-4'>
+            <SidebarInset>
                 <TopBar />
-                <Outlet />
-            </div>
-        </div>
+                <main>
+                    <Outlet />
+                </main>
+            </SidebarInset>
+        </SidebarProvider>
     )
 }
