@@ -6,7 +6,6 @@ import {
     Scripts,
 } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
-import { SidebarProvider } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'
 import appCss from '../styles.css?url'
 
@@ -40,7 +39,7 @@ function RootDocument({ children }: { children: ReactNode }) {
                 <HeadContent />
             </head>
             <body>
-                <SidebarProvider>{children}</SidebarProvider>
+                {children}
                 <Scripts />
                 <Toaster position='bottom-right' />
             </body>
