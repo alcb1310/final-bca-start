@@ -4,6 +4,18 @@ import {
     FolderOpenIcon,
     type LucideProps,
     ShoppingCartIcon,
+    ChartCandlestickIcon,
+    ScaleIcon,
+    BanknoteArrowDownIcon,
+    ClipboardClockIcon,
+    LayoutListIcon,
+    ChartBarStackedIcon,
+    BrickWallIcon,
+    FolderKanbanIcon,
+    CableIcon,
+    ShoppingBasketIcon,
+    ShellIcon,
+    ChartSplineIcon,
 } from 'lucide-react'
 import type { ForwardRefExoticComponent, RefAttributes } from 'react'
 import {
@@ -40,11 +52,39 @@ const menu: Menu[] = [
         items: [
             { title: 'Presupuesto', path: '#', icon: ShoppingCartIcon },
             { title: 'Facturas', path: '#', icon: CreditCardIcon },
+            { title: 'Cierre mensual', path: '#', icon: ChartCandlestickIcon },
         ],
     },
     {
         title: 'Reportes',
-        items: [{ title: 'Actual', path: '#', icon: FolderOpenIcon }],
+        items: [
+            { title: 'Actual', path: '#', icon: FolderOpenIcon },
+            { title: 'Cuadre', path: '#', icon: ScaleIcon },
+            {
+                title: 'Gastado por Partida',
+                path: '#',
+                icon: BanknoteArrowDownIcon,
+            },
+            { title: 'Histórico', path: '#', icon: ClipboardClockIcon },
+        ],
+    },
+    {
+        title: 'Parámetros',
+        items: [
+            { title: 'Partidas', path: '#', icon: LayoutListIcon },
+            { title: 'Categorias', path: '#', icon: ChartBarStackedIcon },
+            { title: 'Materiales', path: '#', icon: BrickWallIcon },
+            { title: 'Proyectos', path: '#', icon: FolderKanbanIcon },
+            { title: 'Proveedores', path: '#', icon: CableIcon },
+            { title: 'Rubros', path: '#', icon: ShoppingBasketIcon },
+        ],
+    },
+    {
+        title: 'Analisis',
+        items: [
+            { title: 'Cantidades', path: '#', icon: ShellIcon },
+            { title: 'Analisis', path: '#', icon: ChartSplineIcon },
+        ],
     },
 ]
 
