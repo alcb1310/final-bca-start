@@ -9,6 +9,7 @@ import type { ReactNode } from 'react'
 import { Toaster } from '@/components/ui/sonner'
 
 import appCss from '../styles.css?url'
+import { SidebarProvider } from '@/components/ui/sidebar'
 
 export const Route = createRootRoute({
     head: () => ({
@@ -40,7 +41,7 @@ function RootDocument({ children }: { children: ReactNode }) {
                 <HeadContent />
             </head>
             <body>
-                {children}
+                <SidebarProvider>{children}</SidebarProvider>
                 <Scripts />
                 <Toaster position='bottom-right' />
             </body>

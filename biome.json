@@ -7,7 +7,12 @@
     },
     "files": {
         "ignoreUnknown": false,
-        "includes": ["**/*.{js,jsx,ts,tsx,json}", "!**/*.gen.ts", "!!**/.vite"]
+        "includes": [
+            "**/*.{js,jsx,ts,tsx,json}",
+            "!**/*.gen.ts",
+            "!!**/.vite",
+            "!src/components/ui/**/*"
+        ]
     },
     "formatter": {
         "enabled": true,
