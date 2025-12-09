@@ -1,5 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import {
+    CreditCardIcon,
+    FolderOpenIcon,
+    type LucideProps,
+    ShoppingCartIcon,
+} from 'lucide-react'
+import type { ForwardRefExoticComponent, RefAttributes } from 'react'
+import {
     Sidebar,
     SidebarContent,
     SidebarGroup,
@@ -12,13 +19,6 @@ import {
     SidebarSeparator,
 } from '@/components/ui/sidebar'
 import type { FileRoutesByTo } from '@/routeTree.gen'
-import {
-    type LucideProps,
-    ShoppingCartIcon,
-    CreditCardIcon,
-    FolderOpenIcon,
-} from 'lucide-react'
-import type { ForwardRefExoticComponent, RefAttributes } from 'react'
 
 type MenuItem = {
     title: string

@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { toast } from 'sonner'
 import z from 'zod'
 import {
     Field,
@@ -8,7 +9,6 @@ import {
     FieldSet,
 } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
-import { toast } from 'sonner'
 
 const formSchema = z.object({
     email: z.string({ message: 'Ingrese un correo' }),
