@@ -1,21 +1,21 @@
 import { Link } from '@tanstack/react-router'
 import {
-    CreditCardIcon,
-    FolderOpenIcon,
-    type LucideProps,
-    ShoppingCartIcon,
-    ChartCandlestickIcon,
-    ScaleIcon,
     BanknoteArrowDownIcon,
-    ClipboardClockIcon,
-    LayoutListIcon,
-    ChartBarStackedIcon,
     BrickWallIcon,
-    FolderKanbanIcon,
     CableIcon,
-    ShoppingBasketIcon,
-    ShellIcon,
+    ChartBarStackedIcon,
+    ChartCandlestickIcon,
     ChartSplineIcon,
+    ClipboardClockIcon,
+    CreditCardIcon,
+    FolderKanbanIcon,
+    FolderOpenIcon,
+    LayoutListIcon,
+    type LucideProps,
+    ScaleIcon,
+    ShellIcon,
+    ShoppingBasketIcon,
+    ShoppingCartIcon,
 } from 'lucide-react'
 import type { ForwardRefExoticComponent, RefAttributes } from 'react'
 import {
