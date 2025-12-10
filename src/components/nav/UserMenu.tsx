@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { ChevronDownIcon, UserIcon } from 'lucide-react'
 import { Button } from '../ui/button'
 import {
@@ -7,7 +8,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { Link } from '@tanstack/react-router'
 
 export default function UserMenu() {
     return (
