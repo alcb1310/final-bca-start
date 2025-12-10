@@ -17,7 +17,7 @@ function RouteComponent() {
             <SideBar />
             <SidebarInset>
                 <TopBar />
-                <main>
+                <main className='px-4'>
                     <Outlet />
                 </main>
             </SidebarInset>
