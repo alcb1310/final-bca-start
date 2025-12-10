@@ -1,8 +1,9 @@
 import { authClient } from '@/utils/auth-client'
 import { useNavigate } from '@tanstack/react-router'
-import { LogOutIcon, UserIcon } from 'lucide-react'
+import { LogOutIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
+import UserMenu from './UserMenu'
 
 export default function TopBar() {
     const navigate = useNavigate()
@@ -31,9 +32,7 @@ export default function TopBar() {
                 Sistema Control Presupuestario
             </h3>
             <div>
-                <Button variant='ghost' size='icon'>
-                    <UserIcon />
-                </Button>
+                <UserMenu />
                 <Button variant='ghost' size='icon' onClick={handleLogout}>
                     <LogOutIcon />
                 </Button>
