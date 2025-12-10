@@ -3,6 +3,8 @@ import {
     flexRender,
     getCoreRowModel,
     getPaginationRowModel,
+    getSortedRowModel,
+    type SortingState,
     useReactTable,
 } from '@tanstack/react-table'
 import {
@@ -11,6 +13,7 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
 } from 'lucide-react'
+import { useState } from 'react'
 import { Button } from '../ui/button'
 import {
     Table,
@@ -30,11 +33,18 @@ export default function DataTable<TData, TValue>({
     columns,
     data,
 }: Readonly<DataTableProps<TData, TValue>>) {
+    const [sorting, setSorting] = useState<SortingState>([])
+
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting,
+        },
     })
 
     return (
@@ -50,10 +60,10 @@ export default function DataTable<TData, TValue>({
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext(),
-                                                  )}
+                                                    header.column.columnDef
+                                                        .header,
+                                                    header.getContext(),
+                                                )}
                                         </TableHead>
                                     )
                                 })}
