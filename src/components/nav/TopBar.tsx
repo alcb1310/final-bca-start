@@ -1,7 +1,7 @@
-import { authClient } from '@/utils/auth-client'
 import { useNavigate } from '@tanstack/react-router'
 import { LogOutIcon } from 'lucide-react'
 import { toast } from 'sonner'
+import { authClient } from '@/utils/auth-client'
 import { Button } from '../ui/button'
 import UserMenu from './UserMenu'
 
