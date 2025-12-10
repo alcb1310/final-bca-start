@@ -5,7 +5,6 @@ export const Route = createFileRoute('/_authed/dashboard')({
     component: RouteComponent,
     loader: async () => {
         const { data: session } = await authClient.getSession()
-        console.log('session', session)
 
         return {
             user: session?.user,
