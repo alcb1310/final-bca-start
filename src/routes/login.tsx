@@ -9,6 +9,7 @@ import {
     FieldSet,
 } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
+import { authClient } from '@/utils/auth-client'
 
 const formSchema = z.object({
     email: z.string({ message: 'Ingrese un correo' }),
@@ -31,28 +32,24 @@ function RouteComponent() {
             onSubmit: formSchema,
         },
         onSubmit: async ({ value }) => {
-            console.log(value)
-
-            const res = await fetch('/api/auth/sign-in/email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+            await authClient.signIn.email(
+                {
                     email: value.email,
                     password: value.password,
-                }),
-            })
-
-            if (!res.ok) {
-                toast.error('Credenciales incorrectas', {
-                    richColors: true,
-                    position: 'top-center',
-                })
-                return
-            }
-
-            toast.success('Bienvenido')
+                },
+                {
+                    onSuccess: () => {
+                        toast.success('Bienvenido')
+                    },
+                    onError: ({ error }) => {
+                        toast.error('Credenciales incorrectas', {
+                            richColors: true,
+                            position: 'top-center',
+                        })
+                        console.error(error)
+                    },
+                },
+            )
         },
     })
 
