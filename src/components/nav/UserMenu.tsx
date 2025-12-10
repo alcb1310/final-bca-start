@@ -25,7 +25,9 @@ export default function UserMenu() {
                     <DropdownMenuItem>
                         <Link to='/usuarios/perfil'>Mi Perfil</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>Administrar</DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link to='/usuarios/admin'>Administrar</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Contrseña</DropdownMenuItem>
                 </DropdownMenuGroup>
             </DropdownMenuContent>
