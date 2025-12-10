@@ -1,6 +1,5 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import { createAuthClient } from 'better-auth/client'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import * as schema from '@/db/schema'
@@ -15,8 +14,7 @@ export const auth = betterAuth({
     baseURL: process.env.BETTER_AUTH_URL || '',
     emailAndPassword: {
         enabled: true,
+        autoSignIn: false,
     },
     plugins: [tanstackStartCookies()],
 })
-
-export const authClient = createAuthClient()
