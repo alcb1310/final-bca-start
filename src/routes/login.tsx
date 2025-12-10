@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import z from 'zod'
 import {
@@ -23,6 +23,8 @@ export const Route = createFileRoute('/login')({
 })
 
 function RouteComponent() {
+    const navigate = useNavigate()
+
     const form = useAppForm({
         defaultValues: {
             email: '',
@@ -39,7 +41,7 @@ function RouteComponent() {
                 },
                 {
                     onSuccess: () => {
-                        toast.success('Bienvenido')
+                        navigate({ to: '/dashboard' })
                     },
                     onError: ({ error }) => {
                         toast.error('Credenciales incorrectas', {
