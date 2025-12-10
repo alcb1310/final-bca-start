@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { PageTitle } from '@/components/pages/Title'
 import { authClient } from '@/utils/auth-client'
 

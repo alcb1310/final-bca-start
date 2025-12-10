@@ -6,6 +6,13 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 import {
+    ChevronFirstIcon,
+    ChevronLastIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+} from 'lucide-react'
+import { Button } from '../ui/button'
+import {
     Table,
     TableBody,
     TableCell,
@@ -13,13 +20,6 @@ import {
     TableHeader,
     TableRow,
 } from '../ui/table'
-import { Button } from '../ui/button'
-import {
-    ChevronFirstIcon,
-    ChevronLastIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-} from 'lucide-react'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -50,10 +50,10 @@ export default function DataTable<TData, TValue>({
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
-                                                    header.column.columnDef
-                                                        .header,
-                                                    header.getContext(),
-                                                )}
+                                                      header.column.columnDef
+                                                          .header,
+                                                      header.getContext(),
+                                                  )}
                                         </TableHead>
                                     )
                                 })}
