@@ -1,5 +1,6 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { admin } from 'better-auth/plugins'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import * as schema from '@/db/schema'
@@ -16,5 +17,5 @@ export const auth = betterAuth({
         enabled: true,
         autoSignIn: false,
     },
-    plugins: [tanstackStartCookies()],
+    plugins: [admin({ defaultRole: 'admin' }), tanstackStartCookies()],
 })
