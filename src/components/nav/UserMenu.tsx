@@ -7,6 +7,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import { Link } from '@tanstack/react-router'
 
 export default function UserMenu() {
     return (
@@ -21,7 +22,9 @@ export default function UserMenu() {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>Mi Perfil</DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link to='/usuarios/perfil'>Mi Perfil</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Administrar</DropdownMenuItem>
                     <DropdownMenuItem>Contrseña</DropdownMenuItem>
                 </DropdownMenuGroup>
