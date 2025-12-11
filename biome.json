@@ -12,6 +12,7 @@
             "!**/*.gen.ts",
             "!!**/.vite",
             "!src/components/ui/**/*",
+            "!src/db/**/*",
             "!drizzle/**/*"
         ]
     },
