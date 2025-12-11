@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { PencilIcon, TrashIcon } from 'lucide-react'
@@ -7,6 +7,7 @@ import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/utils/auth-client'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/_authed/usuarios/admin')({
     component: RouteComponent,
@@ -36,6 +37,20 @@ function RouteComponent() {
     const { data: session } = useSuspenseQuery({
         queryKey: ['session'],
         queryFn: () => authClient.getSession(),
+    })
+
+    const mutate = useMutation({
+        mutationFn: (id: string) => authClient.admin.removeUser({ userId: id }),
+        onSuccess: () => {
+            toast.success('Usuario eliminado')
+        },
+        onError: () => {
+            toast.error('No se pudo eliminar el usuario', {
+                description: 'Por favor, contactarse con el administrador',
+                richColors: true,
+                position: 'top-center',
+            })
+        },
     })
 
     const user = session.data?.user
@@ -71,6 +86,7 @@ function RouteComponent() {
                                 variant='ghost'
                                 size='icon-sm'
                                 className='text-destructive'
+                                onClick={() => mutate.mutate(row.original.id)}
                             >
                                 <TrashIcon />
                             </Button>
