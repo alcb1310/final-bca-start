@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import { PencilIcon, TrashIcon } from 'lucide-react'
+import { CreateUserDrawer } from '@/components/drawers/users/create-user'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/utils/auth-client'
-import { CreateUserDrawer } from '@/components/drawers/users/create-user'
 
 export const Route = createFileRoute('/_authed/usuarios/admin')({
     component: RouteComponent,
