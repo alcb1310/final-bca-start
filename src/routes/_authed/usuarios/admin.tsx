@@ -5,6 +5,7 @@ import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/utils/auth-client'
+import { CreateUserDrawer } from '@/components/drawers/users/create-user'
 
 export const Route = createFileRoute('/_authed/usuarios/admin')({
     component: RouteComponent,
@@ -68,10 +69,7 @@ function RouteComponent() {
         <>
             <PageTitle title='Administar usuarios' />
 
-            <Button variant='ghost' className='mb-3'>
-                <PlusIcon size={10} />
-                Crear usuario
-            </Button>
+            <CreateUserDrawer />
 
             <DataTable columns={columns} data={users} />
         </>
