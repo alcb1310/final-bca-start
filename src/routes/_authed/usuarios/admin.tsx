@@ -76,7 +76,7 @@ function RouteComponent() {
 
             <CreateUserDrawer />
 
-            <DataTable columns={columns} data={users.data.users} />
+            <DataTable columns={columns} data={users.data?.users} />
         </>
     )
 }
