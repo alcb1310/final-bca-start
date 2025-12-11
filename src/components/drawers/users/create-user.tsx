@@ -1,4 +1,5 @@
 import { PlusIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,8 +12,8 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import { useAppForm } from '@/hooks/formHook'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/formHook'
 
 const userSchema = z.object({
     email: z
@@ -30,6 +31,7 @@ const userSchema = z.object({
 type UserSchema = z.infer<typeof userSchema>
 
 export function CreateUserDrawer() {
+    const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: {
             email: '',
@@ -45,8 +47,14 @@ export function CreateUserDrawer() {
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='ghost' className='mb-3'>
                     <PlusIcon size={10} />
