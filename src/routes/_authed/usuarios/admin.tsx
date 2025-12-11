@@ -47,7 +47,7 @@ function RouteComponent() {
                         <Button
                             variant='ghost'
                             size='icon-sm'
-                            className='text-amber-600'
+                            className='text-warning'
                         >
                             <PencilIcon />
                         </Button>
