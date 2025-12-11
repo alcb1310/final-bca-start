@@ -6,24 +6,29 @@ import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/utils/auth-client'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
 export const Route = createFileRoute('/_authed/usuarios/admin')({
     component: RouteComponent,
-    loader: async () => {
-        const { data: users } = await authClient.admin.listUsers({
-            query: {
-                sortBy: 'email',
-            },
+    loader: async ({ context: { queryClient } }) => {
+        await queryClient.ensureQueryData({
+            queryKey: ['users'],
+            queryFn: () =>
+                authClient.admin.listUsers({
+                    query: { sortBy: 'email' },
+                }),
         })
-
-        return {
-            users: users ? users.users : [],
-        }
     },
 })
 
 function RouteComponent() {
-    const { users } = Route.useLoaderData()
+    const { data: users } = useSuspenseQuery({
+        queryKey: ['users'],
+        queryFn: () =>
+            authClient.admin.listUsers({
+                query: { sortBy: 'email' },
+            }),
+    })
 
     const columns: ColumnDef<typeof users>[] = [
         {
@@ -71,7 +76,7 @@ function RouteComponent() {
 
             <CreateUserDrawer />
 
-            <DataTable columns={columns} data={users} />
+            <DataTable columns={columns} data={users.data.users} />
         </>
     )
 }
