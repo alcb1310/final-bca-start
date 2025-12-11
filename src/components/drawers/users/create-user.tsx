@@ -14,6 +14,10 @@ import {
 } from '@/components/ui/drawer'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
+import { authClient } from '@/utils/auth-client'
+import { toast } from 'sonner'
+
+const roleEnum = ['admin', 'user'] as const
 
 const userSchema = z.object({
     email: z
@@ -25,7 +29,7 @@ const userSchema = z.object({
     name: z
         .string({ message: 'El nombre es requerido' })
         .min(1, { message: 'El nombre es requerido' }),
-    role: z.string({ message: 'El rol es requerido' }),
+    role: z.enum(roleEnum, { message: 'El rol es requerido' }),
 })
 
 type UserSchema = z.infer<typeof userSchema>
@@ -43,7 +47,23 @@ export function CreateUserDrawer() {
             onSubmit: userSchema,
         },
         onSubmit: async ({ value }) => {
-            console.table(value)
+            const { error } = await authClient.admin.createUser({
+                email: value.email,
+                password: value.password,
+                name: value.name,
+                role: value.role,
+            })
+
+            if (error) {
+                toast.error(error.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.success('Usuario creado exitosamente')
+            setOpen(false)
         },
     })
 
