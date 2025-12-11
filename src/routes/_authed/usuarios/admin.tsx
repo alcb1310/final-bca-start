@@ -18,6 +18,10 @@ export const Route = createFileRoute('/_authed/usuarios/admin')({
                     query: { sortBy: 'email' },
                 }),
         })
+        await queryClient.ensureQueryData({
+            queryKey: ['session'],
+            queryFn: () => authClient.getSession(),
+        })
     },
 })
 
@@ -29,6 +33,12 @@ function RouteComponent() {
                 query: { sortBy: 'email' },
             }),
     })
+    const { data: session } = useSuspenseQuery({
+        queryKey: ['session'],
+        queryFn: () => authClient.getSession(),
+    })
+
+    const user = session.data?.user
 
     const columns: ColumnDef<typeof users>[] = [
         {
@@ -46,8 +56,7 @@ function RouteComponent() {
         {
             header: '',
             accessorKey: 'actions',
-            // cell: ({ row }) => {
-            cell: () => {
+            cell: ({ row }) => {
                 return (
                     <div className='flex gap-0'>
                         <Button
@@ -57,13 +66,15 @@ function RouteComponent() {
                         >
                             <PencilIcon />
                         </Button>
-                        <Button
-                            variant='ghost'
-                            size='icon-sm'
-                            className='text-destructive'
-                        >
-                            <TrashIcon />
-                        </Button>
+                        {row.original.email !== user?.email && (
+                            <Button
+                                variant='ghost'
+                                size='icon-sm'
+                                className='text-destructive'
+                            >
+                                <TrashIcon />
+                            </Button>
+                        )}
                     </div>
                 )
             },
