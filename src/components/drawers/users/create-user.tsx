@@ -16,6 +16,7 @@ import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import { authClient } from '@/utils/auth-client'
 import { toast } from 'sonner'
+import { useQueryClient } from '@tanstack/react-query'
 
 const roleEnum = ['admin', 'user'] as const
 
@@ -35,6 +36,7 @@ const userSchema = z.object({
 type UserSchema = z.infer<typeof userSchema>
 
 export function CreateUserDrawer() {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: {
@@ -63,6 +65,9 @@ export function CreateUserDrawer() {
             }
 
             toast.success('Usuario creado exitosamente')
+            queryClient.invalidateQueries({
+                queryKey: ['users'],
+            })
             setOpen(false)
         },
     })
