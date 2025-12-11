@@ -1,4 +1,8 @@
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
+import {
+    useMutation,
+    useQueryClient,
+    useSuspenseQuery,
+} from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { PencilIcon, TrashIcon } from 'lucide-react'
@@ -27,6 +31,7 @@ export const Route = createFileRoute('/_authed/usuarios/admin')({
 })
 
 function RouteComponent() {
+    const queryClient = useQueryClient()
     const { data: users } = useSuspenseQuery({
         queryKey: ['users'],
         queryFn: () =>
@@ -42,6 +47,7 @@ function RouteComponent() {
     const mutate = useMutation({
         mutationFn: (id: string) => authClient.admin.removeUser({ userId: id }),
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['users'] })
             toast.success('Usuario eliminado')
         },
         onError: () => {
