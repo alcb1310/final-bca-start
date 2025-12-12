@@ -21,8 +21,14 @@ import {
 import z from 'zod'
 import { useAppForm } from '@/hooks/formHook'
 import { Field, FieldGroup, FieldSet } from '../ui/field'
+import { useMutation } from '@tanstack/react-query'
+import { authClient } from '@/utils/auth-client'
+import { toast } from 'sonner'
 
 const passSchema = z.object({
+    currentpassword: z
+        .string({ message: 'La contraseña es requerida' })
+        .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' }),
     password: z
         .string({ message: 'La contraseña es requerida' })
         .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' }),
@@ -33,10 +39,32 @@ type PassSchema = z.infer<typeof passSchema>
 export default function UserMenu() {
     const form = useAppForm({
         defaultValues: {
+            currentpassword: '',
             password: '',
         } satisfies PassSchema as PassSchema,
         validators: {
             onSubmit: passSchema,
+        },
+        onSubmit: ({ value }) => {
+            mutation.mutate({ value })
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: ({ value }: { value: PassSchema }) =>
+            authClient.changePassword({
+                newPassword: value.password,
+                currentPassword: value.currentpassword,
+                revokeOtherSessions: true,
+            }),
+        onSuccess: () => {
+            toast.success('Contraseña cambiada exitosamente')
+        },
+        onError: (error) => {
+            toast.error(error.message, {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
@@ -83,10 +111,19 @@ export default function UserMenu() {
                 >
                     <FieldGroup className='my-5 px-4'>
                         <FieldSet>
+                            <form.AppField name='currentpassword'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Contraseña Actual'
+                                        type='password'
+                                        name='currentpassword'
+                                    />
+                                )}
+                            </form.AppField>
                             <form.AppField name='password'>
                                 {(field) => (
                                     <field.TextField
-                                        label='Contraseña'
+                                        label='Contraseña Nueva'
                                         type='password'
                                         name='password'
                                     />
