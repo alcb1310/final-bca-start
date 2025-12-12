@@ -8,29 +8,106 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '../ui/dialog'
+import z from 'zod'
+import { useAppForm } from '@/hooks/formHook'
+import { Field, FieldGroup, FieldSet } from '../ui/field'
+
+const passSchema = z.object({
+    password: z
+        .string({ message: 'La contraseña es requerida' })
+        .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' }),
+})
+
+type PassSchema = z.infer<typeof passSchema>
 
 export default function UserMenu() {
+    const form = useAppForm({
+        defaultValues: {
+            password: '',
+        } satisfies PassSchema as PassSchema,
+        validators: {
+            onSubmit: passSchema,
+        },
+    })
+
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant='ghost' size='icon'>
-                    <div className='flex gap-0 items-center'>
-                        <UserIcon />
-                        <ChevronDownIcon />
-                    </div>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <Link to='/usuarios/perfil'>Mi Perfil</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link to='/usuarios/admin'>Administrar</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>Contrseña</DropdownMenuItem>
-                </DropdownMenuGroup>
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <Dialog>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant='ghost' size='icon'>
+                        <div className='flex gap-0 items-center'>
+                            <UserIcon />
+                            <ChevronDownIcon />
+                        </div>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                            <Link to='/usuarios/perfil'>Mi Perfil</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Link to='/usuarios/admin'>Administrar</Link>
+                        </DropdownMenuItem>
+                        <DialogTrigger asChild>
+                            <DropdownMenuItem>
+                                Cambiar contrseña
+                            </DropdownMenuItem>
+                        </DialogTrigger>
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Cambiar contraseña</DialogTitle>
+                    <DialogDescription>
+                        Cambia la contraseña del usuario actual
+                    </DialogDescription>
+                </DialogHeader>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        form.handleSubmit()
+                    }}
+                >
+                    <FieldGroup className='my-5 px-4'>
+                        <FieldSet>
+                            <form.AppField name='password'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Contraseña'
+                                        type='password'
+                                        name='password'
+                                    />
+                                )}
+                            </form.AppField>
+                        </FieldSet>
+                    </FieldGroup>
+                    <DialogFooter>
+                        <Field orientation='horizontal'>
+                            <form.AppForm>
+                                <form.FormButton label='Guardar' />
+                            </form.AppForm>
+                            <DialogClose asChild>
+                                <Button type='button' variant='secondary'>
+                                    Cerrar
+                                </Button>
+                            </DialogClose>
+                        </Field>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
+        </Dialog>
     )
 }
