@@ -1,4 +1,6 @@
+import { useMutation } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import z from 'zod'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,9 +15,7 @@ import {
 } from '@/components/ui/drawer'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
-import { useMutation } from '@tanstack/react-query'
 import { authClient } from '@/utils/auth-client'
-import { toast } from 'sonner'
 
 const roleEnum = ['admin', 'user'] as const
 
