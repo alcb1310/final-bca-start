@@ -7,13 +7,13 @@ import {
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { TrashIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import { CreateUserDrawer } from '@/components/drawers/users/create-user'
+import EditUser from '@/components/drawers/users/edit-user'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/utils/auth-client'
-import { toast } from 'sonner'
-import EditUser from '@/components/drawers/users/edit-user'
 
 export const Route = createFileRoute('/_authed/usuarios/admin')({
     component: RouteComponent,

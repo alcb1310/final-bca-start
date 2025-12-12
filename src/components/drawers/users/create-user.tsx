@@ -1,5 +1,7 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
@@ -15,8 +17,6 @@ import {
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import { authClient } from '@/utils/auth-client'
-import { toast } from 'sonner'
-import { useQueryClient } from '@tanstack/react-query'
 
 const roleEnum = ['admin', 'user'] as const
 
