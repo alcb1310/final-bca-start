@@ -13,6 +13,9 @@ import {
 } from '@/components/ui/drawer'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
+import { useMutation } from '@tanstack/react-query'
+import { authClient } from '@/utils/auth-client'
+import { toast } from 'sonner'
 
 const roleEnum = ['admin', 'user'] as const
 
@@ -28,7 +31,10 @@ const userSchema = z.object({
 
 type UserSchema = z.infer<typeof userSchema>
 
-export default function EditUser({ user }: Readonly<{ user: UserSchema }>) {
+export default function EditUser({
+    id,
+    user,
+}: Readonly<{ id: string; user: UserSchema }>) {
     const form = useAppForm({
         defaultValues: {
             email: user.email,
@@ -39,7 +45,29 @@ export default function EditUser({ user }: Readonly<{ user: UserSchema }>) {
             onSubmit: userSchema,
         },
         onSubmit: async ({ value }) => {
-            console.log(value)
+            mutate.mutate({ id, value })
+        },
+    })
+
+    const mutate = useMutation({
+        mutationFn: ({ id, value }: { id: string; value: UserSchema }) =>
+            authClient.admin.updateUser({
+                userId: id,
+                data: {
+                    email: value.email,
+                    name: value.name,
+                    role: value.role,
+                },
+            }),
+        onSuccess: () => {
+            toast.success('Usuario actualizado exitosamente')
+        },
+        onError: () => {
+            toast.error('No se pudo actualizar el usuario', {
+                description: 'Por favor, contactarse con el administrador',
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
