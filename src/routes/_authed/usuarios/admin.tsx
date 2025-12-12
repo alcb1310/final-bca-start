@@ -83,6 +83,7 @@ function RouteComponent() {
                 return (
                     <div className='flex gap-0'>
                         <EditUser
+                            id={row.original.id}
                             user={{
                                 email: row.original.email,
                                 name: row.original.name,
