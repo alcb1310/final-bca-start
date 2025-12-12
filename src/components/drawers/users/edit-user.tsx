@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -36,6 +36,7 @@ export default function EditUser({
     id,
     user,
 }: Readonly<{ id: string; user: UserSchema }>) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: {
@@ -63,6 +64,9 @@ export default function EditUser({
             }),
         onSuccess: () => {
             toast.success('Usuario actualizado exitosamente')
+            queryClient.invalidateQueries({
+                queryKey: ['users'],
+            })
         },
         onError: () => {
             toast.error('No se pudo actualizar el usuario', {
