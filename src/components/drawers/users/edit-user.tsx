@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import z from 'zod'
 import { Button } from '@/components/ui/button'
@@ -35,6 +36,7 @@ export default function EditUser({
     id,
     user,
 }: Readonly<{ id: string; user: UserSchema }>) {
+    const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: {
             email: user.email,
@@ -71,8 +73,14 @@ export default function EditUser({
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='ghost' size='icon-sm' className='text-warning'>
                     <PencilIcon />
