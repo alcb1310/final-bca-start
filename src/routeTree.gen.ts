@@ -16,6 +16,7 @@ import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedUsuariosPerfilRouteImport } from './routes/_authed/usuarios/perfil'
 import { Route as AuthedUsuariosAdminRouteImport } from './routes/_authed/usuarios/admin'
+import { Route as AuthedParametrosProyectosRouteImport } from './routes/_authed/parametros/proyectos'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -51,11 +52,18 @@ const AuthedUsuariosAdminRoute = AuthedUsuariosAdminRouteImport.update({
   path: '/usuarios/admin',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedParametrosProyectosRoute =
+  AuthedParametrosProyectosRouteImport.update({
+    id: '/parametros/proyectos',
+    path: '/parametros/proyectos',
+    getParentRoute: () => AuthedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -64,6 +72,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -74,6 +83,7 @@ export interface FileRoutesById {
   '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
+  '/_authed/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/_authed/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/_authed/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/dashboard'
+    | '/parametros/proyectos'
     | '/usuarios/admin'
     | '/usuarios/perfil'
     | '/api/auth/$'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/dashboard'
+    | '/parametros/proyectos'
     | '/usuarios/admin'
     | '/usuarios/perfil'
     | '/api/auth/$'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
     | '/_authed'
     | '/login'
     | '/_authed/dashboard'
+    | '/_authed/parametros/proyectos'
     | '/_authed/usuarios/admin'
     | '/_authed/usuarios/perfil'
     | '/api/auth/$'
@@ -164,17 +177,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedUsuariosAdminRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/parametros/proyectos': {
+      id: '/_authed/parametros/proyectos'
+      path: '/parametros/proyectos'
+      fullPath: '/parametros/proyectos'
+      preLoaderRoute: typeof AuthedParametrosProyectosRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
 interface AuthedRouteChildren {
   AuthedDashboardRoute: typeof AuthedDashboardRoute
+  AuthedParametrosProyectosRoute: typeof AuthedParametrosProyectosRoute
   AuthedUsuariosAdminRoute: typeof AuthedUsuariosAdminRoute
   AuthedUsuariosPerfilRoute: typeof AuthedUsuariosPerfilRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedParametrosProyectosRoute: AuthedParametrosProyectosRoute,
   AuthedUsuariosAdminRoute: AuthedUsuariosAdminRoute,
   AuthedUsuariosPerfilRoute: AuthedUsuariosPerfilRoute,
 }

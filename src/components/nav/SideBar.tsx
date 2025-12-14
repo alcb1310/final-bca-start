@@ -74,7 +74,11 @@ const menu: Menu[] = [
             { title: 'Partidas', path: '#', icon: LayoutListIcon },
             { title: 'Categorias', path: '#', icon: ChartBarStackedIcon },
             { title: 'Materiales', path: '#', icon: BrickWallIcon },
-            { title: 'Proyectos', path: '#', icon: FolderKanbanIcon },
+            {
+                title: 'Proyectos',
+                path: '/parametros/proyectos',
+                icon: FolderKanbanIcon,
+            },
             { title: 'Proveedores', path: '#', icon: CableIcon },
             { title: 'Rubros', path: '#', icon: ShoppingBasketIcon },
         ],
