@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, PlusIcon } from 'lucide-react'
+import { PencilIcon } from 'lucide-react'
+import CreateProjectDrawer from '@/components/drawers/parametros/proyectos/create-project'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
-import { Button } from '@/components/ui/button'
 import {
     getAllProjects,
     type ProjectResponseType,
@@ -72,12 +72,7 @@ function RouteComponent() {
     return (
         <div>
             <PageTitle title='Proyectos' />
-
-            <Button variant='ghost' className='mb-3'>
-                <PlusIcon size={10} />
-                Crear Proyecto
-            </Button>
-
+            <CreateProjectDrawer />
             <DataTable data={data} columns={columns} />
         </div>
     )
