@@ -1,13 +1,11 @@
+import { useMutation } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { ChevronDownIcon, UserIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import z from 'zod'
+import { useAppForm } from '@/hooks/formHook'
+import { authClient } from '@/utils/auth-client'
 import { Button } from '../ui/button'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
 import {
     Dialog,
     DialogClose,
@@ -18,12 +16,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '../ui/dialog'
-import z from 'zod'
-import { useAppForm } from '@/hooks/formHook'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 import { Field, FieldGroup, FieldSet } from '../ui/field'
-import { useMutation } from '@tanstack/react-query'
-import { authClient } from '@/utils/auth-client'
-import { toast } from 'sonner'
 
 const passSchema = z.object({
     currentpassword: z
