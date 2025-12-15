@@ -1,15 +1,15 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon } from 'lucide-react'
 import CreateProjectDrawer from '@/components/drawers/parametros/proyectos/create-project'
+import EditProjectDraser from '@/components/drawers/parametros/proyectos/edit-project'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
+import { Switch } from '@/components/ui/switch'
 import {
     getAllProjects,
     type ProjectResponseType,
 } from '@/queries/parametros/projects'
-import { Switch } from '@/components/ui/switch'
 
 export const Route = createFileRoute('/_authed/parametros/proyectos')({
     component: RouteComponent,
@@ -77,8 +77,8 @@ function RouteComponent() {
         {
             header: '',
             accessorKey: 'actions',
-            cell: () => {
-                return <PencilIcon className='text-warning' size={16} />
+            cell: ({ row }) => {
+                return <EditProjectDraser project={row.original} />
             },
         },
     ]
