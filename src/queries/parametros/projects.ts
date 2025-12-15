@@ -13,7 +13,7 @@ export const projectResponseSchema = z.object({
 export const projectCreateSchema = z.object({
     name: z
         .string({ message: 'El nombre es requerido' })
-        .min(1, { message: 'El nombre es requerido' }),
+        .min(0, { message: 'El nombre es requerido' }),
     is_active: z.boolean(),
     gross_area: z.coerce.number({ message: 'Ingrese un número válido' }),
     net_area: z.coerce.number({ message: 'Ingrese un número válido' }),
@@ -36,7 +36,14 @@ export const getAllProjects = createServerFn({ method: 'GET' }).handler(
 )
 
 export const createProject = createServerFn({ method: 'POST' })
-    .inputValidator((data: { data: ProjectCreateType }) => data)
+    .inputValidator((data: { data: ProjectCreateType }) => {
+        return {
+            name: data.data.name,
+            is_active: data.data.is_active,
+            gross_area: Number.parseFloat(String(data.data.gross_area)),
+            net_area: Number.parseFloat(String(data.data.net_area)),
+        }
+    })
     .handler(async ({ data }) => {
         const response = await fetch(`${url}/projects`, {
             method: 'POST',
@@ -45,9 +52,12 @@ export const createProject = createServerFn({ method: 'POST' })
             },
             body: JSON.stringify(data),
         })
+        const resData = await response.json()
 
         if (!response.ok) {
-            throw new Error('Error al crear el proyecto')
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
         }
         return
     })
