@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -28,6 +28,7 @@ interface EditProjectDraserProps {
 export default function EditProjectDraser({
     project,
 }: Readonly<EditProjectDraserProps>) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: {
@@ -52,6 +53,10 @@ export default function EditProjectDraser({
             updateProject({ data: { data } }),
         onSuccess: () => {
             toast.success('Proyecto actualizado con exito')
+            queryClient.invalidateQueries({
+                queryKey: ['proyectos'],
+            })
+            setOpen(false)
         },
         onError: (error) => {
             const e = JSON.parse(error.message)
