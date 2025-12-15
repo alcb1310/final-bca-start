@@ -1,4 +1,5 @@
 import { PencilIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -24,6 +25,7 @@ interface EditProjectDraserProps {
 export default function EditProjectDraser({
     project,
 }: Readonly<EditProjectDraserProps>) {
+    const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: {
             id: project.id,
@@ -36,8 +38,15 @@ export default function EditProjectDraser({
             onSubmit: projectResponseSchema,
         },
     })
+
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='ghost' size='icon-sm'>
                     <PencilIcon className='text-warning' size={16} />
