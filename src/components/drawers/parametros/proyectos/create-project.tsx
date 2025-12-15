@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -22,6 +22,7 @@ import {
 } from '@/queries/parametros/projects'
 
 export default function CreateProjectDrawer() {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: {
@@ -44,6 +45,9 @@ export default function CreateProjectDrawer() {
             createProject({ data: { data } }),
         onSuccess: () => {
             toast.success('Proyecto creado con exito')
+            queryClient.invalidateQueries({
+                queryKey: ['proyectos'],
+            })
             setOpen(false)
         },
         onError: (error) => {
