@@ -126,6 +126,15 @@ export default function CreateProjectDrawer() {
                                     />
                                 )}
                             </form.AppField>
+
+                            <form.AppField name='is_active'>
+                                {(field) => (
+                                    <field.SwitchField
+                                        label='Activo'
+                                        name='is_active'
+                                    />
+                                )}
+                            </form.AppField>
                         </FieldSet>
                     </FieldGroup>
 
