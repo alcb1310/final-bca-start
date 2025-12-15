@@ -9,6 +9,7 @@ import {
     getAllProjects,
     type ProjectResponseType,
 } from '@/queries/parametros/projects'
+import { Switch } from '@/components/ui/switch'
 
 export const Route = createFileRoute('/_authed/parametros/proyectos')({
     component: RouteComponent,
@@ -65,9 +66,11 @@ function RouteComponent() {
             accessorKey: 'is_active',
             cell: ({ row }) => {
                 return (
-                    <span className='block text-center'>
-                        {row.original.is_active ? 'Si' : 'No'}
-                    </span>
+                    <Switch
+                        className='block mx-auto'
+                        checked={row.original.is_active}
+                        disabled
+                    />
                 )
             },
         },
