@@ -1,5 +1,7 @@
+import { useMutation } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -16,6 +18,7 @@ import { useAppForm } from '@/hooks/formHook'
 import {
     type ProjectResponseType,
     projectResponseSchema,
+    updateProject,
 } from '@/queries/parametros/projects'
 
 interface EditProjectDraserProps {
@@ -33,9 +36,37 @@ export default function EditProjectDraser({
             is_active: project.is_active,
             gross_area: project.gross_area,
             net_area: project.net_area,
-        } satisfies ProjectResponseType as ProjectResponseType,
+        },
         validators: {
+            // @ts-expect-error
             onSubmit: projectResponseSchema,
+        },
+        onSubmit: ({ value }) => {
+            mutation.mutate(value)
+            setOpen(false)
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: (data: ProjectResponseType) =>
+            updateProject({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Proyecto actualizado con exito')
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al actualizar el proyecto', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
@@ -110,6 +141,9 @@ export default function EditProjectDraser({
 
                     <DrawerFooter>
                         <Field orientation='horizontal'>
+                            <form.AppForm>
+                                <form.FormButton label='Guardar' />
+                            </form.AppForm>
                             <DrawerClose asChild>
                                 <Button variant='outline'>Cancel</Button>
                             </DrawerClose>
