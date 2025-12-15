@@ -1,6 +1,5 @@
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import z from 'zod'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -14,16 +13,10 @@ import {
 } from '@/components/ui/drawer'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
-
-export const projectCreateSchema = z.object({
-    name: z
-        .string({ message: 'El nombre es requerido' })
-        .min(1, { message: 'El nombre es requerido' }),
-    is_active: z.boolean(),
-    gross_area: z.coerce.number({ message: 'Ingrese un número válido' }),
-    net_area: z.coerce.number({ message: 'Ingrese un número válido' }),
-})
-export type ProjectCreateType = z.infer<typeof projectCreateSchema>
+import {
+    type ProjectCreateType,
+    projectCreateSchema,
+} from '@/queries/parametros/projects'
 
 export default function CreateProjectDrawer() {
     const [open, setOpen] = useState<boolean>(false)
