@@ -61,3 +61,31 @@ export const createProject = createServerFn({ method: 'POST' })
         }
         return
     })
+
+export const updateProject = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: ProjectResponseType }) => {
+        return {
+            id: data.data.id,
+            name: data.data.name,
+            is_active: data.data.is_active,
+            gross_area: Number.parseFloat(String(data.data.gross_area)),
+            net_area: Number.parseFloat(String(data.data.net_area)),
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/projects/${data.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        const resData = await response.json()
+
+        if (!response.ok) {
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
