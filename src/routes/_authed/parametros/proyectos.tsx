@@ -61,6 +61,17 @@ function RouteComponent() {
             },
         },
         {
+            header: 'Activo',
+            accessorKey: 'is_active',
+            cell: ({ row }) => {
+                return (
+                    <span className='block text-center'>
+                        {row.original.is_active ? 'Si' : 'No'}
+                    </span>
+                )
+            },
+        },
+        {
             header: '',
             accessorKey: 'actions',
             cell: () => {
