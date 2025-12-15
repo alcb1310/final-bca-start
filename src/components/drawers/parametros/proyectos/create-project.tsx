@@ -1,4 +1,5 @@
 import { PlusIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import z from 'zod'
 import { Button } from '@/components/ui/button'
 import {
@@ -25,6 +26,7 @@ export const projectCreateSchema = z.object({
 export type ProjectCreateType = z.infer<typeof projectCreateSchema>
 
 export default function CreateProjectDrawer() {
+    const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: {
             name: '',
@@ -41,8 +43,14 @@ export default function CreateProjectDrawer() {
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='ghost' className='mb-3'>
                     <PlusIcon size={10} />
