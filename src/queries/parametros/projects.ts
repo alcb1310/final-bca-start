@@ -6,8 +6,8 @@ export const projectResponseSchema = z.object({
     id: z.string().uuid({ version: 'v4' }),
     name: z.string(),
     is_active: z.boolean(),
-    gross_area: z.number(),
-    net_area: z.number(),
+    gross_area: z.coerce.number({ message: 'Ingrese un número válido' }),
+    net_area: z.coerce.number({ message: 'Ingrese un número válido' }),
 })
 
 export const projectCreateSchema = z.object({
