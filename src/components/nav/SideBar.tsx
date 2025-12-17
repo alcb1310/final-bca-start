@@ -79,7 +79,11 @@ const menu: Menu[] = [
                 path: '/parametros/proyectos',
                 icon: FolderKanbanIcon,
             },
-            { title: 'Proveedores', path: '#', icon: CableIcon },
+            {
+                title: 'Proveedores',
+                path: '/parametros/proveedores',
+                icon: CableIcon,
+            },
             { title: 'Rubros', path: '#', icon: ShoppingBasketIcon },
         ],
     },
