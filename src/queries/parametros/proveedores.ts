@@ -4,7 +4,7 @@ import { stringNull } from '@/types/StringNull'
 
 const url = process.env.BACKEND_URL
 
-export const projectResponseSchema = z.object({
+export const supplierResponseSchema = z.object({
     id: z.string().uuid({ version: 'v4' }),
     name: z.string(),
     supplier_id: z.string(),
@@ -12,7 +12,7 @@ export const projectResponseSchema = z.object({
     contact_email: stringNull,
     contact_phone: stringNull,
 })
-export type ProjectResponseType = z.infer<typeof projectResponseSchema>
+export type SupplierResponseType = z.infer<typeof supplierResponseSchema>
 
 export const getAllSuppliers = createServerFn({ method: 'GET' }).handler(
     async () => {
@@ -23,6 +23,6 @@ export const getAllSuppliers = createServerFn({ method: 'GET' }).handler(
             throw new Error(data.message)
         }
 
-        return data as ProjectResponseType[]
+        return data as SupplierResponseType[]
     },
 )
