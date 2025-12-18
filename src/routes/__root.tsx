@@ -41,7 +41,7 @@ function RootDocument({ children }: { children: ReactNode }) {
             <head>
                 <HeadContent />
             </head>
-            <body>
+            <body className='dark'>
                 {children}
                 <Scripts />
                 <Toaster position='bottom-right' />
