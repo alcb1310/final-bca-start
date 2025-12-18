@@ -76,7 +76,7 @@ export default function CreateProjectDrawer() {
     return (
         <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <Button variant='ghost' className='mb-3'>
+                <Button variant='default' className='mb-3'>
                     <PlusIcon size={10} />
                     Crear Proyecto
                 </Button>

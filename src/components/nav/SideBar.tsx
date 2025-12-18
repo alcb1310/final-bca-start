@@ -28,7 +28,6 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarSeparator,
 } from '@/components/ui/sidebar'
 import type { FileRoutesByTo } from '@/routeTree.gen'
 
@@ -102,16 +101,21 @@ export default function SideBar() {
             <SidebarHeader className='flex justify-center items-center text-2xl font-bold'>
                 <Link to='/dashboard'>BCA</Link>
             </SidebarHeader>
-            <SidebarSeparator />
             <SidebarContent>
                 {menu.map((men) => (
                     <SidebarGroup key={men.title}>
-                        <SidebarGroupLabel>{men.title}</SidebarGroupLabel>
+                        <SidebarGroupLabel className='bg-primary text-primary-foreground'>
+                            {men.title}
+                        </SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
                                 {men.items.map((item) => (
                                     <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild>
+                                        <SidebarMenuButton
+                                            size='sm'
+                                            className='text-primary'
+                                            asChild
+                                        >
                                             <Link to={item.path}>
                                                 <div className='flex gap-4 justify-center'>
                                                     {item.icon && (
