@@ -27,7 +27,7 @@ export default function TopBar() {
     }
 
     return (
-        <nav className='flex justify-between items-center p-4'>
+        <nav className='bg-primary text-primary-foreground flex justify-between items-center py-1 px-4'>
             <h3 className='text-xl font-bold'>
                 Sistema Control Presupuestario
             </h3>
