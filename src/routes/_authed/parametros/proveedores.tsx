@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, PlusIcon } from 'lucide-react'
+import { PencilIcon } from 'lucide-react'
+import CreateSupplier from '@/components/drawers/parametros/proveedores/create-supplier'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
-import { Button } from '@/components/ui/button'
 import {
     getAllSuppliers,
     type SupplierResponseType,
@@ -65,12 +65,7 @@ function RouteComponent() {
     return (
         <div>
             <PageTitle title='Proveedores' />
-
-            <Button variant='default'>
-                <PlusIcon size={10} />
-                Crear Proveedor
-            </Button>
-
+            <CreateSupplier />
             <DataTable data={data} columns={columns} />
         </div>
     )
