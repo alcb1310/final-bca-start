@@ -19,9 +19,18 @@ export const supplierCreateSchema = z.object({
     contact_email: z.string().optional(),
     contact_phone: z.string().optional(),
 })
+export const supplierEditSchema = z.object({
+    id: z.string().uuid({ version: 'v4' }),
+    name: z.string().min(1, { message: 'El nombre es requerido' }),
+    supplier_id: z.string().min(1, { message: 'El RUC es requerido' }),
+    contact_name: z.string().optional().nullable(),
+    contact_email: z.string().optional().nullable(),
+    contact_phone: z.string().optional().nullable(),
+})
 
 export type SupplierResponseType = z.infer<typeof supplierResponseSchema>
 export type SupplierCreateType = z.infer<typeof supplierCreateSchema>
+export type SupplierEditType = z.infer<typeof supplierEditSchema>
 
 export const getAllSuppliers = createServerFn({ method: 'GET' }).handler(
     async () => {
