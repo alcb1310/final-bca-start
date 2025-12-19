@@ -7,8 +7,10 @@ import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import {
     getAllSuppliers,
+    SupplierEditType,
     type SupplierResponseType,
 } from '@/queries/parametros/proveedores'
+import EditSupplier from '@/components/drawers/parametros/proveedores/edit-supplier'
 
 export const Route = createFileRoute('/_authed/parametros/proveedores')({
     component: RouteComponent,
@@ -57,7 +59,15 @@ function RouteComponent() {
             header: '',
             accessorKey: 'actions',
             cell: ({ row }) => {
-                return <PencilIcon size={10} />
+                const supplier: SupplierEditType = {
+                    id: row.original.id,
+                    name: row.original.name,
+                    supplier_id: row.original.supplier_id,
+                    contact_name: row.original.contact_name.String,
+                    contact_email: row.original.contact_email.String,
+                    contact_phone: row.original.contact_phone.String,
+                }
+                return <EditSupplier supplier={supplier} />
             },
         },
     ]
