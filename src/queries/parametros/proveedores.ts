@@ -35,3 +35,31 @@ export const getAllSuppliers = createServerFn({ method: 'GET' }).handler(
         return data as SupplierResponseType[]
     },
 )
+
+export const createSupplier = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: SupplierCreateType }) => {
+        return {
+            name: data.data.name,
+            supplier_id: data.data.supplier_id,
+            contact_name: data.data.contact_name,
+            contact_email: data.data.contact_email,
+            contact_phone: data.data.contact_phone,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/suppliers`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        const resData = await response.json()
+
+        if (!response.ok) {
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
