@@ -12,7 +12,16 @@ export const supplierResponseSchema = z.object({
     contact_email: stringNull,
     contact_phone: stringNull,
 })
+export const supplierCreateSchema = z.object({
+    name: z.string(),
+    supplier_id: z.string(),
+    contact_name: z.string().optional(),
+    contact_email: z.string().optional(),
+    contact_phone: z.string().optional(),
+})
+
 export type SupplierResponseType = z.infer<typeof supplierResponseSchema>
+export type SupplierCreateType = z.infer<typeof supplierCreateSchema>
 
 export const getAllSuppliers = createServerFn({ method: 'GET' }).handler(
     async () => {
