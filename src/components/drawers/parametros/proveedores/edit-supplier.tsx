@@ -22,8 +22,8 @@ export default function EditSupplier({
     return (
         <Drawer direction='right'>
             <DrawerTrigger asChild>
-                <Button>
-                    <PencilIcon size={10} />
+                <Button variant='ghost' size='icon-sm'>
+                    <PencilIcon size={10} className='text-warning' />
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
