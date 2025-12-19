@@ -13,8 +13,8 @@ export const supplierResponseSchema = z.object({
     contact_phone: stringNull,
 })
 export const supplierCreateSchema = z.object({
-    name: z.string(),
-    supplier_id: z.string(),
+    name: z.string().min(1, { message: 'El nombre es requerido' }),
+    supplier_id: z.string().min(1, { message: 'El RUC es requerido' }),
     contact_name: z.string().optional(),
     contact_email: z.string().optional(),
     contact_phone: z.string().optional(),

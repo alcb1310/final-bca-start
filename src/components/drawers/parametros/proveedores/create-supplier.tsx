@@ -13,7 +13,10 @@ import {
 } from '@/components/ui/drawer'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
-import type { SupplierCreateType } from '@/queries/parametros/proveedores'
+import {
+    supplierCreateSchema,
+    type SupplierCreateType,
+} from '@/queries/parametros/proveedores'
 
 export default function CreateSupplier() {
     const [open, setOpen] = useState(false)
@@ -25,6 +28,13 @@ export default function CreateSupplier() {
             contact_email: '',
             contact_phone: '',
         } satisfies SupplierCreateType as SupplierCreateType,
+        validators: {
+            onSubmit: supplierCreateSchema,
+        },
+        onSubmit: ({ value }) => {
+            console.log(value)
+            // mutation.mutate(value)
+        },
     })
 
     useEffect(() => {
