@@ -1,16 +1,15 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon } from 'lucide-react'
 import CreateSupplier from '@/components/drawers/parametros/proveedores/create-supplier'
+import EditSupplier from '@/components/drawers/parametros/proveedores/edit-supplier'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import {
     getAllSuppliers,
-    SupplierEditType,
+    type SupplierEditType,
     type SupplierResponseType,
 } from '@/queries/parametros/proveedores'
-import EditSupplier from '@/components/drawers/parametros/proveedores/edit-supplier'
 
 export const Route = createFileRoute('/_authed/parametros/proveedores')({
     component: RouteComponent,
