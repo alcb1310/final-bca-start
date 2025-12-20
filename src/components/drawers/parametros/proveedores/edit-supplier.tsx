@@ -1,5 +1,7 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -14,6 +16,7 @@ import {
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
+    editSupplier,
     type SupplierEditType,
     supplierEditSchema,
 } from '@/queries/parametros/proveedores'
@@ -25,6 +28,7 @@ interface EditSupplierProps {
 export default function EditSupplier({
     supplier,
 }: Readonly<EditSupplierProps>) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: supplier,
@@ -32,7 +36,34 @@ export default function EditSupplier({
             onSubmit: supplierEditSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutation.mutate(value)
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: (data: SupplierEditType) =>
+            editSupplier({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Proveedor creado con exito')
+            queryClient.invalidateQueries({
+                queryKey: ['proveedores'],
+            })
+            setOpen(false)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al crear el proveedor', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
