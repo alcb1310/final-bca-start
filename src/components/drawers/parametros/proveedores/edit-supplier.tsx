@@ -1,4 +1,6 @@
 import { PencilIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
     Drawer,
     DrawerClose,
@@ -9,13 +11,12 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import { useAppForm } from '@/hooks/formHook'
-import { Button } from '@/components/ui/button'
-import {
-    supplierEditSchema,
-    type SupplierEditType,
-} from '@/queries/parametros/proveedores'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/formHook'
+import {
+    type SupplierEditType,
+    supplierEditSchema,
+} from '@/queries/parametros/proveedores'
 
 interface EditSupplierProps {
     supplier: SupplierEditType
@@ -24,6 +25,7 @@ interface EditSupplierProps {
 export default function EditSupplier({
     supplier,
 }: Readonly<EditSupplierProps>) {
+    const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: supplier,
         validators: {
@@ -34,8 +36,14 @@ export default function EditSupplier({
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='ghost' size='icon-sm'>
                     <PencilIcon size={10} className='text-warning' />
