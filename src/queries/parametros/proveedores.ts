@@ -72,3 +72,32 @@ export const createSupplier = createServerFn({ method: 'POST' })
         }
         return
     })
+
+export const editSupplier = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: SupplierEditType }) => {
+        return {
+            id: data.data.id,
+            name: data.data.name,
+            supplier_id: data.data.supplier_id,
+            contact_name: data.data.contact_name,
+            contact_email: data.data.contact_email,
+            contact_phone: data.data.contact_phone,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/suppliers/${data.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
