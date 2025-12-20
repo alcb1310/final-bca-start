@@ -1,5 +1,4 @@
 import { PencilIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import {
     Drawer,
     DrawerContent,
@@ -8,7 +7,12 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import type { SupplierEditType } from '@/queries/parametros/proveedores'
+import { useAppForm } from '@/hooks/formHook'
+import { Button } from '@/components/ui/button'
+import {
+    supplierEditSchema,
+    type SupplierEditType,
+} from '@/queries/parametros/proveedores'
 
 interface EditSupplierProps {
     supplier: SupplierEditType
@@ -17,7 +21,15 @@ interface EditSupplierProps {
 export default function EditSupplier({
     supplier,
 }: Readonly<EditSupplierProps>) {
-    console.log(supplier)
+    const form = useAppForm({
+        defaultValues: supplier,
+        validators: {
+            onSubmit: supplierEditSchema,
+        },
+        onSubmit: ({ value }) => {
+            console.log(value)
+        },
+    })
 
     return (
         <Drawer direction='right'>
@@ -27,12 +39,20 @@ export default function EditSupplier({
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>Editar Proveedor</DrawerTitle>
-                    <DrawerDescription>
-                        Edita el proveedor con la información ingresada
-                    </DrawerDescription>
-                </DrawerHeader>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        form.handleSubmit()
+                    }}
+                >
+                    <DrawerHeader>
+                        <DrawerTitle>Editar Proveedor</DrawerTitle>
+                        <DrawerDescription>
+                            Edita el proveedor con la información ingresada
+                        </DrawerDescription>
+                    </DrawerHeader>
+                </form>
             </DrawerContent>
         </Drawer>
     )
