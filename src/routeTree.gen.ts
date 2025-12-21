@@ -18,6 +18,7 @@ import { Route as AuthedUsuariosPerfilRouteImport } from './routes/_authed/usuar
 import { Route as AuthedUsuariosAdminRouteImport } from './routes/_authed/usuarios/admin'
 import { Route as AuthedParametrosProyectosRouteImport } from './routes/_authed/parametros/proyectos'
 import { Route as AuthedParametrosProveedoresRouteImport } from './routes/_authed/parametros/proveedores'
+import { Route as AuthedParametrosPartidasRouteImport } from './routes/_authed/parametros/partidas'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -65,11 +66,18 @@ const AuthedParametrosProveedoresRoute =
     path: '/parametros/proveedores',
     getParentRoute: () => AuthedRoute,
   } as any)
+const AuthedParametrosPartidasRoute =
+  AuthedParametrosPartidasRouteImport.update({
+    id: '/parametros/partidas',
+    path: '/parametros/partidas',
+    getParentRoute: () => AuthedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
@@ -80,6 +88,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
@@ -92,6 +101,7 @@ export interface FileRoutesById {
   '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
+  '/_authed/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/_authed/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/_authed/parametros/proyectos': typeof AuthedParametrosProyectosRoute
   '/_authed/usuarios/admin': typeof AuthedUsuariosAdminRoute
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/dashboard'
+    | '/parametros/partidas'
     | '/parametros/proveedores'
     | '/parametros/proyectos'
     | '/usuarios/admin'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/dashboard'
+    | '/parametros/partidas'
     | '/parametros/proveedores'
     | '/parametros/proyectos'
     | '/usuarios/admin'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
     | '/_authed'
     | '/login'
     | '/_authed/dashboard'
+    | '/_authed/parametros/partidas'
     | '/_authed/parametros/proveedores'
     | '/_authed/parametros/proyectos'
     | '/_authed/usuarios/admin'
@@ -204,11 +217,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedParametrosProveedoresRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/parametros/partidas': {
+      id: '/_authed/parametros/partidas'
+      path: '/parametros/partidas'
+      fullPath: '/parametros/partidas'
+      preLoaderRoute: typeof AuthedParametrosPartidasRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
 interface AuthedRouteChildren {
   AuthedDashboardRoute: typeof AuthedDashboardRoute
+  AuthedParametrosPartidasRoute: typeof AuthedParametrosPartidasRoute
   AuthedParametrosProveedoresRoute: typeof AuthedParametrosProveedoresRoute
   AuthedParametrosProyectosRoute: typeof AuthedParametrosProyectosRoute
   AuthedUsuariosAdminRoute: typeof AuthedUsuariosAdminRoute
@@ -217,6 +238,7 @@ interface AuthedRouteChildren {
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedParametrosPartidasRoute: AuthedParametrosPartidasRoute,
   AuthedParametrosProveedoresRoute: AuthedParametrosProveedoresRoute,
   AuthedParametrosProyectosRoute: AuthedParametrosProyectosRoute,
   AuthedUsuariosAdminRoute: AuthedUsuariosAdminRoute,

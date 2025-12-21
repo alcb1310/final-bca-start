@@ -70,7 +70,11 @@ const menu: Menu[] = [
     {
         title: 'Parámetros',
         items: [
-            { title: 'Partidas', path: '#', icon: LayoutListIcon },
+            {
+                title: 'Partidas',
+                path: '/parametros/partidas',
+                icon: LayoutListIcon,
+            },
             { title: 'Categorias', path: '#', icon: ChartBarStackedIcon },
             { title: 'Materiales', path: '#', icon: BrickWallIcon },
             {
