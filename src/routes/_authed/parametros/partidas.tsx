@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PlusIcon } from 'lucide-react'
+import { PencilIcon, PlusIcon } from 'lucide-react'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
@@ -63,6 +63,9 @@ function RouteComponent() {
         {
             header: '',
             accessorKey: 'actions',
+            cell: ({ row }) => {
+                return <PencilIcon size={10} className='text-warning' />
+            },
         },
     ]
 
