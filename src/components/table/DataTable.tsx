@@ -45,6 +45,12 @@ export default function DataTable<TData, TValue>({
         state: {
             sorting,
         },
+        defaultColumn: {
+            size: 200,
+            minSize: 5,
+            maxSize: 1000,
+            enableResizing: true,
+        },
     })
 
     return (
