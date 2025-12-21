@@ -33,6 +33,8 @@ export default function CreateItemDrawer() {
         },
     })
 
+    const options = [{ value: null, label: 'Sin padre' }]
+
     return (
         <Drawer direction='right'>
             <DrawerTrigger asChild>
@@ -73,6 +75,15 @@ export default function CreateItemDrawer() {
                                         label='Nombre'
                                         placeholder='Ingrese el nombre del proyecto'
                                         name='name'
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='parent_id'>
+                                {(field) => (
+                                    <field.SelectField
+                                        name='parent_id'
+                                        label='Partida Padre'
+                                        options={options}
                                     />
                                 )}
                             </form.AppField>
