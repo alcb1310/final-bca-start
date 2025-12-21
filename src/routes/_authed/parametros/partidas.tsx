@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, PlusIcon } from 'lucide-react'
+import { PencilIcon } from 'lucide-react'
+import CreateItemDrawer from '@/components/drawers/parametros/partidas/create-item'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
-import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import {
     type BudgetItemResponse,
@@ -73,10 +73,7 @@ function RouteComponent() {
         <div>
             <PageTitle title='Partidas' />
 
-            <Button variant='default' size='sm'>
-                <PlusIcon size={10} />
-                Crear Partida
-            </Button>
+            <CreateItemDrawer />
 
             <DataTable columns={column} data={data} />
         </div>
