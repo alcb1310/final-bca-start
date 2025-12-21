@@ -9,12 +9,20 @@ export const budgetItemResponseSchema = z.object({
     code: z.string(),
     name: z.string(),
     accumulate: z.boolean(),
-    parent_id: z.string().nullable(),
+    parent_id: z.string().uuid().nullable(),
     parent_code: stringNull,
     parent_name: stringNull,
 })
 
+export const budgetItemCreateSchema = z.object({
+    code: z.string(),
+    name: z.string(),
+    accumulate: z.boolean(),
+    parent_id: z.string().uuid().nullable(),
+})
+
 export type BudgetItemResponse = z.infer<typeof budgetItemResponseSchema>
+export type BudgetItemCreateType = z.infer<typeof budgetItemCreateSchema>
 
 export const getAllBudgetItems = createServerFn({ method: 'GET' }).handler(
     async () => {
