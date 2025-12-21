@@ -1,9 +1,28 @@
 import { createFileRoute } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { PlusIcon } from 'lucide-react'
+import { PageTitle } from '@/components/pages/Title'
+import DataTable from '@/components/table/DataTable'
+import { Button } from '@/components/ui/button'
+import type { BudgetItemResponse } from '@/queries/parametros/partidas'
 
 export const Route = createFileRoute('/_authed/parametros/partidas')({
-  component: RouteComponent,
+    component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/_authed/parametros/partidas"!</div>
+    const column: ColumnDef<BudgetItemResponse>[] = []
+
+    return (
+        <div>
+            <PageTitle title='Partidas' />
+
+            <Button variant='default' size='sm'>
+                <PlusIcon size={10} />
+                Crear Partida
+            </Button>
+
+            <DataTable columns={column} data={[]} />
+        </div>
+    )
 }
