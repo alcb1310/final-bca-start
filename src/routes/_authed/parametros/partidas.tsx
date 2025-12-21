@@ -1,29 +1,47 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { PlusIcon } from 'lucide-react'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
-import type { BudgetItemResponse } from '@/queries/parametros/partidas'
 import { Switch } from '@/components/ui/switch'
+import {
+    type BudgetItemResponse,
+    getAllBudgetItems,
+} from '@/queries/parametros/partidas'
 
 export const Route = createFileRoute('/_authed/parametros/partidas')({
     component: RouteComponent,
+    loader: ({ context: { queryClient } }) => {
+        queryClient.ensureQueryData({
+            queryKey: ['partidas'],
+            queryFn: getAllBudgetItems,
+        })
+    },
 })
 
 function RouteComponent() {
+    const { data } = useSuspenseQuery({
+        queryKey: ['partidas'],
+        queryFn: getAllBudgetItems,
+    })
+
     const column: ColumnDef<BudgetItemResponse>[] = [
         {
             header: 'Código',
             accessorKey: 'code',
+            size: 50,
         },
         {
             header: 'Nombre',
             accessorKey: 'name',
+            size: 600,
         },
         {
             header: 'Nivel',
             accessorKey: 'level',
+            size: 25,
         },
         {
             header: 'Acumula',
@@ -34,10 +52,17 @@ function RouteComponent() {
                     disabled
                 />
             ),
+            size: 25,
         },
         {
             header: 'Padre',
             accessorKey: 'parent_code',
+            size: 100,
+        },
+
+        {
+            header: '',
+            accessorKey: 'actions',
         },
     ]
 
@@ -50,7 +75,7 @@ function RouteComponent() {
                 Crear Partida
             </Button>
 
-            <DataTable columns={column} data={[]} />
+            <DataTable columns={column} data={data} />
         </div>
     )
 }
