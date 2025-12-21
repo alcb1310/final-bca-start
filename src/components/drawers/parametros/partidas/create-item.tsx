@@ -10,7 +10,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import { Field } from '@/components/ui/field'
+import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
     type BudgetItemCreateType,
@@ -42,13 +42,6 @@ export default function CreateItemDrawer() {
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>Crear Partida</DrawerTitle>
-                    <DrawerDescription>
-                        Crea una partida presupuestaria con la información
-                        requerida.
-                    </DrawerDescription>
-                </DrawerHeader>
                 <form
                     onSubmit={(e) => {
                         e.preventDefault()
@@ -56,6 +49,43 @@ export default function CreateItemDrawer() {
                         form.handleSubmit()
                     }}
                 >
+                    <DrawerHeader>
+                        <DrawerTitle>Crear Partida</DrawerTitle>
+                        <DrawerDescription>
+                            Crea una partida presupuestaria con la información
+                            requerida.
+                        </DrawerDescription>
+                    </DrawerHeader>
+                    <FieldGroup className='my-5 px-4'>
+                        <FieldSet>
+                            <form.AppField name='code'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Código'
+                                        placeholder='Ingrese el código del proyecto'
+                                        name='code'
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='name'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Nombre'
+                                        placeholder='Ingrese el nombre del proyecto'
+                                        name='name'
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='accumulate'>
+                                {(field) => (
+                                    <field.SwitchField
+                                        label='Acumula'
+                                        name='accumulate'
+                                    />
+                                )}
+                            </form.AppField>
+                        </FieldSet>
+                    </FieldGroup>
                     <DrawerFooter>
                         <Field orientation='horizontal'>
                             <form.AppForm>
