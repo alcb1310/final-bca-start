@@ -21,8 +21,15 @@ export const budgetItemCreateSchema = z.object({
     parent_id: z.string(),
 })
 
+export const budgetItemEditSchema = z.object({
+    id: z.string().uuid({ version: 'v4' }),
+    code: z.string(),
+    name: z.string(),
+})
+
 export type BudgetItemResponse = z.infer<typeof budgetItemResponseSchema>
 export type BudgetItemCreateType = z.infer<typeof budgetItemCreateSchema>
+export type BudgetItemEditType = z.infer<typeof budgetItemEditSchema>
 
 export const getAllBudgetItems = createServerFn({ method: 'GET' }).handler(
     async () => {
