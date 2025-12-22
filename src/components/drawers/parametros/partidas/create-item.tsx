@@ -23,7 +23,7 @@ export default function CreateItemDrawer() {
             code: '',
             name: '',
             accumulate: false,
-            parent_id: null,
+            parent_id: '',
         } satisfies BudgetItemCreateType as BudgetItemCreateType,
         validators: {
             onSubmit: budgetItemCreateSchema,
@@ -33,7 +33,7 @@ export default function CreateItemDrawer() {
         },
     })
 
-    const options = [{ value: null, label: 'Sin padre' }]
+    const options = [{ value: '', label: 'Sin padre' }]
 
     return (
         <Drawer direction='right'>

@@ -18,7 +18,7 @@ export const budgetItemCreateSchema = z.object({
     code: z.string(),
     name: z.string(),
     accumulate: z.boolean(),
-    parent_id: z.string().uuid().nullable(),
+    parent_id: z.string().uuid().optional(),
 })
 
 export type BudgetItemResponse = z.infer<typeof budgetItemResponseSchema>
