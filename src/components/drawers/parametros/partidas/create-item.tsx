@@ -1,5 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -16,10 +18,13 @@ import { useAppForm } from '@/hooks/formHook'
 import {
     type BudgetItemCreateType,
     budgetItemCreateSchema,
+    createBudgetItem,
     getPartidasByAccumulate,
 } from '@/queries/parametros/partidas'
 
 export default function CreateItemDrawer() {
+    const queryClient = useQueryClient()
+    const [open, setOpen] = useState<boolean>(false)
     const accum = true
     const form = useAppForm({
         defaultValues: {
@@ -32,9 +37,40 @@ export default function CreateItemDrawer() {
             onSubmit: budgetItemCreateSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutation.mutate(value)
         },
     })
+
+    const mutation = useMutation({
+        mutationFn: (data: BudgetItemCreateType) =>
+            createBudgetItem({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Proyecto creado con exito')
+            queryClient.invalidateQueries({
+                queryKey: ['partidas', 'accum'],
+            })
+            queryClient.invalidateQueries({
+                queryKey: ['partidas'],
+            })
+            setOpen(false)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al crear el proyecto', {
+                richColors: true,
+                position: 'top-center',
+            })
+        },
+    })
+
     const { data: partidas } = useQuery({
         queryKey: ['partidas', 'accum'],
         queryFn: () => getPartidasByAccumulate({ data: { accum } }),
@@ -54,8 +90,14 @@ export default function CreateItemDrawer() {
         label: 'Seleccione una partida',
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='default' size='sm'>
                     <PlusIcon size={10} />
