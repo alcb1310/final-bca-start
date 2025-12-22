@@ -64,7 +64,12 @@ function RouteComponent() {
             header: '',
             accessorKey: 'actions',
             cell: ({ row }) => {
-                return <UpdateItem />
+                const item = {
+                    id: row.original.id,
+                    code: row.original.code,
+                    name: row.original.name,
+                }
+                return <UpdateItem item={item} />
             },
         },
     ]
