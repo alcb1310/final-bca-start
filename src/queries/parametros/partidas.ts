@@ -54,3 +54,30 @@ export const getPartidasByAccumulate = createServerFn({ method: 'GET' })
 
         return resData as BudgetItemResponse[]
     })
+
+export const createBudgetItem = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: BudgetItemCreateType }) => {
+        return {
+            code: data.data.code,
+            name: data.data.name,
+            accumulate: data.data.accumulate,
+            parent_id: data.data.parent_id,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/budget-items`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
