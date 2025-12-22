@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -15,9 +16,11 @@ import { useAppForm } from '@/hooks/formHook'
 import {
     type BudgetItemCreateType,
     budgetItemCreateSchema,
+    getPartidasByAccumulate,
 } from '@/queries/parametros/partidas'
 
 export default function CreateItemDrawer() {
+    const accum = true
     const form = useAppForm({
         defaultValues: {
             code: '',
@@ -32,8 +35,24 @@ export default function CreateItemDrawer() {
             console.log(value)
         },
     })
+    const { data: partidas } = useQuery({
+        queryKey: ['partidas', 'accum'],
+        queryFn: () => getPartidasByAccumulate({ data: { accum } }),
+    })
 
-    const options = [{ value: '', label: 'Sin padre' }]
+    const options = partidas
+        ? partidas.map((partida) => {
+              return {
+                  value: partida.id,
+                  label: partida.name,
+              }
+          })
+        : []
+
+    options.unshift({
+        value: '',
+        label: 'Seleccione una partida',
+    })
 
     return (
         <Drawer direction='right'>
