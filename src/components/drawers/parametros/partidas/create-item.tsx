@@ -78,11 +78,11 @@ export default function CreateItemDrawer() {
 
     const options = partidas
         ? partidas.map((partida) => {
-              return {
-                  value: partida.id,
-                  label: partida.name,
-              }
-          })
+            return {
+                value: partida.id,
+                label: partida.name,
+            }
+        })
         : []
 
     options.unshift({
@@ -99,7 +99,7 @@ export default function CreateItemDrawer() {
     return (
         <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <Button variant='default' size='sm'>
+                <Button variant='default' className='mb-3'>
                     <PlusIcon size={10} />
                     Crear Partida
                 </Button>
