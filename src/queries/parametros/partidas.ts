@@ -36,3 +36,21 @@ export const getAllBudgetItems = createServerFn({ method: 'GET' }).handler(
         return data as BudgetItemResponse[]
     },
 )
+
+export const getPartidasByAccumulate = createServerFn({ method: 'GET' })
+    .inputValidator((data: { accum: boolean }) => data)
+    .handler(async ({ data }) => {
+        const params = new URLSearchParams()
+        params.set('accum', String(data.accum))
+        const fetchUrl = new URL(`${url}/budget-items`)
+        fetchUrl.search = params.toString()
+
+        const response = await fetch(fetchUrl)
+        const resData = await response.json()
+
+        if (!response.ok) {
+            throw new Error(resData.message)
+        }
+
+        return resData as BudgetItemResponse[]
+    })
