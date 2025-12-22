@@ -5,7 +5,7 @@ import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field'
 import { NativeSelect, NativeSelectOption } from '../ui/native-select'
 
 type Option = {
-    value: string | null
+    value: string
     label: string
 }
 
