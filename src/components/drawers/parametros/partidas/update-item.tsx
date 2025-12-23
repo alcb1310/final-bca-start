@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { PencilIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -22,6 +23,7 @@ interface UpdateItemProps {
 }
 
 export default function UpdateItem({ item }: Readonly<UpdateItemProps>) {
+    const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: item,
         validators: {
@@ -32,8 +34,14 @@ export default function UpdateItem({ item }: Readonly<UpdateItemProps>) {
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='ghost' size='icon-sm'>
                     <PencilIcon size={10} className='text-warning' />
