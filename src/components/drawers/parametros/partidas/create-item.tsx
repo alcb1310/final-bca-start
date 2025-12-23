@@ -45,7 +45,7 @@ export default function CreateItemDrawer() {
         mutationFn: (data: BudgetItemCreateType) =>
             createBudgetItem({ data: { data } }),
         onSuccess: () => {
-            toast.success('Proyecto creado con exito')
+            toast.success('Partida creada con exito')
             queryClient.invalidateQueries({
                 queryKey: ['partidas', 'accum'],
             })
@@ -64,7 +64,7 @@ export default function CreateItemDrawer() {
                 return
             }
 
-            toast.error('Error al crear el proyecto', {
+            toast.error('Error al actualizar la partida', {
                 richColors: true,
                 position: 'top-center',
             })
@@ -78,11 +78,11 @@ export default function CreateItemDrawer() {
 
     const options = partidas
         ? partidas.map((partida) => {
-              return {
-                  value: partida.id,
-                  label: partida.name,
-              }
-          })
+            return {
+                value: partida.id,
+                label: partida.name,
+            }
+        })
         : []
 
     options.unshift({
