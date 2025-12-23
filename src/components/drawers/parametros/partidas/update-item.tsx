@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -16,6 +18,7 @@ import { useAppForm } from '@/hooks/formHook'
 import {
     type BudgetItemEditType,
     budgetItemEditSchema,
+    updateBudgetItem,
 } from '@/queries/parametros/partidas'
 
 interface UpdateItemProps {
@@ -23,6 +26,7 @@ interface UpdateItemProps {
 }
 
 export default function UpdateItem({ item }: Readonly<UpdateItemProps>) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState<boolean>(false)
     const form = useAppForm({
         defaultValues: item,
@@ -30,7 +34,37 @@ export default function UpdateItem({ item }: Readonly<UpdateItemProps>) {
             onSubmit: budgetItemEditSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutation.mutate(value)
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: (data: BudgetItemEditType) =>
+            updateBudgetItem({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Partida actualizada con exito')
+            queryClient.invalidateQueries({
+                queryKey: ['partidas', 'accum'],
+            })
+            queryClient.invalidateQueries({
+                queryKey: ['partidas'],
+            })
+            setOpen(false)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al actualizar la partida', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
