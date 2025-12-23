@@ -88,3 +88,27 @@ export const createBudgetItem = createServerFn({ method: 'POST' })
         }
         return
     })
+
+export const updateBudgetItem = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: BudgetItemEditType }) => {
+        return {
+            id: data.data.id,
+            code: data.data.code,
+            name: data.data.name,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/budget-items/${data.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(resData)
+        }
+        return
+    })
