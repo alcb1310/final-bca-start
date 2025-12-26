@@ -27,3 +27,25 @@ export const getAllCategories = createServerFn({ method: 'GET' }).handler(
         return data as CategoryType[]
     },
 )
+
+export const createCategory = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: CreateCategoryType }) => {
+        return {
+            name: data.data.name,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/categories`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(resData)
+        }
+        return
+    })
