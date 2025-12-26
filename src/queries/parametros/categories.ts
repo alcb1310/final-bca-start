@@ -51,3 +51,28 @@ export const createCategory = createServerFn({ method: 'POST' })
         }
         return
     })
+
+export const editCategory = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: CategoryType }) => {
+        return {
+            id: data.data.id,
+            name: data.data.name,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/categories/${data.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
