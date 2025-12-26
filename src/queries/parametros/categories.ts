@@ -45,7 +45,9 @@ export const createCategory = createServerFn({ method: 'POST' })
 
         if (!response.ok) {
             const resData = await response.json()
-            throw new Error(resData)
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
         }
         return
     })
