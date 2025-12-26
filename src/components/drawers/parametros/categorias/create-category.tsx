@@ -8,8 +8,25 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
+import { useAppForm } from '@/hooks/formHook'
+import {
+    type CreateCategoryType,
+    createCategorySchema,
+} from '@/queries/parametros/categories'
 
 export default function CreateCategoryDrawer() {
+    const form = useAppForm({
+        defaultValues: {
+            name: '',
+        } satisfies CreateCategoryType as CreateCategoryType,
+        validators: {
+            onSubmit: createCategorySchema,
+        },
+        onSubmit: ({ value }) => {
+            console.log(value)
+        },
+    })
+
     return (
         <Drawer direction='right'>
             <DrawerTrigger asChild>
@@ -19,12 +36,21 @@ export default function CreateCategoryDrawer() {
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>Crear Categoría</DrawerTitle>
-                    <DrawerDescription>
-                        Crea una nueva categoría con la información requerida
-                    </DrawerDescription>
-                </DrawerHeader>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        form.handleSubmit()
+                    }}
+                >
+                    <DrawerHeader>
+                        <DrawerTitle>Crear Categoría</DrawerTitle>
+                        <DrawerDescription>
+                            Crea una nueva categoría con la información
+                            requerida
+                        </DrawerDescription>
+                    </DrawerHeader>
+                </form>
             </DrawerContent>
         </Drawer>
     )
