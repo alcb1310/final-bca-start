@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import {
     Drawer,
     DrawerContent,
+    DrawerDescription,
     DrawerHeader,
     DrawerTitle,
     DrawerTrigger,
@@ -20,6 +21,9 @@ export default function CreateCategoryDrawer() {
             <DrawerContent>
                 <DrawerHeader>
                     <DrawerTitle>Crear Categoría</DrawerTitle>
+                    <DrawerDescription>
+                        Crea una nueva categoría con la información requerida
+                    </DrawerDescription>
                 </DrawerHeader>
             </DrawerContent>
         </Drawer>
