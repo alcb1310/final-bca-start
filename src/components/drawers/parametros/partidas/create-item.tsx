@@ -78,11 +78,11 @@ export default function CreateItemDrawer() {
 
     const options = partidas
         ? partidas.map((partida) => {
-            return {
-                value: partida.id,
-                label: partida.name,
-            }
-        })
+              return {
+                  value: partida.id,
+                  label: partida.name,
+              }
+          })
         : []
 
     options.unshift({
