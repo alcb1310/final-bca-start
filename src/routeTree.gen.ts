@@ -19,6 +19,7 @@ import { Route as AuthedUsuariosAdminRouteImport } from './routes/_authed/usuari
 import { Route as AuthedParametrosProyectosRouteImport } from './routes/_authed/parametros/proyectos'
 import { Route as AuthedParametrosProveedoresRouteImport } from './routes/_authed/parametros/proveedores'
 import { Route as AuthedParametrosPartidasRouteImport } from './routes/_authed/parametros/partidas'
+import { Route as AuthedParametrosCategoriasRouteImport } from './routes/_authed/parametros/categorias'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -72,11 +73,18 @@ const AuthedParametrosPartidasRoute =
     path: '/parametros/partidas',
     getParentRoute: () => AuthedRoute,
   } as any)
+const AuthedParametrosCategoriasRoute =
+  AuthedParametrosCategoriasRouteImport.update({
+    id: '/parametros/categorias',
+    path: '/parametros/categorias',
+    getParentRoute: () => AuthedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/parametros/categorias': typeof AuthedParametrosCategoriasRoute
   '/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
@@ -88,6 +96,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/parametros/categorias': typeof AuthedParametrosCategoriasRoute
   '/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
@@ -101,6 +110,7 @@ export interface FileRoutesById {
   '/_authed': typeof AuthedRouteWithChildren
   '/login': typeof LoginRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
+  '/_authed/parametros/categorias': typeof AuthedParametrosCategoriasRoute
   '/_authed/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/_authed/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/_authed/parametros/proyectos': typeof AuthedParametrosProyectosRoute
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/dashboard'
+    | '/parametros/categorias'
     | '/parametros/partidas'
     | '/parametros/proveedores'
     | '/parametros/proyectos'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/dashboard'
+    | '/parametros/categorias'
     | '/parametros/partidas'
     | '/parametros/proveedores'
     | '/parametros/proyectos'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
     | '/_authed'
     | '/login'
     | '/_authed/dashboard'
+    | '/_authed/parametros/categorias'
     | '/_authed/parametros/partidas'
     | '/_authed/parametros/proveedores'
     | '/_authed/parametros/proyectos'
@@ -224,11 +237,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedParametrosPartidasRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/parametros/categorias': {
+      id: '/_authed/parametros/categorias'
+      path: '/parametros/categorias'
+      fullPath: '/parametros/categorias'
+      preLoaderRoute: typeof AuthedParametrosCategoriasRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
 interface AuthedRouteChildren {
   AuthedDashboardRoute: typeof AuthedDashboardRoute
+  AuthedParametrosCategoriasRoute: typeof AuthedParametrosCategoriasRoute
   AuthedParametrosPartidasRoute: typeof AuthedParametrosPartidasRoute
   AuthedParametrosProveedoresRoute: typeof AuthedParametrosProveedoresRoute
   AuthedParametrosProyectosRoute: typeof AuthedParametrosProyectosRoute
@@ -238,6 +259,7 @@ interface AuthedRouteChildren {
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedParametrosCategoriasRoute: AuthedParametrosCategoriasRoute,
   AuthedParametrosPartidasRoute: AuthedParametrosPartidasRoute,
   AuthedParametrosProveedoresRoute: AuthedParametrosProveedoresRoute,
   AuthedParametrosProyectosRoute: AuthedParametrosProyectosRoute,
