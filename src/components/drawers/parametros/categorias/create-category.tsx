@@ -1,4 +1,5 @@
 import { PlusIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -18,6 +19,7 @@ import {
 } from '@/queries/parametros/categories'
 
 export default function CreateCategoryDrawer() {
+    const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: {
             name: '',
@@ -30,8 +32,14 @@ export default function CreateCategoryDrawer() {
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='default' className='mb-3'>
                     <PlusIcon size={10} />
