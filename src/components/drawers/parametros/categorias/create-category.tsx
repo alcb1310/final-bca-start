@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -22,6 +22,7 @@ import {
 } from '@/queries/parametros/categories'
 
 export default function CreateCategoryDrawer() {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: {
@@ -40,6 +41,9 @@ export default function CreateCategoryDrawer() {
             createCategory({ data: { data } }),
         onSuccess: () => {
             toast.success('Categoría creada con exito')
+            queryClient.invalidateQueries({
+                queryKey: ['categorias'],
+            })
             setOpen(false)
         },
         onError: (error) => {
