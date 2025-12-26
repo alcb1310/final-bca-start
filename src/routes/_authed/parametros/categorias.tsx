@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, PlusIcon } from 'lucide-react'
+import { PencilIcon } from 'lucide-react'
+import CreateCategoryDrawer from '@/components/drawers/parametros/categorias/create-category'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
-import { Button } from '@/components/ui/button'
 import {
     type CategoryType,
     getAllCategories,
@@ -44,10 +44,7 @@ function RouteComponent() {
         <div>
             <PageTitle title='Categorias' />
 
-            <Button>
-                <PlusIcon size={10} />
-                Crear Categoría
-            </Button>
+            <CreateCategoryDrawer />
 
             <DataTable columns={columns} data={data} />
         </div>
