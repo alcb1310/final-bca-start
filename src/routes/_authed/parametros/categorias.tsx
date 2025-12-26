@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon } from 'lucide-react'
 import CreateCategoryDrawer from '@/components/drawers/parametros/categorias/create-category'
+import EditCategory from '@/components/drawers/parametros/categorias/edit-category'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import {
@@ -35,7 +35,7 @@ function RouteComponent() {
             header: '',
             accessorKey: 'actions',
             cell: ({ row }) => {
-                return <PencilIcon size={10} />
+                return <EditCategory category={row.original} />
             },
         },
     ]
