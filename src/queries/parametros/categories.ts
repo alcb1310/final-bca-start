@@ -8,7 +8,12 @@ export const categorySchema = z.object({
     name: z.string(),
 })
 
+export const createCategorySchema = z.object({
+    name: z.string().min(1, { message: 'El nombre es requerido' }),
+})
+
 export type CategoryType = z.infer<typeof categorySchema>
+export type CreateCategoryType = z.infer<typeof createCategorySchema>
 
 export const getAllCategories = createServerFn({ method: 'GET' }).handler(
     async () => {
