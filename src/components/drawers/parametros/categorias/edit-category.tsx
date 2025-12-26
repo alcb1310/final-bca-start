@@ -1,4 +1,5 @@
 import { PencilIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -24,6 +25,7 @@ interface EditCategoryProps {
 export default function EditCategory({
     category,
 }: Readonly<EditCategoryProps>) {
+    const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: category,
         validators: {
@@ -33,8 +35,15 @@ export default function EditCategory({
             console.log(value)
         },
     })
+
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='ghost' size='icon-sm'>
                     <PencilIcon size={10} className='text-warning' />
