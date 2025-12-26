@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -28,6 +28,7 @@ interface EditCategoryProps {
 export default function EditCategory({
     category,
 }: Readonly<EditCategoryProps>) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: category,
@@ -43,6 +44,9 @@ export default function EditCategory({
         mutationFn: (data: CategoryType) => editCategory({ data: { data } }),
         onSuccess: () => {
             toast.success('Categoría actualizada con exito')
+            queryClient.invalidateQueries({
+                queryKey: ['categorias'],
+            })
             setOpen(false)
         },
         onError: (error) => {
