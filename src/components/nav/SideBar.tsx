@@ -75,7 +75,11 @@ const menu: Menu[] = [
                 path: '/parametros/partidas',
                 icon: LayoutListIcon,
             },
-            { title: 'Categorias', path: '#', icon: ChartBarStackedIcon },
+            {
+                title: 'Categorias',
+                path: '/parametros/categorias',
+                icon: ChartBarStackedIcon,
+            },
             { title: 'Materiales', path: '#', icon: BrickWallIcon },
             {
                 title: 'Proyectos',
