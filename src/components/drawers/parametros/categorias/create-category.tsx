@@ -1,5 +1,7 @@
+import { useMutation } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -15,6 +17,7 @@ import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
     type CreateCategoryType,
+    createCategory,
     createCategorySchema,
 } from '@/queries/parametros/categories'
 
@@ -28,7 +31,31 @@ export default function CreateCategoryDrawer() {
             onSubmit: createCategorySchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutate.mutate(value)
+        },
+    })
+
+    const mutate = useMutation({
+        mutationFn: (data: CreateCategoryType) =>
+            createCategory({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Categoría creada con exito')
+            setOpen(false)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al crear la categoría', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
