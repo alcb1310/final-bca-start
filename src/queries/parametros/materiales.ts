@@ -61,3 +61,29 @@ export const createMaterial = createServerFn({ method: 'POST' })
 
         return
     })
+
+export const updateMaterial = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: MaterialResponseType }) => {
+        return {
+            id: data.data.id,
+            name: data.data.name,
+            code: data.data.code,
+            unit: data.data.unit,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/materials/${data.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+    })
