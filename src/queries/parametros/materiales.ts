@@ -33,3 +33,31 @@ export const getAllMaterials = createServerFn({ method: 'GET' }).handler(
         return data as MaterialResponseType[]
     },
 )
+
+export const createMaterial = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: MaterialCreateType }) => {
+        return {
+            name: data.data.name,
+            code: data.data.code,
+            unit: data.data.unit,
+            category_id: data.data.category_id,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/materials`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+
+        return
+    })
