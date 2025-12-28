@@ -1,6 +1,13 @@
 import { PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
+import {
+    Drawer,
+    DrawerContent,
+    DrawerDescription,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from '@/components/ui/drawer'
 
 export function CreateMaterial() {
     return (
@@ -12,7 +19,15 @@ export function CreateMaterial() {
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
-                <form></form>
+                <form>
+                    <DrawerHeader>
+                        <DrawerTitle>Crear Material</DrawerTitle>
+                        <DrawerDescription>
+                            Crea un nuevo material con la información
+                            proporcionada.
+                        </DrawerDescription>
+                    </DrawerHeader>
+                </form>
             </DrawerContent>
         </Drawer>
     )
