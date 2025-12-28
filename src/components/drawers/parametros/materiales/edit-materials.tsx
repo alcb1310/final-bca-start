@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -26,6 +26,7 @@ interface EditMaterialProps {
 }
 
 export function EditMaterial({ material }: Readonly<EditMaterialProps>) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: material,
@@ -42,6 +43,9 @@ export function EditMaterial({ material }: Readonly<EditMaterialProps>) {
             updateMaterial({ data: { data } }),
         onSuccess: () => {
             toast.success('Material actualizado correctamente')
+            queryClient.invalidateQueries({
+                queryKey: ['materiales'],
+            })
             setOpen(false)
         },
         onError: (error) => {
