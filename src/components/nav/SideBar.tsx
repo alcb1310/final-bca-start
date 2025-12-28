@@ -80,7 +80,11 @@ const menu: Menu[] = [
                 path: '/parametros/categorias',
                 icon: ChartBarStackedIcon,
             },
-            { title: 'Materiales', path: '#', icon: BrickWallIcon },
+            {
+                title: 'Materiales',
+                path: '/parametros/materiales',
+                icon: BrickWallIcon,
+            },
             {
                 title: 'Proyectos',
                 path: '/parametros/proyectos',
