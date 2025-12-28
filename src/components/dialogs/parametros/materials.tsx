@@ -1,4 +1,6 @@
+import { useMutation } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -11,13 +13,31 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import type { MaterialResponseType } from '@/queries/parametros/materiales'
+import {
+    deleteMaterial,
+    type MaterialResponseType,
+} from '@/queries/parametros/materiales'
 
 interface DeleteMaterialProps {
     material: MaterialResponseType
 }
 
 export function DeleteMaterial({ material }: Readonly<DeleteMaterialProps>) {
+    const mutate = useMutation({
+        mutationFn: (data: MaterialResponseType) =>
+            deleteMaterial({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Material borrado correctamente')
+        },
+        onError: (error) => {
+            console.error('error', error)
+            toast.error('Error al borrar la categoría', {
+                richColors: true,
+                position: 'top-center',
+            })
+        },
+    })
+
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -36,7 +56,9 @@ export function DeleteMaterial({ material }: Readonly<DeleteMaterialProps>) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                    <AlertDialogAction>Borrar</AlertDialogAction>
+                    <AlertDialogAction onClick={() => mutate.mutate(material)}>
+                        Borrar
+                    </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
