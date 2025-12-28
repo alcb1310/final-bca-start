@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -20,6 +21,7 @@ import {
 } from '@/queries/parametros/materiales'
 
 export function CreateMaterial() {
+    const [open, setOpen] = useState(false)
     const { data } = useQuery({
         queryKey: ['categorias'],
         queryFn: () => getAllCategories(),
@@ -49,8 +51,14 @@ export function CreateMaterial() {
         value: '',
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='default' className='mb-3'>
                     <PlusIcon size={10} />
