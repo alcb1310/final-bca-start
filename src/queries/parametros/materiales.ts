@@ -12,7 +12,6 @@ export const materialResponseSchema = z.object({
     category: categorySchema,
 })
 export const materialCreateSchema = z.object({
-    id: z.string().uuid({ version: 'v4' }),
     name: z.string().min(1, { message: 'El nombre es requerido' }),
     code: z.string().min(1, { message: 'El código es requerido' }),
     unit: z.string().min(1, { message: 'La unidad es requerida' }),
