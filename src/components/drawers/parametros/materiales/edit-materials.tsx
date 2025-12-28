@@ -1,5 +1,7 @@
+import { useMutation } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -16,6 +18,7 @@ import { useAppForm } from '@/hooks/formHook'
 import {
     type MaterialResponseType,
     materialResponseSchema,
+    updateMaterial,
 } from '@/queries/parametros/materiales'
 
 interface EditMaterialProps {
@@ -30,7 +33,32 @@ export function EditMaterial({ material }: Readonly<EditMaterialProps>) {
             onSubmit: materialResponseSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutate.mutate(value)
+        },
+    })
+
+    const mutate = useMutation({
+        mutationFn: (data: MaterialResponseType) =>
+            updateMaterial({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Material actualizado correctamente')
+            setOpen(false)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            console.error('error', error)
+            toast.error('Error al actualizar la categoría', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
