@@ -1,4 +1,5 @@
 import { PencilIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -10,18 +11,19 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
+import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
     type MaterialResponseType,
     materialResponseSchema,
 } from '@/queries/parametros/materiales'
-import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 
 interface EditMaterialProps {
     material: MaterialResponseType
 }
 
 export function EditMaterial({ material }: Readonly<EditMaterialProps>) {
+    const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: material,
         validators: {
@@ -32,8 +34,14 @@ export function EditMaterial({ material }: Readonly<EditMaterialProps>) {
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button size={'icon-sm'} variant={'ghost'}>
                     <PencilIcon className='text-warning' />
