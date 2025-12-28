@@ -87,3 +87,25 @@ export const updateMaterial = createServerFn({ method: 'POST' })
             )
         }
     })
+
+export const deleteMaterial = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: MaterialResponseType }) => {
+        return {
+            id: data.data.id,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/materials/${data.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
