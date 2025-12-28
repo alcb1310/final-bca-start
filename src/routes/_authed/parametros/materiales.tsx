@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { TrashIcon } from 'lucide-react'
+import { DeleteMaterial } from '@/components/dialogs/parametros/materials'
 import { CreateMaterial } from '@/components/drawers/parametros/materiales/create-material'
 import { EditMaterial } from '@/components/drawers/parametros/materiales/edit-materials'
 import { PageTitle } from '@/components/pages/Title'
@@ -51,7 +51,7 @@ function RouteComponent() {
                 return (
                     <div className='flex gap-2 items-center'>
                         <EditMaterial material={row.original} />
-                        <TrashIcon size={10} className='text-destructive' />
+                        <DeleteMaterial material={row.original} />
                     </div>
                 )
             },
