@@ -11,8 +11,16 @@ export const materialResponseSchema = z.object({
     unit: z.string(),
     category: categorySchema,
 })
+export const materialCreateSchema = z.object({
+    id: z.string().uuid({ version: 'v4' }),
+    name: z.string().min(1, { message: 'El nombre es requerido' }),
+    code: z.string().min(1, { message: 'El código es requerido' }),
+    unit: z.string().min(1, { message: 'La unidad es requerida' }),
+    category_id: z.string().uuid({ version: 'v4' }),
+})
 
 export type MaterialResponseType = z.infer<typeof materialResponseSchema>
+export type MaterialCreateType = z.infer<typeof materialCreateSchema>
 
 export const getAllMaterials = createServerFn({ method: 'GET' }).handler(
     async () => {
