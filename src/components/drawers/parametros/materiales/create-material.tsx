@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -23,6 +23,7 @@ import {
 import { toast } from 'sonner'
 
 export function CreateMaterial() {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const { data } = useQuery({
         queryKey: ['categorias'],
@@ -48,6 +49,9 @@ export function CreateMaterial() {
             createMaterial({ data: { data } }),
         onSuccess: () => {
             toast.success('Material creado correctamente')
+            queryClient.invalidateQueries({
+                queryKey: ['materiales'],
+            })
             setOpen(false)
         },
         onError: (error) => {
