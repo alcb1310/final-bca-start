@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -18,7 +18,9 @@ import { getAllCategories } from '@/queries/parametros/categories'
 import {
     type MaterialCreateType,
     materialCreateSchema,
+    createMaterial,
 } from '@/queries/parametros/materiales'
+import { toast } from 'sonner'
 
 export function CreateMaterial() {
     const [open, setOpen] = useState(false)
@@ -37,7 +39,32 @@ export function CreateMaterial() {
             onSubmit: materialCreateSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutate.mutate(value)
+        },
+    })
+
+    const mutate = useMutation({
+        mutationFn: (data: MaterialCreateType) =>
+            createMaterial({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Material creado correctamente')
+            setOpen(false)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            console.error('error', error)
+            toast.error('Error al crear la categoría', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
