@@ -1,8 +1,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, TrashIcon } from 'lucide-react'
+import { TrashIcon } from 'lucide-react'
 import { CreateMaterial } from '@/components/drawers/parametros/materiales/create-material'
+import { EditMaterial } from '@/components/drawers/parametros/materiales/edit-materials'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import {
@@ -48,8 +49,8 @@ function RouteComponent() {
             accessorKey: 'actions',
             cell: ({ row }) => {
                 return (
-                    <div className='flex gap-2'>
-                        <PencilIcon size={10} className='text-warning' />
+                    <div className='flex gap-2 items-center'>
+                        <EditMaterial material={row.original} />
                         <TrashIcon size={10} className='text-destructive' />
                     </div>
                 )
