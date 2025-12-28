@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import {
@@ -23,11 +23,15 @@ interface DeleteMaterialProps {
 }
 
 export function DeleteMaterial({ material }: Readonly<DeleteMaterialProps>) {
+    const queryClient = useQueryClient()
     const mutate = useMutation({
         mutationFn: (data: MaterialResponseType) =>
             deleteMaterial({ data: { data } }),
         onSuccess: () => {
             toast.success('Material borrado correctamente')
+            queryClient.invalidateQueries({
+                queryKey: ['materiales'],
+            })
         },
         onError: (error) => {
             console.error('error', error)
