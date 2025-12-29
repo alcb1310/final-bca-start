@@ -95,7 +95,11 @@ const menu: Menu[] = [
                 path: '/parametros/proveedores',
                 icon: CableIcon,
             },
-            { title: 'Rubros', path: '#', icon: ShoppingBasketIcon },
+            {
+                title: 'Rubros',
+                path: '/parametros/rubros',
+                icon: ShoppingBasketIcon,
+            },
         ],
     },
     {
