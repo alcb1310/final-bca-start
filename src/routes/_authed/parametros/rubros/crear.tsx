@@ -1,9 +1,12 @@
+import { useMutation } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import { toast } from 'sonner'
 import { PageTitle } from '@/components/pages/Title'
 import { Button } from '@/components/ui/button'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
+    createRubro,
     createRubroSchema,
     type RubroCreateType,
 } from '@/queries/parametros/rubros'
@@ -23,7 +26,30 @@ function RouteComponent() {
             onSubmit: createRubroSchema,
         },
         onSubmit: ({ value }) => {
+            mutate.mutate(value)
+        },
+    })
+
+    const mutate = useMutation({
+        mutationFn: (data: RubroCreateType) => createRubro({ data: { data } }),
+        onSuccess: (value) => {
+            toast.success('Rubro creado con exito')
             console.log(value)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al crear la categoría', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
