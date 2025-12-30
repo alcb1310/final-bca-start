@@ -44,9 +44,18 @@ function RouteComponent() {
             header: '',
             accessorKey: 'actions',
             cell: ({ row }) => (
-                <div>
+                <Button
+                    variant={'ghost'}
+                    size='icon-sm'
+                    onClick={() => {
+                        navigate({
+                            to: '/parametros/rubros/$rubroId',
+                            params: { rubroId: row.original.id },
+                        })
+                    }}
+                >
                     <PencilIcon size={10} className='text-warning' />
-                </div>
+                </Button>
             ),
         },
     ]
