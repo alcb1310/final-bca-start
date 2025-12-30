@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { PencilIcon, PlusIcon } from 'lucide-react'
 import { PageTitle } from '@/components/pages/Title'
@@ -21,6 +21,7 @@ export const Route = createFileRoute('/_authed/parametros/rubros/')({
 })
 
 function RouteComponent() {
+    const navigate = useNavigate()
     const { data } = useSuspenseQuery({
         queryKey: ['rubros'],
         queryFn: getAllRubros,
@@ -53,7 +54,10 @@ function RouteComponent() {
         <div>
             <PageTitle title='Rubros' />
 
-            <Button>
+            <Button
+                onClick={() => navigate({ to: '/parametros/rubros/crear' })}
+                className='mb-3'
+            >
                 <PlusIcon size={10} />
                 Crear Rubro
             </Button>
