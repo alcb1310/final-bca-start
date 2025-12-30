@@ -10,7 +10,14 @@ export const rubroResponseSchema = z.object({
     unit: z.string(),
 })
 
+export const createRubroSchema = z.object({
+    code: z.string(),
+    name: z.string(),
+    unit: z.string(),
+})
+
 export type RubroResponseType = z.infer<typeof rubroResponseSchema>
+export type RubroCreateType = z.infer<typeof createRubroSchema>
 
 export const getAllRubros = createServerFn({ method: 'GET' }).handler(
     async () => {
