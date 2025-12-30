@@ -1,9 +1,83 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { PageTitle } from '@/components/pages/Title'
+import { Button } from '@/components/ui/button'
+import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/formHook'
+import {
+    createRubroSchema,
+    type RubroCreateType,
+} from '@/queries/parametros/rubros'
 
 export const Route = createFileRoute('/_authed/parametros/rubros/crear')({
-  component: RouteComponent,
+    component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/_authed/parametros/rubros/crear"!</div>
+    const form = useAppForm({
+        defaultValues: {
+            code: '',
+            name: '',
+            unit: '',
+        } satisfies RubroCreateType as RubroCreateType,
+        validators: {
+            onSubmit: createRubroSchema,
+        },
+        onSubmit: ({ value }) => {
+            console.log(value)
+        },
+    })
+
+    return (
+        <div>
+            <PageTitle title='Crear Rubro' />
+
+            <div className='w-1/2 mx-auto'>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        form.handleSubmit()
+                    }}
+                >
+                    <FieldGroup className='my-5 px-4'>
+                        <FieldSet>
+                            <form.AppField name='code'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Código'
+                                        placeholder='Ingrese el código del material'
+                                        name='code'
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='name'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Nombre'
+                                        placeholder='Ingrese el nombre del material'
+                                        name='name'
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='unit'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Unidad'
+                                        placeholder='Ingrese la unidad del material'
+                                        name='unit'
+                                    />
+                                )}
+                            </form.AppField>
+                        </FieldSet>
+                    </FieldGroup>
+                    <Field orientation='horizontal'>
+                        <form.AppForm>
+                            <form.FormButton label='Guardar' />
+                        </form.AppForm>
+                        <Button variant='outline'>Cancel</Button>
+                    </Field>
+                </form>
+            </div>
+        </div>
+    )
 }
