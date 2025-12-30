@@ -22,6 +22,7 @@ import { Route as AuthedParametrosPartidasRouteImport } from './routes/_authed/p
 import { Route as AuthedParametrosMaterialesRouteImport } from './routes/_authed/parametros/materiales'
 import { Route as AuthedParametrosCategoriasRouteImport } from './routes/_authed/parametros/categorias'
 import { Route as AuthedParametrosRubrosIndexRouteImport } from './routes/_authed/parametros/rubros/index'
+import { Route as AuthedParametrosRubrosCrearRouteImport } from './routes/_authed/parametros/rubros/crear'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -93,6 +94,12 @@ const AuthedParametrosRubrosIndexRoute =
     path: '/parametros/rubros/',
     getParentRoute: () => AuthedRoute,
   } as any)
+const AuthedParametrosRubrosCrearRoute =
+  AuthedParametrosRubrosCrearRouteImport.update({
+    id: '/parametros/rubros/crear',
+    path: '/parametros/rubros/crear',
+    getParentRoute: () => AuthedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
   '/parametros/rubros': typeof AuthedParametrosRubrosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -120,6 +128,7 @@ export interface FileRoutesByTo {
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
   '/parametros/rubros': typeof AuthedParametrosRubrosIndexRoute
 }
 export interface FileRoutesById {
@@ -136,6 +145,7 @@ export interface FileRoutesById {
   '/_authed/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/_authed/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/_authed/parametros/rubros/crear': typeof AuthedParametrosRubrosCrearRoute
   '/_authed/parametros/rubros/': typeof AuthedParametrosRubrosIndexRoute
 }
 export interface FileRouteTypes {
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/usuarios/admin'
     | '/usuarios/perfil'
     | '/api/auth/$'
+    | '/parametros/rubros/crear'
     | '/parametros/rubros'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/usuarios/admin'
     | '/usuarios/perfil'
     | '/api/auth/$'
+    | '/parametros/rubros/crear'
     | '/parametros/rubros'
   id:
     | '__root__'
@@ -181,6 +193,7 @@ export interface FileRouteTypes {
     | '/_authed/usuarios/admin'
     | '/_authed/usuarios/perfil'
     | '/api/auth/$'
+    | '/_authed/parametros/rubros/crear'
     | '/_authed/parametros/rubros/'
   fileRoutesById: FileRoutesById
 }
@@ -284,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedParametrosRubrosIndexRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/parametros/rubros/crear': {
+      id: '/_authed/parametros/rubros/crear'
+      path: '/parametros/rubros/crear'
+      fullPath: '/parametros/rubros/crear'
+      preLoaderRoute: typeof AuthedParametrosRubrosCrearRouteImport
+      parentRoute: typeof AuthedRoute
+    }
   }
 }
 
@@ -296,6 +316,7 @@ interface AuthedRouteChildren {
   AuthedParametrosProyectosRoute: typeof AuthedParametrosProyectosRoute
   AuthedUsuariosAdminRoute: typeof AuthedUsuariosAdminRoute
   AuthedUsuariosPerfilRoute: typeof AuthedUsuariosPerfilRoute
+  AuthedParametrosRubrosCrearRoute: typeof AuthedParametrosRubrosCrearRoute
   AuthedParametrosRubrosIndexRoute: typeof AuthedParametrosRubrosIndexRoute
 }
 
@@ -308,6 +329,7 @@ const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedParametrosProyectosRoute: AuthedParametrosProyectosRoute,
   AuthedUsuariosAdminRoute: AuthedUsuariosAdminRoute,
   AuthedUsuariosPerfilRoute: AuthedUsuariosPerfilRoute,
+  AuthedParametrosRubrosCrearRoute: AuthedParametrosRubrosCrearRoute,
   AuthedParametrosRubrosIndexRoute: AuthedParametrosRubrosIndexRoute,
 }
 
