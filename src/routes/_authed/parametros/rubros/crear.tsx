@@ -70,7 +70,10 @@ function RouteComponent() {
                             </form.AppField>
                         </FieldSet>
                     </FieldGroup>
-                    <Field orientation='horizontal'>
+                    <Field
+                        orientation='horizontal'
+                        className='flex justify-around'
+                    >
                         <form.AppForm>
                             <form.FormButton label='Guardar' />
                         </form.AppForm>
