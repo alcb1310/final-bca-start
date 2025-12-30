@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { PageTitle } from '@/components/pages/Title'
 import { Button } from '@/components/ui/button'
@@ -16,6 +16,7 @@ export const Route = createFileRoute('/_authed/parametros/rubros/crear')({
 })
 
 function RouteComponent() {
+    const navigate = useNavigate()
     const form = useAppForm({
         defaultValues: {
             code: '',
@@ -103,7 +104,15 @@ function RouteComponent() {
                         <form.AppForm>
                             <form.FormButton label='Guardar' />
                         </form.AppForm>
-                        <Button variant='outline'>Cancel</Button>
+                        <Button
+                            variant='outline'
+                            type='button'
+                            onClick={() => {
+                                navigate({ to: '/parametros/rubros' })
+                            }}
+                        >
+                            Cancel
+                        </Button>
                     </Field>
                 </form>
             </div>
