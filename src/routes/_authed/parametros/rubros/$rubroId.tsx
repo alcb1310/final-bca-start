@@ -1,11 +1,17 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
 import z from 'zod'
 import { PageTitle } from '@/components/pages/Title'
 import { Button } from '@/components/ui/button'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
-import { getRubro, rubroResponseSchema } from '@/queries/parametros/rubros'
+import {
+    getRubro,
+    type RubroResponseType,
+    rubroResponseSchema,
+    updateRubro,
+} from '@/queries/parametros/rubros'
 
 export const Route = createFileRoute('/_authed/parametros/rubros/$rubroId')({
     component: RouteComponent,
@@ -41,7 +47,30 @@ function RouteComponent() {
             onSubmit: rubroResponseSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutate.mutate(value)
+        },
+    })
+
+    const mutate = useMutation({
+        mutationFn: (data: RubroResponseType) =>
+            updateRubro({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Rubro actualizado con exito')
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al actualizar la rubro', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
