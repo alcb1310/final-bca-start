@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import z from 'zod'
 import { PageTitle } from '@/components/pages/Title'
 import { Button } from '@/components/ui/button'
@@ -28,6 +28,7 @@ export const Route = createFileRoute('/_authed/parametros/rubros/$rubroId')({
 })
 
 function RouteComponent() {
+    const navigate = useNavigate()
     const { rubroId } = Route.useParams()
     const { data: rubro } = useSuspenseQuery({
         queryKey: ['rubro', rubroId],
@@ -96,6 +97,9 @@ function RouteComponent() {
                         <Button
                             variant='outline'
                             type='button'
+                            onClick={() => {
+                                navigate({ to: '/parametros/rubros' })
+                            }}
                         >
                             Cancel
                         </Button>
