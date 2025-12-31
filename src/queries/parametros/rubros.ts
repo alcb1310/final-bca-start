@@ -32,6 +32,23 @@ export const getAllRubros = createServerFn({ method: 'GET' }).handler(
     },
 )
 
+export const getRubro = createServerFn({ method: 'GET' })
+    .inputValidator((data: { id: string }) => {
+        return {
+            id: data.id,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/items/${data.id}`)
+        const dataRes = await response.json()
+
+        if (!response.ok) {
+            throw new Error(dataRes.message)
+        }
+
+        return dataRes as RubroResponseType
+    })
+
 export const createRubro = createServerFn({ method: 'POST' })
     .inputValidator((data: { data: RubroCreateType }) => {
         return {
