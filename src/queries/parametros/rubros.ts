@@ -74,3 +74,30 @@ export const createRubro = createServerFn({ method: 'POST' })
         }
         return resData as RubroResponseType
     })
+
+export const updateRubro = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: RubroResponseType }) => {
+        return {
+            id: data.data.id,
+            code: data.data.code,
+            name: data.data.name,
+            unit: data.data.unit,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/items/${data.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
