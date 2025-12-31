@@ -35,7 +35,10 @@ function RouteComponent() {
         mutationFn: (data: RubroCreateType) => createRubro({ data: { data } }),
         onSuccess: (value) => {
             toast.success('Rubro creado con exito')
-            console.log(value)
+            navigate({
+                to: '/parametros/rubros/$rubroId',
+                params: { rubroId: value.id },
+            })
         },
         onError: (error) => {
             const e = JSON.parse(error.message)
