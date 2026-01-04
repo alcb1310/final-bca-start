@@ -1,9 +1,10 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import { PencilIcon, TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import z from 'zod'
+import { CreateItemMaterial } from '@/components/drawers/parametros/partidas/materiales/createItemMaterial'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
@@ -181,13 +182,7 @@ function RouteComponent() {
                 </form>
             </div>
 
-            <div className='mb-3'>
-                <Button variant='default'>
-                    <PlusIcon size={10} />
-                    Agregar material
-                </Button>
-            </div>
-
+            <CreateItemMaterial />
             <DataTable columns={columns} data={rubro.itemMaterials} />
         </div>
     )
