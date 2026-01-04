@@ -182,7 +182,7 @@ function RouteComponent() {
                 </form>
             </div>
 
-            <CreateItemMaterial />
+            <CreateItemMaterial id={rubroId} />
             <DataTable columns={columns} data={rubro.itemMaterials} />
         </div>
     )

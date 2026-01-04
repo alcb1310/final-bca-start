@@ -11,8 +11,31 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer'
 import { Field } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/formHook'
+import {
+    createRubroMaterialSchema,
+    type RubroMaterialCreateType,
+} from '@/queries/parametros/rubros'
 
-export function CreateItemMaterial() {
+type CreateItemMaterialProps = {
+    id: string
+}
+
+export function CreateItemMaterial({ id }: CreateItemMaterialProps) {
+    const form = useAppForm({
+        defaultValues: {
+            item_id: id,
+            material_id: '',
+            quantity: 0,
+        } satisfies RubroMaterialCreateType as RubroMaterialCreateType,
+        validators: {
+            onSubmit: createRubroMaterialSchema,
+        },
+        onSubmit: ({ value }) => {
+            console.log(value)
+        },
+    })
+
     return (
         <Drawer direction='right'>
             <DrawerTrigger asChild>
@@ -22,7 +45,13 @@ export function CreateItemMaterial() {
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
-                <form>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        form.handleSubmit()
+                    }}
+                >
                     <DrawerHeader>
                         <DrawerTitle>Agregar Material</DrawerTitle>
                         <DrawerDescription>
@@ -32,6 +61,9 @@ export function CreateItemMaterial() {
                     </DrawerHeader>
                     <DrawerFooter>
                         <Field orientation={'horizontal'}>
+                            <form.AppForm>
+                                <form.FormButton label='Guardar' />
+                            </form.AppForm>
                             <DrawerClose asChild>
                                 <Button variant={'outline'}>Cancelar</Button>
                             </DrawerClose>
