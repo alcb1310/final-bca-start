@@ -127,3 +127,31 @@ export const updateRubro = createServerFn({ method: 'POST' })
         }
         return
     })
+
+export const createRubroMaterial = createServerFn({
+    method: 'POST',
+})
+    .inputValidator((data: { data: RubroMaterialCreateType }) => {
+        return {
+            item_id: data.data.item_id,
+            material_id: data.data.material_id,
+            quantity: Number.parseFloat(String(data.data.quantity)),
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/items/${data.item_id}/materials`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        const resData = await response.json()
+
+        if (!response.ok) {
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
