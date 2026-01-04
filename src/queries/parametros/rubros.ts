@@ -33,10 +33,17 @@ export const createRubroSchema = z.object({
     unit: z.string(),
 })
 
+export const createRubroMaterialSchema = z.object({
+    item_id: z.string(),
+    material_id: z.string().min(1, { message: 'El material es requerido' }),
+    quantity: z.coerce.number({ message: 'Ingrese un número valido' }),
+})
+
 export type SingleRubroResponseType = z.infer<typeof singleRubroResponseSchema>
 export type RubroCreateType = z.infer<typeof createRubroSchema>
 export type RubroMaterialType = z.infer<typeof rubroMaterialResponseSchema>
 export type RubroResponseType = z.infer<typeof rubroResponseSchema>
+export type RubroMaterialCreateType = z.infer<typeof createRubroMaterialSchema>
 
 export const getAllRubros = createServerFn({ method: 'GET' }).handler(
     async () => {
