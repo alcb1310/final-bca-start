@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -27,6 +27,7 @@ type CreateItemMaterialProps = {
 }
 
 export function CreateItemMaterial({ id }: CreateItemMaterialProps) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const { data } = useQuery({
         queryKey: ['materals'],
@@ -52,6 +53,8 @@ export function CreateItemMaterial({ id }: CreateItemMaterialProps) {
             createRubroMaterial({ data: { data } }),
         onSuccess: () => {
             toast.success('Material creado correctamente')
+            queryClient.invalidateQueries({ queryKey: ['rubros', id] })
+            setOpen(false)
         },
         onError: (error) => {
             const e = JSON.parse(error.message)
