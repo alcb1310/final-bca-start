@@ -1,8 +1,11 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
+import { PlusIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import z from 'zod'
 import { PageTitle } from '@/components/pages/Title'
+import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
@@ -34,6 +37,8 @@ export const Route = createFileRoute('/_authed/parametros/rubros/$rubroId')({
 })
 
 function RouteComponent() {
+    const data: any[] = []
+    const columns: ColumnDef<any>[] = []
     const navigate = useNavigate()
     const { rubroId } = Route.useParams()
     const { data: rubro } = useSuspenseQuery({
@@ -135,6 +140,15 @@ function RouteComponent() {
                     </Field>
                 </form>
             </div>
+
+            <div className='mb-3'>
+                <Button variant='default'>
+                    <PlusIcon size={10} />
+                    Agregar material
+                </Button>
+            </div>
+
+            <DataTable columns={columns} data={data} />
         </div>
     )
 }
