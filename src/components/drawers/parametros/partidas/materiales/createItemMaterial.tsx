@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
@@ -26,6 +27,7 @@ type CreateItemMaterialProps = {
 }
 
 export function CreateItemMaterial({ id }: CreateItemMaterialProps) {
+    const [open, setOpen] = useState(false)
     const { data } = useQuery({
         queryKey: ['materals'],
         queryFn: () => getAllMaterials(),
@@ -77,8 +79,14 @@ export function CreateItemMaterial({ id }: CreateItemMaterialProps) {
         }) || []
     materials.unshift({ value: '', label: 'Seleccione un material' })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button className='mb-3'>
                     <PlusIcon size={10} />
