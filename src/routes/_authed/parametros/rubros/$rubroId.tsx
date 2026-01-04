@@ -1,7 +1,7 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PlusIcon } from 'lucide-react'
+import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import z from 'zod'
 import { PageTitle } from '@/components/pages/Title'
@@ -71,6 +71,28 @@ function RouteComponent() {
         {
             header: 'Cantidad',
             accessorKey: 'quantity',
+            cell: ({ row }) => {
+                return (
+                    <span className='block text-right'>
+                        {row.original.quantity.toLocaleString('es-EC', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })}
+                    </span>
+                )
+            },
+        },
+        {
+            header: '',
+            accessorKey: 'actions',
+            cell: ({ row }) => {
+                return (
+                    <div className='flex gap-2 items-center'>
+                        <PencilIcon size={10} className='text-warning' />
+                        <TrashIcon size={10} className='text-destructive' />
+                    </div>
+                )
+            },
         },
     ]
 
