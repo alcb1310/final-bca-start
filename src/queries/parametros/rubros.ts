@@ -98,7 +98,7 @@ export const createRubro = createServerFn({ method: 'POST' })
                 JSON.stringify({ code: response.status, data: resData }),
             )
         }
-        return resData as RubroResponseType
+        return resData as SingleRubroResponseType
     })
 
 export const updateRubro = createServerFn({ method: 'POST' })
