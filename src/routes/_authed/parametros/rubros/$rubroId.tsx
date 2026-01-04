@@ -11,6 +11,7 @@ import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
     getRubro,
+    type RubroMaterialType,
     type SingleRubroResponseType,
     singleRubroResponseSchema,
     updateRubro,
@@ -37,7 +38,6 @@ export const Route = createFileRoute('/_authed/parametros/rubros/$rubroId')({
 })
 
 function RouteComponent() {
-    const columns: ColumnDef<any>[] = []
     const navigate = useNavigate()
     const { rubroId } = Route.useParams()
     const { data: rubro } = useSuspenseQuery({
@@ -54,6 +54,25 @@ function RouteComponent() {
             mutate.mutate(value)
         },
     })
+
+    const columns: ColumnDef<RubroMaterialType>[] = [
+        {
+            header: 'Código',
+            accessorKey: 'material_code',
+        },
+        {
+            header: 'Nombre',
+            accessorKey: 'material_name',
+        },
+        {
+            header: 'Unidad',
+            accessorKey: 'material_unit',
+        },
+        {
+            header: 'Cantidad',
+            accessorKey: 'quantity',
+        },
+    ]
 
     const mutate = useMutation({
         mutationFn: (data: SingleRubroResponseType) =>
