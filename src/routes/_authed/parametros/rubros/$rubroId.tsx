@@ -11,8 +11,8 @@ import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
     getRubro,
-    type RubroResponseType,
-    rubroResponseSchema,
+    type SingleRubroResponseType,
+    singleRubroResponseSchema,
     updateRubro,
 } from '@/queries/parametros/rubros'
 
@@ -37,7 +37,6 @@ export const Route = createFileRoute('/_authed/parametros/rubros/$rubroId')({
 })
 
 function RouteComponent() {
-    const data: any[] = []
     const columns: ColumnDef<any>[] = []
     const navigate = useNavigate()
     const { rubroId } = Route.useParams()
@@ -47,9 +46,9 @@ function RouteComponent() {
     })
 
     const form = useAppForm({
-        defaultValues: rubro,
+        defaultValues: rubro.item,
         validators: {
-            onSubmit: rubroResponseSchema,
+            onSubmit: singleRubroResponseSchema,
         },
         onSubmit: ({ value }) => {
             mutate.mutate(value)
@@ -57,7 +56,7 @@ function RouteComponent() {
     })
 
     const mutate = useMutation({
-        mutationFn: (data: RubroResponseType) =>
+        mutationFn: (data: SingleRubroResponseType) =>
             updateRubro({ data: { data } }),
         onSuccess: () => {
             toast.success('Rubro actualizado con exito')
@@ -148,7 +147,7 @@ function RouteComponent() {
                 </Button>
             </div>
 
-            <DataTable columns={columns} data={data} />
+            <DataTable columns={columns} data={rubro.itemMaterials} />
         </div>
     )
 }

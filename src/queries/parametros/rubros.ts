@@ -3,11 +3,28 @@ import { z } from 'zod'
 
 const url = process.env.BACKEND_URL
 
-export const rubroResponseSchema = z.object({
+export const singleRubroResponseSchema = z.object({
     id: z.string(),
     code: z.string(),
     name: z.string(),
     unit: z.string(),
+})
+
+export const rubroMaterialResponseSchema = z.object({
+    item_id: z.string(),
+    item_code: z.string(),
+    item_name: z.string(),
+    item_unit: z.string(),
+    material_id: z.string(),
+    material_code: z.string(),
+    material_name: z.string(),
+    material_unit: z.string(),
+    quantity: z.number(),
+})
+
+export const rubroResponseSchema = z.object({
+    item: singleRubroResponseSchema,
+    itemMaterials: z.array(rubroMaterialResponseSchema),
 })
 
 export const createRubroSchema = z.object({
@@ -16,8 +33,10 @@ export const createRubroSchema = z.object({
     unit: z.string(),
 })
 
-export type RubroResponseType = z.infer<typeof rubroResponseSchema>
+export type SingleRubroResponseType = z.infer<typeof singleRubroResponseSchema>
 export type RubroCreateType = z.infer<typeof createRubroSchema>
+export type RubroMaterialType = z.infer<typeof rubroMaterialResponseSchema>
+export type RubroResponseType = z.infer<typeof rubroResponseSchema>
 
 export const getAllRubros = createServerFn({ method: 'GET' }).handler(
     async () => {
@@ -28,7 +47,7 @@ export const getAllRubros = createServerFn({ method: 'GET' }).handler(
             throw new Error(data.message)
         }
 
-        return data as RubroResponseType[]
+        return data as SingleRubroResponseType[]
     },
 )
 
@@ -76,7 +95,7 @@ export const createRubro = createServerFn({ method: 'POST' })
     })
 
 export const updateRubro = createServerFn({ method: 'POST' })
-    .inputValidator((data: { data: RubroResponseType }) => {
+    .inputValidator((data: { data: SingleRubroResponseType }) => {
         return {
             id: data.data.id,
             code: data.data.code,
