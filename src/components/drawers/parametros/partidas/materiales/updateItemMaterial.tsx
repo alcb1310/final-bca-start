@@ -1,4 +1,5 @@
 import { PencilIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -21,6 +22,7 @@ type UpdateItemMaterialProps = {
 }
 
 export function UpdateItemMaterial({ itemMaterial }: UpdateItemMaterialProps) {
+    const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: {
             item_id: itemMaterial.item_id,
@@ -37,8 +39,14 @@ export function UpdateItemMaterial({ itemMaterial }: UpdateItemMaterialProps) {
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button size={'icon-sm'} variant={'ghost'}>
                     <PencilIcon className='text-warning' />
