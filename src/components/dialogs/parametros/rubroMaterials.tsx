@@ -1,4 +1,6 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -11,7 +13,10 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import type { RubroMaterialType } from '@/queries/parametros/rubros'
+import {
+    deleteRubroMaterial,
+    type RubroMaterialType,
+} from '@/queries/parametros/rubros'
 
 type DeleteRubroMaterialProps = {
     rubroMaterial: RubroMaterialType
@@ -20,6 +25,25 @@ type DeleteRubroMaterialProps = {
 export function DeleteRubroMaterial({
     rubroMaterial,
 }: Readonly<DeleteRubroMaterialProps>) {
+    const queryClient = useQueryClient()
+    const mutate = useMutation({
+        mutationFn: (data: RubroMaterialType) =>
+            deleteRubroMaterial({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Material borrado correctamente')
+            queryClient.invalidateQueries({
+                queryKey: ['rubro', rubroMaterial.item_id],
+            })
+        },
+        onError: (error) => {
+            console.error('error', error)
+            toast.error('Error al borrar la categoría', {
+                richColors: true,
+                position: 'top-center',
+            })
+        },
+    })
+
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -46,7 +70,11 @@ export function DeleteRubroMaterial({
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => { }}>
+                    <AlertDialogAction
+                        onClick={() => {
+                            mutate.mutate(rubroMaterial)
+                        }}
+                    >
                         Borrar
                     </AlertDialogAction>
                 </AlertDialogFooter>
