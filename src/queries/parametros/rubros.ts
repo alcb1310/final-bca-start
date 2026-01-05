@@ -181,3 +181,26 @@ export const updateRubroMaterial = createServerFn({ method: 'POST' })
             )
         }
     })
+
+export const deleteRubroMaterial = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: RubroMaterialCreateType }) => {
+        return {
+            item_id: data.data.item_id,
+            material_id: data.data.material_id,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(
+            `${url}/items/${data.item_id}/materials/${data.material_id}`,
+            {
+                method: 'DELETE',
+            },
+        )
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+    })
