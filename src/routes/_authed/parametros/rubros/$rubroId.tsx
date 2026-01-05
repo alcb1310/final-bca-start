@@ -5,6 +5,7 @@ import { PencilIcon, TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import z from 'zod'
 import { CreateItemMaterial } from '@/components/drawers/parametros/partidas/materiales/createItemMaterial'
+import { UpdateItemMaterial } from '@/components/drawers/parametros/partidas/materiales/updateItemMaterial'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
@@ -17,7 +18,6 @@ import {
     singleRubroResponseSchema,
     updateRubro,
 } from '@/queries/parametros/rubros'
-import { UpdateItemMaterial } from '@/components/drawers/parametros/partidas/materiales/updateItemMaterial'
 
 export const Route = createFileRoute('/_authed/parametros/rubros/$rubroId')({
     component: RouteComponent,
