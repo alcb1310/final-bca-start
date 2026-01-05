@@ -1,7 +1,7 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, TrashIcon } from 'lucide-react'
+import { TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import z from 'zod'
 import { CreateItemMaterial } from '@/components/drawers/parametros/partidas/materiales/createItemMaterial'
