@@ -1,5 +1,7 @@
+import { useMutation } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -14,7 +16,9 @@ import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
     createRubroMaterialSchema,
+    type RubroMaterialCreateType,
     type RubroMaterialType,
+    updateRubroMaterial,
 } from '@/queries/parametros/rubros'
 
 type UpdateItemMaterialProps = {
@@ -35,7 +39,31 @@ export function UpdateItemMaterial({ itemMaterial }: UpdateItemMaterialProps) {
             onSubmit: createRubroMaterialSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutate.mutate(value)
+        },
+    })
+
+    const mutate = useMutation({
+        mutationFn: (data: RubroMaterialCreateType) =>
+            updateRubroMaterial({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Material actualizado correctamente')
+            setOpen(false)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al actualizar el material', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
