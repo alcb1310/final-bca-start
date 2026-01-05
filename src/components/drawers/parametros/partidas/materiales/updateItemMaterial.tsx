@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -26,6 +26,7 @@ type UpdateItemMaterialProps = {
 }
 
 export function UpdateItemMaterial({ itemMaterial }: UpdateItemMaterialProps) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: {
@@ -49,6 +50,9 @@ export function UpdateItemMaterial({ itemMaterial }: UpdateItemMaterialProps) {
         onSuccess: () => {
             toast.success('Material actualizado correctamente')
             setOpen(false)
+            queryClient.invalidateQueries({
+                queryKey: ['rubros', itemMaterial.item_id],
+            })
         },
         onError: (error) => {
             const e = JSON.parse(error.message)
