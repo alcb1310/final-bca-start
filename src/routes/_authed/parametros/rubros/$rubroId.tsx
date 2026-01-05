@@ -17,6 +17,7 @@ import {
     singleRubroResponseSchema,
     updateRubro,
 } from '@/queries/parametros/rubros'
+import { UpdateItemMaterial } from '@/components/drawers/parametros/partidas/materiales/updateItemMaterial'
 
 export const Route = createFileRoute('/_authed/parametros/rubros/$rubroId')({
     component: RouteComponent,
@@ -89,7 +90,7 @@ function RouteComponent() {
             cell: ({ row }) => {
                 return (
                     <div className='flex gap-2 items-center'>
-                        <PencilIcon size={10} className='text-warning' />
+                        <UpdateItemMaterial itemMaterial={row.original} />
                         <TrashIcon size={10} className='text-destructive' />
                     </div>
                 )
