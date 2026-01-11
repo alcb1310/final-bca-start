@@ -16,6 +16,7 @@ import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthedUsuariosPerfilRouteImport } from './routes/_authed/usuarios/perfil'
 import { Route as AuthedUsuariosAdminRouteImport } from './routes/_authed/usuarios/admin'
+import { Route as AuthedTransaccionesPresupuestoRouteImport } from './routes/_authed/transacciones/presupuesto'
 import { Route as AuthedParametrosProyectosRouteImport } from './routes/_authed/parametros/proyectos'
 import { Route as AuthedParametrosProveedoresRouteImport } from './routes/_authed/parametros/proveedores'
 import { Route as AuthedParametrosPartidasRouteImport } from './routes/_authed/parametros/partidas'
@@ -59,6 +60,12 @@ const AuthedUsuariosAdminRoute = AuthedUsuariosAdminRouteImport.update({
   path: '/usuarios/admin',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedTransaccionesPresupuestoRoute =
+  AuthedTransaccionesPresupuestoRouteImport.update({
+    id: '/transacciones/presupuesto',
+    path: '/transacciones/presupuesto',
+    getParentRoute: () => AuthedRoute,
+  } as any)
 const AuthedParametrosProyectosRoute =
   AuthedParametrosProyectosRouteImport.update({
     id: '/parametros/proyectos',
@@ -117,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
+  '/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -133,6 +141,7 @@ export interface FileRoutesByTo {
   '/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/parametros/proyectos': typeof AuthedParametrosProyectosRoute
+  '/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
   '/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -151,6 +160,7 @@ export interface FileRoutesById {
   '/_authed/parametros/partidas': typeof AuthedParametrosPartidasRoute
   '/_authed/parametros/proveedores': typeof AuthedParametrosProveedoresRoute
   '/_authed/parametros/proyectos': typeof AuthedParametrosProyectosRoute
+  '/_authed/transacciones/presupuesto': typeof AuthedTransaccionesPresupuestoRoute
   '/_authed/usuarios/admin': typeof AuthedUsuariosAdminRoute
   '/_authed/usuarios/perfil': typeof AuthedUsuariosPerfilRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/parametros/partidas'
     | '/parametros/proveedores'
     | '/parametros/proyectos'
+    | '/transacciones/presupuesto'
     | '/usuarios/admin'
     | '/usuarios/perfil'
     | '/api/auth/$'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/parametros/partidas'
     | '/parametros/proveedores'
     | '/parametros/proyectos'
+    | '/transacciones/presupuesto'
     | '/usuarios/admin'
     | '/usuarios/perfil'
     | '/api/auth/$'
@@ -202,6 +214,7 @@ export interface FileRouteTypes {
     | '/_authed/parametros/partidas'
     | '/_authed/parametros/proveedores'
     | '/_authed/parametros/proyectos'
+    | '/_authed/transacciones/presupuesto'
     | '/_authed/usuarios/admin'
     | '/_authed/usuarios/perfil'
     | '/api/auth/$'
@@ -266,6 +279,13 @@ declare module '@tanstack/react-router' {
       path: '/usuarios/admin'
       fullPath: '/usuarios/admin'
       preLoaderRoute: typeof AuthedUsuariosAdminRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/transacciones/presupuesto': {
+      id: '/_authed/transacciones/presupuesto'
+      path: '/transacciones/presupuesto'
+      fullPath: '/transacciones/presupuesto'
+      preLoaderRoute: typeof AuthedTransaccionesPresupuestoRouteImport
       parentRoute: typeof AuthedRoute
     }
     '/_authed/parametros/proyectos': {
@@ -334,6 +354,7 @@ interface AuthedRouteChildren {
   AuthedParametrosPartidasRoute: typeof AuthedParametrosPartidasRoute
   AuthedParametrosProveedoresRoute: typeof AuthedParametrosProveedoresRoute
   AuthedParametrosProyectosRoute: typeof AuthedParametrosProyectosRoute
+  AuthedTransaccionesPresupuestoRoute: typeof AuthedTransaccionesPresupuestoRoute
   AuthedUsuariosAdminRoute: typeof AuthedUsuariosAdminRoute
   AuthedUsuariosPerfilRoute: typeof AuthedUsuariosPerfilRoute
   AuthedParametrosRubrosRubroIdRoute: typeof AuthedParametrosRubrosRubroIdRoute
@@ -348,6 +369,7 @@ const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedParametrosPartidasRoute: AuthedParametrosPartidasRoute,
   AuthedParametrosProveedoresRoute: AuthedParametrosProveedoresRoute,
   AuthedParametrosProyectosRoute: AuthedParametrosProyectosRoute,
+  AuthedTransaccionesPresupuestoRoute: AuthedTransaccionesPresupuestoRoute,
   AuthedUsuariosAdminRoute: AuthedUsuariosAdminRoute,
   AuthedUsuariosPerfilRoute: AuthedUsuariosPerfilRoute,
   AuthedParametrosRubrosRubroIdRoute: AuthedParametrosRubrosRubroIdRoute,
