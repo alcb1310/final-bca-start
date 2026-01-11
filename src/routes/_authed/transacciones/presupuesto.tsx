@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon, PlusIcon } from 'lucide-react'
+import { PencilIcon } from 'lucide-react'
+import { CreateBudgetDrawer } from '@/components/drawers/transacciones/presupuesto/create-budget'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
-import { Button } from '@/components/ui/button'
 import {
     type BudgetResponseType,
     getAllBudgets,
@@ -107,10 +107,7 @@ function RouteComponent() {
         <div>
             <PageTitle title='Presupuesto' />
 
-            <Button variant='default' className='mb-3'>
-                <PlusIcon size={10} />
-                Crear Presupuesto
-            </Button>
+            <CreateBudgetDrawer />
 
             <DataTable data={data} columns={columns} />
         </div>
