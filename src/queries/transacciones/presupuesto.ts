@@ -1,6 +1,9 @@
+import { createServerFn } from '@tanstack/react-start'
 import z from 'zod'
 import { budgetItemResponseSchema } from '../parametros/partidas'
 import { projectResponseSchema } from '../parametros/projects'
+
+const url = process.env.BACKEND_URL
 
 export const budgetResponseSchema = z.object({
     project: projectResponseSchema,
@@ -17,3 +20,15 @@ export const budgetResponseSchema = z.object({
 })
 
 export type BudgetResponseType = z.infer<typeof budgetResponseSchema>
+
+export const getAllBudgets = createServerFn({ method: 'GET' }).handler(
+    async () => {
+        const response = await fetch(`${url}/budgets`)
+        const data = await response.json()
+        if (!response.ok) {
+            throw new Error(data.message)
+        }
+        return data
+    },
+)
+
