@@ -49,7 +49,11 @@ const menu: Menu[] = [
     {
         title: 'Transacciones',
         items: [
-            { title: 'Presupuesto', path: '#', icon: ShoppingCartIcon },
+            {
+                title: 'Presupuesto',
+                path: '/transacciones/presupuesto',
+                icon: ShoppingCartIcon,
+            },
             { title: 'Facturas', path: '#', icon: CreditCardIcon },
             { title: 'Cierre mensual', path: '#', icon: ChartCandlestickIcon },
         ],
