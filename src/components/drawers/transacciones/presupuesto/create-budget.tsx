@@ -11,13 +11,13 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import { Field } from '@/components/ui/field'
+import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import { getPartidasByAccumulate } from '@/queries/parametros/partidas'
 import { getAllProjects } from '@/queries/parametros/projects'
 import {
-    createBudgetSchema,
     type BudgetCreateType,
+    createBudgetSchema,
 } from '@/queries/transacciones/presupuesto'
 
 export function CreateBudgetDrawer() {
@@ -90,6 +90,46 @@ export function CreateBudgetDrawer() {
                             proyecto seleccionado.
                         </DrawerDescription>
                     </DrawerHeader>
+                    <FieldGroup className='my-5 px-4'>
+                        <FieldSet>
+                            <form.AppField name='project_id'>
+                                {(field) => (
+                                    <field.SelectField
+                                        label='Proyecto'
+                                        name='project_id'
+                                        options={projects}
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='budget_item_id'>
+                                {(field) => (
+                                    <field.SelectField
+                                        label='Partida'
+                                        name='budget_item_id'
+                                        options={budgetItems}
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='quantity'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Cantidad'
+                                        placeholder='Ingrese la cantidad'
+                                        name='quantity'
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='cost'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Costo'
+                                        placeholder='Ingrese el costo'
+                                        name='cost'
+                                    />
+                                )}
+                            </form.AppField>
+                        </FieldSet>
+                    </FieldGroup>
                     <DrawerFooter>
                         <Field orientation={'horizontal'}>
                             <form.AppForm>
