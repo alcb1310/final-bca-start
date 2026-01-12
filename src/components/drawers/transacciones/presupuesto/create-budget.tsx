@@ -1,3 +1,4 @@
+import { useQueries } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,8 +12,41 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer'
 import { Field } from '@/components/ui/field'
+import { getPartidasByAccumulate } from '@/queries/parametros/partidas'
+import { getAllProjects } from '@/queries/parametros/projects'
 
 export function CreateBudgetDrawer() {
+    const allQueries = useQueries({
+        queries: [
+            {
+                queryKey: ['proyectos'],
+                queryFn: () => getAllProjects(),
+            },
+            {
+                queryKey: ['partidas', 'accum'],
+                queryFn: () =>
+                    getPartidasByAccumulate({ data: { accum: false } }),
+            },
+        ],
+    })
+
+    const projects =
+        allQueries[0].data?.map((project: any) => {
+            return {
+                label: project.name,
+                value: project.id,
+            }
+        }) || []
+    projects.unshift({ label: 'Seleccione un proyecto', value: '' })
+    const budgetItems =
+        allQueries[1].data?.map((budgetItem: any) => {
+            return {
+                label: budgetItem.name,
+                value: budgetItem.id,
+            }
+        }) || []
+    budgetItems.unshift({ label: 'Seleccione una partida', value: '' })
+
     return (
         <Drawer direction='right'>
             <DrawerTrigger asChild>
