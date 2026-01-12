@@ -12,10 +12,30 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer'
 import { Field } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/formHook'
 import { getPartidasByAccumulate } from '@/queries/parametros/partidas'
 import { getAllProjects } from '@/queries/parametros/projects'
+import {
+    createBudgetSchema,
+    type BudgetCreateType,
+} from '@/queries/transacciones/presupuesto'
 
 export function CreateBudgetDrawer() {
+    const form = useAppForm({
+        defaultValues: {
+            project_id: '',
+            budget_item_id: '',
+            quantity: 0,
+            cost: 0,
+        } satisfies BudgetCreateType as BudgetCreateType,
+        validators: {
+            onSubmit: createBudgetSchema,
+        },
+        onSubmit: ({ value }) => {
+            console.log(value)
+        },
+    })
+
     const allQueries = useQueries({
         queries: [
             {
@@ -56,7 +76,13 @@ export function CreateBudgetDrawer() {
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
-                <form>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        form.handleSubmit()
+                    }}
+                >
                     <DrawerHeader>
                         <DrawerTitle>Crear Presupuesto</DrawerTitle>
                         <DrawerDescription>
@@ -66,6 +92,9 @@ export function CreateBudgetDrawer() {
                     </DrawerHeader>
                     <DrawerFooter>
                         <Field orientation={'horizontal'}>
+                            <form.AppForm>
+                                <form.FormButton label='Guardar' />
+                            </form.AppForm>
                             <DrawerClose asChild>
                                 <Button variant='outline'>Cerrar</Button>
                             </DrawerClose>
