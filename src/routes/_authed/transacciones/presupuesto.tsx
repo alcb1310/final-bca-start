@@ -9,6 +9,7 @@ import {
     type BudgetResponseType,
     getAllBudgets,
 } from '@/queries/transacciones/presupuesto'
+import { EditBudgetDrawer } from '@/components/drawers/transacciones/presupuesto/edit-budget'
 
 export const Route = createFileRoute('/_authed/transacciones/presupuesto')({
     component: RouteComponent,
@@ -41,12 +42,12 @@ function RouteComponent() {
                     <span className='block text-right'>
                         {row.original.remaining_quantity.Valid
                             ? row.original.remaining_quantity.Float64?.toLocaleString(
-                                  'es-EC',
-                                  {
-                                      minimumFractionDigits: 2,
-                                      maximumFractionDigits: 2,
-                                  },
-                              )
+                                'es-EC',
+                                {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                },
+                            )
                             : ''}
                     </span>
                 )
@@ -59,12 +60,12 @@ function RouteComponent() {
                     <span className='block text-right'>
                         {row.original.remaining_cost.Valid
                             ? row.original.remaining_cost.Float64?.toLocaleString(
-                                  'es-EC',
-                                  {
-                                      minimumFractionDigits: 2,
-                                      maximumFractionDigits: 2,
-                                  },
-                              )
+                                'es-EC',
+                                {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                },
+                            )
                             : ''}
                     </span>
                 )
@@ -90,7 +91,7 @@ function RouteComponent() {
                 return (
                     <>
                         {!row.original.budget_item.accumulate && (
-                            <PencilIcon size={10} className='text-warning' />
+                            <EditBudgetDrawer />
                         )}
                     </>
                 )
