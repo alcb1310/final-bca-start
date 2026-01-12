@@ -1,5 +1,6 @@
 import { useQueries } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -21,6 +22,7 @@ import {
 } from '@/queries/transacciones/presupuesto'
 
 export function CreateBudgetDrawer() {
+    const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: {
             project_id: '',
@@ -50,6 +52,12 @@ export function CreateBudgetDrawer() {
         ],
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     const projects =
         allQueries[0].data?.map((project: any) => {
             return {
@@ -68,7 +76,7 @@ export function CreateBudgetDrawer() {
     budgetItems.unshift({ label: 'Seleccione una partida', value: '' })
 
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='default' className='mb-3'>
                     <PlusIcon size={10} />
