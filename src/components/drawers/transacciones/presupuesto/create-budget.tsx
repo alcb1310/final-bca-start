@@ -1,4 +1,4 @@
-import { useMutation, useQueries } from '@tanstack/react-query'
+import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -24,6 +24,7 @@ import {
 } from '@/queries/transacciones/presupuesto'
 
 export function CreateBudgetDrawer() {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: {
@@ -33,6 +34,7 @@ export function CreateBudgetDrawer() {
             cost: 0,
         } satisfies BudgetCreateType as BudgetCreateType,
         validators: {
+            // @ts-expect-error
             onSubmit: createBudgetSchema,
         },
         onSubmit: ({ value }) => {
@@ -46,6 +48,9 @@ export function CreateBudgetDrawer() {
         onSuccess: () => {
             toast.success('Proyecto creado con exito')
             setOpen(false)
+            queryClient.invalidateQueries({
+                queryKey: ['presupuesto'],
+            })
         },
         onError: (error) => {
             const e = JSON.parse(error.message)
