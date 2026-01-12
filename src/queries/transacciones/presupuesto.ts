@@ -23,8 +23,8 @@ export const budgetResponseSchema = z.object({
 export const createBudgetSchema = z.object({
     project_id: z.string().uuid({ version: 'v4' }),
     budget_item_id: z.string().uuid({ version: 'v4' }),
-    quantity: z.number(),
-    cost: z.number(),
+    quantity: z.coerce.number({ message: 'Ingrese un número válido' }),
+    cost: z.coerce.number({ message: 'Ingrese un número válido' }),
 })
 
 export type BudgetResponseType = z.infer<typeof budgetResponseSchema>
