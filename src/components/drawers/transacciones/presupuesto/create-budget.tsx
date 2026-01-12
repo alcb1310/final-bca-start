@@ -1,6 +1,7 @@
-import { useQueries } from '@tanstack/react-query'
+import { useMutation, useQueries } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -18,6 +19,7 @@ import { getPartidasByAccumulate } from '@/queries/parametros/partidas'
 import { getAllProjects } from '@/queries/parametros/projects'
 import {
     type BudgetCreateType,
+    createBudget,
     createBudgetSchema,
 } from '@/queries/transacciones/presupuesto'
 
@@ -34,7 +36,31 @@ export function CreateBudgetDrawer() {
             onSubmit: createBudgetSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutation.mutate(value)
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: (data: BudgetCreateType) =>
+            createBudget({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Proyecto creado con exito')
+            setOpen(false)
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al crear el proyecto', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
