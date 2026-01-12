@@ -20,7 +20,15 @@ export const budgetResponseSchema = z.object({
     updated_budget: z.number(),
 })
 
+export const createBudgetSchema = z.object({
+    project_id: z.string().uuid({ version: 'v4' }),
+    budget_item_id: z.string().uuid({ version: 'v4' }),
+    quantity: z.number(),
+    cost: z.number(),
+})
+
 export type BudgetResponseType = z.infer<typeof budgetResponseSchema>
+export type BudgetCreateType = z.infer<typeof createBudgetSchema>
 
 export const getAllBudgets = createServerFn({ method: 'GET' }).handler(
     async () => {
