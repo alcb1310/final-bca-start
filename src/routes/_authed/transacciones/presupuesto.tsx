@@ -1,15 +1,15 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PencilIcon } from 'lucide-react'
 import { CreateBudgetDrawer } from '@/components/drawers/transacciones/presupuesto/create-budget'
+import { EditBudgetDrawer } from '@/components/drawers/transacciones/presupuesto/edit-budget'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import {
+    type BudgetEditType,
     type BudgetResponseType,
     getAllBudgets,
 } from '@/queries/transacciones/presupuesto'
-import { EditBudgetDrawer } from '@/components/drawers/transacciones/presupuesto/edit-budget'
 
 export const Route = createFileRoute('/_authed/transacciones/presupuesto')({
     component: RouteComponent,
@@ -88,10 +88,18 @@ function RouteComponent() {
             header: '',
             accessorKey: 'actions',
             cell: ({ row }) => {
+                const budget: BudgetEditType = {
+                    project_id: row.original.project.id,
+                    project_name: row.original.project.name,
+                    budget_item_id: row.original.budget_item.id,
+                    budget_item_name: row.original.budget_item.name,
+                    quantity: row.original.remaining_quantity.Float64!,
+                    cost: row.original.remaining_cost.Float64!,
+                }
                 return (
                     <>
                         {!row.original.budget_item.accumulate && (
-                            <EditBudgetDrawer />
+                            <EditBudgetDrawer budget={budget} />
                         )}
                     </>
                 )
