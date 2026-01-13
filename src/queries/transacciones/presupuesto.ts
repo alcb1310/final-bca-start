@@ -27,8 +27,18 @@ export const createBudgetSchema = z.object({
     cost: z.coerce.number({ message: 'Ingrese un número válido' }),
 })
 
+export const editBudgetSchema = z.object({
+    project_id: z.string().uuid({ version: 'v4' }),
+    project_name: z.string(),
+    budget_item_id: z.string().uuid({ version: 'v4' }),
+    budget_item_name: z.string(),
+    quantity: z.coerce.number({ message: 'Ingrese un número válido' }),
+    cost: z.coerce.number({ message: 'Ingrese un número válido' }),
+})
+
 export type BudgetResponseType = z.infer<typeof budgetResponseSchema>
 export type BudgetCreateType = z.infer<typeof createBudgetSchema>
+export type BudgetEditType = z.infer<typeof editBudgetSchema>
 
 export const getAllBudgets = createServerFn({ method: 'GET' }).handler(
     async () => {
