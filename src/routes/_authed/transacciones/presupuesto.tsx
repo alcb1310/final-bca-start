@@ -42,12 +42,12 @@ function RouteComponent() {
                     <span className='block text-right'>
                         {row.original.remaining_quantity.Valid
                             ? row.original.remaining_quantity.Float64?.toLocaleString(
-                                'es-EC',
-                                {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                },
-                            )
+                                  'es-EC',
+                                  {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2,
+                                  },
+                              )
                             : ''}
                     </span>
                 )
@@ -60,12 +60,12 @@ function RouteComponent() {
                     <span className='block text-right'>
                         {row.original.remaining_cost.Valid
                             ? row.original.remaining_cost.Float64?.toLocaleString(
-                                'es-EC',
-                                {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                },
-                            )
+                                  'es-EC',
+                                  {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2,
+                                  },
+                              )
                             : ''}
                     </span>
                 )
