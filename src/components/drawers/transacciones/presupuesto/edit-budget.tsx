@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -27,6 +27,7 @@ type EditBudgetDrawerProps = {
 }
 
 export function EditBudgetDrawer({ budget }: Readonly<EditBudgetDrawerProps>) {
+    const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: budget,
@@ -58,6 +59,9 @@ export function EditBudgetDrawer({ budget }: Readonly<EditBudgetDrawerProps>) {
         onSuccess: () => {
             toast.success('Proyecto actualizado con exito')
             setOpen(false)
+            queryClient.invalidateQueries({
+                queryKey: ['presupuesto'],
+            })
         },
         onError: (error) => {
             const e = JSON.parse(error.message)
