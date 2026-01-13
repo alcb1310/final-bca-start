@@ -75,3 +75,31 @@ export const createBudget = createServerFn({ method: 'POST' })
         }
         return
     })
+
+export const updateBudget = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: BudgetCreateType }) => {
+        return {
+            project_id: data.data.project_id,
+            budget_item_id: data.data.budget_item_id,
+            quantity: Number.parseFloat(String(data.data.quantity)),
+            cost: Number.parseFloat(String(data.data.cost)),
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(
+            `${url}/budgets/${data.project_id}/${data.budget_item_id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            },
+        )
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(resData)
+        }
+        return
+    })
