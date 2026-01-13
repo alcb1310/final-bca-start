@@ -11,8 +11,28 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer'
 import { Field } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/formHook'
+import {
+    type BudgetEditType,
+    editBudgetSchema,
+} from '@/queries/transacciones/presupuesto'
 
-export function EditBudgetDrawer() {
+type EditBudgetDrawerProps = {
+    budget: BudgetEditType
+}
+
+export function EditBudgetDrawer({ budget }: Readonly<EditBudgetDrawerProps>) {
+    const form = useAppForm({
+        defaultValues: budget,
+        validators: {
+            // @ts-expect-error
+            onSubmit: editBudgetSchema,
+        },
+        onSubmit: ({ value }) => {
+            console.log(value)
+        },
+    })
+
     return (
         <Drawer direction='right'>
             <DrawerTrigger asChild>
@@ -21,7 +41,13 @@ export function EditBudgetDrawer() {
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
-                <form>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        form.handleSubmit()
+                    }}
+                >
                     <DrawerHeader>
                         <DrawerTitle>Editar Presupuesto</DrawerTitle>
                         <DrawerDescription>
