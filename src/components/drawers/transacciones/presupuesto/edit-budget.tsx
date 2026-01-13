@@ -1,4 +1,5 @@
 import { PencilIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -22,6 +23,7 @@ type EditBudgetDrawerProps = {
 }
 
 export function EditBudgetDrawer({ budget }: Readonly<EditBudgetDrawerProps>) {
+    const [open, setOpen] = useState(false)
     const form = useAppForm({
         defaultValues: budget,
         validators: {
@@ -33,8 +35,14 @@ export function EditBudgetDrawer({ budget }: Readonly<EditBudgetDrawerProps>) {
         },
     })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant='ghost' size={'icon-sm'}>
                     <PencilIcon size={10} className='text-warning' />
