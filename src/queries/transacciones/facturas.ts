@@ -11,6 +11,7 @@ export const facturaResponseSchema = z.object({
     supplier: supplierResponseSchema,
     invoice_number: z.string(),
     invoice_date: z.date(),
+    invoice_total: z.number(),
 })
 
 export type FacturaResponseType = z.infer<typeof facturaResponseSchema>
