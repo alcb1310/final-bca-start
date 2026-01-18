@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { PlusIcon } from 'lucide-react'
+import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
 import { Button } from '@/components/ui/button'
@@ -25,15 +25,62 @@ function RouteComponent() {
         queryKey: ['facturas'],
         queryFn: () => getFacturas(),
     })
-    const columns: ColumnDef<FacturaResponseType>[] = []
-
-    console.log(data)
+    const columns: ColumnDef<FacturaResponseType>[] = [
+        {
+            header: 'Fecha',
+            cell: ({ row }) => {
+                const dt = new Date(row.original.invoice_date)
+                return (
+                    <span>
+                        {dt.getFullYear()}-
+                        {String(dt.getMonth() + 1).padStart(2, '0')}-
+                        {dt.getDate()}
+                    </span>
+                )
+            },
+        },
+        {
+            header: 'Proyecto',
+            accessorKey: 'project.name',
+        },
+        {
+            header: 'Proveedor',
+            accessorKey: 'supplier.name',
+        },
+        {
+            header: 'Total',
+            cell: ({ row }) => {
+                return (
+                    <span className='block text-right'>
+                        {row.original.invoice_total.toLocaleString('es-EC', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })}
+                    </span>
+                )
+            },
+        },
+        {
+            header: '',
+            accessorKey: 'actions',
+            cell: ({ row }) => {
+                return (
+                    <div className='flex gap-2'>
+                        <PencilIcon size={10} className='text-warning' />
+                        {row.original.invoice_total === 0 && (
+                            <TrashIcon size={10} className='text-destructive' />
+                        )}
+                    </div>
+                )
+            },
+        },
+    ]
 
     return (
         <div>
             <PageTitle title='Facturas' />
 
-            <Button>
+            <Button className='mb-3'>
                 <PlusIcon size={10} />
                 Crear Factura
             </Button>
