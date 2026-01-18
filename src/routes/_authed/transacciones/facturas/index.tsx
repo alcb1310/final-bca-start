@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react'
 import { PageTitle } from '@/components/pages/Title'
@@ -21,6 +21,7 @@ export const Route = createFileRoute('/_authed/transacciones/facturas/')({
 })
 
 function RouteComponent() {
+    const navigate = useNavigate()
     const { data } = useSuspenseQuery({
         queryKey: ['facturas'],
         queryFn: () => getFacturas(),
@@ -80,7 +81,12 @@ function RouteComponent() {
         <div>
             <PageTitle title='Facturas' />
 
-            <Button className='mb-3'>
+            <Button
+                className='mb-3'
+                onClick={() =>
+                    navigate({ to: '/transacciones/facturas/crear' })
+                }
+            >
                 <PlusIcon size={10} />
                 Crear Factura
             </Button>
