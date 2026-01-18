@@ -54,7 +54,11 @@ const menu: Menu[] = [
                 path: '/transacciones/presupuesto',
                 icon: ShoppingCartIcon,
             },
-            { title: 'Facturas', path: '#', icon: CreditCardIcon },
+            {
+                title: 'Facturas',
+                path: '/transacciones/facturas',
+                icon: CreditCardIcon,
+            },
             { title: 'Cierre mensual', path: '#', icon: ChartCandlestickIcon },
         ],
     },
