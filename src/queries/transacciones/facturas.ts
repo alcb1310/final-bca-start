@@ -17,7 +17,9 @@ export const facturaResponseSchema = z.object({
 export const facturaCreateSchema = z.object({
     project_id: z.string().uuid({ version: 'v4' }),
     supplier_id: z.string().uuid({ version: 'v4' }),
-    invoice_number: z.string(),
+    invoice_number: z
+        .string()
+        .min(1, { message: 'El número de factura es requerido' }),
     invoice_date: z.coerce.date(),
 })
 
