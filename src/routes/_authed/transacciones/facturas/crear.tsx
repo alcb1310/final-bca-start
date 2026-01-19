@@ -1,6 +1,8 @@
 import { useQueries } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { PageTitle } from '@/components/pages/Title'
+import { Button } from '@/components/ui/button'
+import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import { getAllProjects } from '@/queries/parametros/projects'
 import { getAllSuppliers } from '@/queries/parametros/proveedores'
@@ -24,6 +26,7 @@ export const Route = createFileRoute('/_authed/transacciones/facturas/crear')({
 })
 
 function RouteComponent() {
+    const navigate = useNavigate()
     const form = useAppForm({
         defaultValues: {
             project_id: '',
@@ -73,13 +76,74 @@ function RouteComponent() {
     return (
         <div>
             <PageTitle title='Crear Factura' />
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    form.handleSubmit()
-                }}
-            ></form>
+
+            <div className='w-1/2 mx-auto'>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        form.handleSubmit()
+                    }}
+                >
+                    <FieldGroup className='my-5 px-4'>
+                        <FieldSet>
+                            <form.AppField name='project_id'>
+                                {(field) => (
+                                    <field.SelectField
+                                        label='Proyecto'
+                                        name='project_id'
+                                        options={projects}
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='supplier_id'>
+                                {(field) => (
+                                    <field.SelectField
+                                        label='Proveedor'
+                                        name='supplier_id'
+                                        options={suppliers}
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='invoice_number'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Número de factura'
+                                        placeholder='Ingrese el número de la factura'
+                                        name='invoice_number'
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='invoice_date'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Fecha'
+                                        name='invoice_date'
+                                        type='date'
+                                    />
+                                )}
+                            </form.AppField>
+                        </FieldSet>
+                    </FieldGroup>
+                    <Field
+                        orientation='horizontal'
+                        className='flex justify-around'
+                    >
+                        <form.AppForm>
+                            <form.FormButton label='Guardar' />
+                        </form.AppForm>
+                        <Button
+                            variant='outline'
+                            type='button'
+                            onClick={() => {
+                                navigate({ to: '/transacciones/facturas' })
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                    </Field>
+                </form>
+            </div>
         </div>
     )
 }
