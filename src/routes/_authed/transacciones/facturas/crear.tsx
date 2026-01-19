@@ -1,8 +1,13 @@
 import { useQueries } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { PageTitle } from '@/components/pages/Title'
+import { useAppForm } from '@/hooks/formHook'
 import { getAllProjects } from '@/queries/parametros/projects'
 import { getAllSuppliers } from '@/queries/parametros/proveedores'
+import {
+    type FacturaCreateType,
+    facturaCreateSchema,
+} from '@/queries/transacciones/facturas'
 
 export const Route = createFileRoute('/_authed/transacciones/facturas/crear')({
     component: RouteComponent,
@@ -19,6 +24,21 @@ export const Route = createFileRoute('/_authed/transacciones/facturas/crear')({
 })
 
 function RouteComponent() {
+    const form = useAppForm({
+        defaultValues: {
+            project_id: '',
+            supplier_id: '',
+            invoice_number: '',
+            invoice_date: new Date(),
+        } satisfies FacturaCreateType as FacturaCreateType,
+        validators: {
+            onSubmit: facturaCreateSchema,
+        },
+        onSubmit: ({ value }) => {
+            console.log(value)
+        },
+    })
+
     const allQueries = useQueries({
         queries: [
             {
@@ -53,6 +73,13 @@ function RouteComponent() {
     return (
         <div>
             <PageTitle title='Crear Factura' />
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    form.handleSubmit()
+                }}
+            ></form>
         </div>
     )
 }
