@@ -36,3 +36,28 @@ export const getFacturas = createServerFn({ method: 'GET' }).handler(
         return data as FacturaResponseType[]
     },
 )
+
+export const createFactura = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: FacturaCreateType }) => {
+        return {
+            project_id: data.data.project_id,
+            supplier_id: data.data.supplier_id,
+            invoice_number: data.data.invoice_number,
+            invoice_date: data.data.invoice_date,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/invoices`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(resData)
+        }
+        return
+    })
