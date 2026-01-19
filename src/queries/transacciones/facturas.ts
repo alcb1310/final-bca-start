@@ -14,7 +14,15 @@ export const facturaResponseSchema = z.object({
     invoice_total: z.number(),
 })
 
+export const facturaCreateSchema = z.object({
+    project_id: z.string().uuid({ version: 'v4' }),
+    supplier_id: z.string().uuid({ version: 'v4' }),
+    invoice_number: z.string(),
+    invoice_date: z.date(),
+})
+
 export type FacturaResponseType = z.infer<typeof facturaResponseSchema>
+export type FacturaCreateType = z.infer<typeof facturaCreateSchema>
 
 export const getFacturas = createServerFn({ method: 'GET' }).handler(
     async () => {
