@@ -1,8 +1,11 @@
 import { TrashIcon } from 'lucide-react'
 import {
     AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
+    AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
@@ -39,6 +42,10 @@ export function DeleteInvoiceDialog({
                         deshacer.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction>Borrar</AlertDialogAction>
+                </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
     )
