@@ -1,6 +1,13 @@
 import { TrashIcon } from 'lucide-react'
+import {
+    AlertDialog,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import type { FacturaResponseType } from '@/queries/transacciones/facturas'
 
 type DeleteInvoiceDialogProps = {
@@ -11,8 +18,8 @@ export function DeleteInvoiceDialog({
     invoice,
 }: Readonly<DeleteInvoiceDialogProps>) {
     return (
-        <Dialog>
-            <DialogTrigger asChild>
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
                 <Button
                     variant='ghost'
                     size={'icon-sm'}
@@ -20,8 +27,19 @@ export function DeleteInvoiceDialog({
                 >
                     <TrashIcon />
                 </Button>
-            </DialogTrigger>
-            <DialogContent></DialogContent>
-        </Dialog>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Borrar factura</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        Está seguro que desea borrar la factura{' '}
+                        {invoice.invoice_number} del proveedor{' '}
+                        {invoice.supplier.name} para la obra{' '}
+                        {invoice.project.name}? Esta acción no se puede
+                        deshacer.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+            </AlertDialogContent>
+        </AlertDialog>
     )
 }
