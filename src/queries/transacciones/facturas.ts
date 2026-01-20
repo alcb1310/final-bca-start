@@ -61,3 +61,20 @@ export const createFactura = createServerFn({ method: 'POST' })
         }
         return
     })
+
+export const deleteInvoice = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: FacturaResponseType }) => {
+        return {
+            id: data.data.id,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/invoices/${data.id}`, {
+            method: 'DELETE',
+        })
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(resData)
+        }
+        return
+    })
