@@ -1,4 +1,6 @@
+import { useMutation } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -11,7 +13,10 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import type { FacturaResponseType } from '@/queries/transacciones/facturas'
+import {
+    deleteInvoice,
+    type FacturaResponseType,
+} from '@/queries/transacciones/facturas'
 
 type DeleteInvoiceDialogProps = {
     invoice: FacturaResponseType
@@ -20,6 +25,21 @@ type DeleteInvoiceDialogProps = {
 export function DeleteInvoiceDialog({
     invoice,
 }: Readonly<DeleteInvoiceDialogProps>) {
+    const mutation = useMutation({
+        mutationFn: (data: FacturaResponseType) =>
+            deleteInvoice({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Factura borrada correctamente')
+        },
+        onError: (error) => {
+            console.error('error', error)
+            toast.error('Error al borrar la factura', {
+                richColors: true,
+                position: 'top-center',
+            })
+        },
+    })
+
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
@@ -44,7 +64,9 @@ export function DeleteInvoiceDialog({
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                    <AlertDialogAction>Borrar</AlertDialogAction>
+                    <AlertDialogAction onClick={() => mutation.mutate(invoice)}>
+                        Borrar
+                    </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
