@@ -1,5 +1,6 @@
-import { useQueries } from '@tanstack/react-query'
+import { useMutation, useQueries } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
 import { PageTitle } from '@/components/pages/Title'
 import { Button } from '@/components/ui/button'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
@@ -7,6 +8,7 @@ import { useAppForm } from '@/hooks/formHook'
 import { getAllProjects } from '@/queries/parametros/projects'
 import { getAllSuppliers } from '@/queries/parametros/proveedores'
 import {
+    createFactura,
     type FacturaCreateType,
     facturaCreateSchema,
 } from '@/queries/transacciones/facturas'
@@ -35,10 +37,35 @@ function RouteComponent() {
             invoice_date: new Date(),
         } satisfies FacturaCreateType as FacturaCreateType,
         validators: {
+            // @ts-expect-error
             onSubmit: facturaCreateSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutation.mutate(value)
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: (data: FacturaCreateType) =>
+            createFactura({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Factura creada correctamente')
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            console.error('error', error)
+            toast.error('Error al crear la factura', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
