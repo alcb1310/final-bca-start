@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import {
@@ -25,11 +25,15 @@ type DeleteInvoiceDialogProps = {
 export function DeleteInvoiceDialog({
     invoice,
 }: Readonly<DeleteInvoiceDialogProps>) {
+    const queryClient = useQueryClient()
     const mutation = useMutation({
         mutationFn: (data: FacturaResponseType) =>
             deleteInvoice({ data: { data } }),
         onSuccess: () => {
             toast.success('Factura borrada correctamente')
+            queryClient.invalidateQueries({
+                queryKey: ['facturas'],
+            })
         },
         onError: (error) => {
             console.error('error', error)
