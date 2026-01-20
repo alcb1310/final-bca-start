@@ -36,7 +36,7 @@ function RouteComponent() {
                     <span>
                         {dt.getFullYear()}-
                         {String(dt.getMonth() + 1).padStart(2, '0')}-
-                        {dt.getDate()}
+                        {String(dt.getDate()).padStart(2, '0')}
                     </span>
                 )
             },
@@ -48,6 +48,10 @@ function RouteComponent() {
         {
             header: 'Proveedor',
             accessorKey: 'supplier.name',
+        },
+        {
+            header: 'Número',
+            accessorKey: 'invoice_number',
         },
         {
             header: 'Total',
