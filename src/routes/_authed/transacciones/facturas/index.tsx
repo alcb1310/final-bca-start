@@ -72,7 +72,18 @@ function RouteComponent() {
             cell: ({ row }) => {
                 return (
                     <div className='flex gap-2'>
-                        <PencilIcon size={10} className='text-warning' />
+                        <Button
+                            variant='ghost'
+                            size='icon-sm'
+                            onClick={() =>
+                                navigate({
+                                    to: '/transacciones/facturas/$id',
+                                    params: { id: row.original.id },
+                                })
+                            }
+                        >
+                            <PencilIcon size={10} className='text-warning' />
+                        </Button>
                         {row.original.invoice_total === 0 && (
                             <DeleteInvoiceDialog invoice={row.original} />
                         )}
