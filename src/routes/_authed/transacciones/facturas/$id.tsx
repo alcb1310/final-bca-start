@@ -1,5 +1,7 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import z from 'zod'
+import { getFactura } from '@/queries/transacciones/facturas'
 
 export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
     component: RouteComponent,
@@ -13,8 +15,20 @@ export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
             }
         },
     },
+    loader: async ({ context: { queryClient }, params: { id } }) => {
+        queryClient.prefetchQuery({
+            queryKey: ['factura', id],
+            queryFn: () => getFactura({ data: { id } }),
+        })
+    },
 })
 
 function RouteComponent() {
-    return <div>Hello "/_authed/transacciones/facturas/$id"!</div>
+    const { id } = Route.useParams()
+    const { data: factura } = useSuspenseQuery({
+        queryKey: ['factura', id],
+        queryFn: () => getFactura({ data: { id } }),
+    })
+
+    return <div>Hello {factura.invoice_number}!</div>
 }
