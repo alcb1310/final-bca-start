@@ -26,11 +26,14 @@ export const facturaCreateSchema = z.object({
 export const facturaEditSchema = z.object({
     id: z.string().uuid({ version: 'v4' }),
     project_id: z.string().uuid({ version: 'v4' }),
+    project_name: z.string(),
     supplier_id: z.string().uuid({ version: 'v4' }),
+    supplier_name: z.string(),
     invoice_number: z
         .string()
         .min(1, { message: 'El número de factura es requerido' }),
-    invoice_date: z.coerce.date(),
+    invoice_date: z.iso.date(),
+    invoice_total: z.number(),
 })
 
 export type FacturaResponseType = z.infer<typeof facturaResponseSchema>
