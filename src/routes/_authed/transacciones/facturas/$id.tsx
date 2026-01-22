@@ -1,15 +1,15 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import z from 'zod'
+import { PageTitle } from '@/components/pages/Title'
+import { Button } from '@/components/ui/button'
+import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/formHook'
 import {
+    type FacturaEditType,
     facturaEditSchema,
-    FacturaEditType,
     getFactura,
 } from '@/queries/transacciones/facturas'
-import { useAppForm } from '@/hooks/formHook'
-import { PageTitle } from '@/components/pages/Title'
-import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
-import { Button } from '@/components/ui/button'
 
 export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
     component: RouteComponent,
@@ -32,13 +32,13 @@ export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
 })
 
 function RouteComponent() {
+    const navigate = useNavigate()
     const { id } = Route.useParams()
     const { data: factura } = useSuspenseQuery({
         queryKey: ['factura', id],
         queryFn: () => getFactura({ data: { id } }),
     })
     const dt = factura.invoice_date.toString().split('T')
-    console.log(dt)
 
     const form = useAppForm({
         defaultValues: {
@@ -133,7 +133,7 @@ function RouteComponent() {
                             variant='outline'
                             type='button'
                             onClick={() => {
-                                // navigate({ to: '/transacciones/facturas' })
+                                navigate({ to: '/transacciones/facturas' })
                             }}
                         >
                             Cancel
