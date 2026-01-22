@@ -93,6 +93,31 @@ export const createFactura = createServerFn({ method: 'POST' })
         return resData
     })
 
+export const updateInvoice = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: FacturaEditType }) => {
+        return {
+            id: data.data.id,
+            invoice_number: data.data.invoice_number,
+            invoice_date: data.data.invoice_date,
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(`${url}/invoices/${data.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
+
 export const deleteInvoice = createServerFn({ method: 'POST' })
     .inputValidator((data: { data: FacturaResponseType }) => {
         return {
