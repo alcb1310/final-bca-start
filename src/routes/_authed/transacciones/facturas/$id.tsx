@@ -1,5 +1,6 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
 import z from 'zod'
 import { PageTitle } from '@/components/pages/Title'
 import { Button } from '@/components/ui/button'
@@ -9,6 +10,7 @@ import {
     type FacturaEditType,
     facturaEditSchema,
     getFactura,
+    updateInvoice,
 } from '@/queries/transacciones/facturas'
 
 export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
@@ -55,7 +57,22 @@ function RouteComponent() {
             onSubmit: facturaEditSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutation.mutate(value)
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: (data: FacturaEditType) =>
+            updateInvoice({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Factura actualizada correctamente')
+        },
+        onError: (error) => {
+            console.error('error', error)
+            toast.error('Error al actualizar la factura', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
