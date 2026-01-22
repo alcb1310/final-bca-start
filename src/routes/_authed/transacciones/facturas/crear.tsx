@@ -48,8 +48,12 @@ function RouteComponent() {
     const mutation = useMutation({
         mutationFn: (data: FacturaCreateType) =>
             createFactura({ data: { data } }),
-        onSuccess: () => {
+        onSuccess: (data) => {
             toast.success('Factura creada correctamente')
+            navigate({
+                to: '/transacciones/facturas/$id',
+                params: { id: data.id },
+            })
         },
         onError: (error) => {
             const e = JSON.parse(error.message)
