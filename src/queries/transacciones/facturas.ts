@@ -84,13 +84,13 @@ export const createFactura = createServerFn({ method: 'POST' })
             body: JSON.stringify(data),
         })
 
+        const resData = await response.json()
         if (!response.ok) {
-            const resData = await response.json()
             throw new Error(
                 JSON.stringify({ code: response.status, data: resData }),
             )
         }
-        return
+        return resData
     })
 
 export const deleteInvoice = createServerFn({ method: 'POST' })
