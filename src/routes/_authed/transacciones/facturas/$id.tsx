@@ -7,11 +7,18 @@ import { Button } from '@/components/ui/button'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
+    DetalleResponseType,
+    getDetalles,
+} from '@/queries/transacciones/detalle'
+import {
     type FacturaEditType,
     facturaEditSchema,
     getFactura,
     updateInvoice,
 } from '@/queries/transacciones/facturas'
+import { PlusIcon, TrashIcon } from 'lucide-react'
+import DataTable from '@/components/table/DataTable'
+import { ColumnDef } from '@tanstack/react-table'
 
 export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
     component: RouteComponent,
@@ -30,6 +37,11 @@ export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
             queryKey: ['factura', id],
             queryFn: () => getFactura({ data: { id } }),
         })
+
+        queryClient.ensureQueryData({
+            queryKey: ['detalle', id],
+            queryFn: () => getDetalles({ data: { id } }),
+        })
     },
 })
 
@@ -40,7 +52,13 @@ function RouteComponent() {
         queryKey: ['factura', id],
         queryFn: () => getFactura({ data: { id } }),
     })
+
+    const { data: detalles } = useSuspenseQuery({
+        queryKey: ['detalle', id],
+        queryFn: () => getDetalles({ data: { id } }),
+    })
     const dt = factura.invoice_date.toString().split('T')
+    console.log(detalles)
 
     const form = useAppForm({
         defaultValues: {
@@ -75,6 +93,62 @@ function RouteComponent() {
             })
         },
     })
+
+    const columns: ColumnDef<DetalleResponseType>[] = [
+        {
+            header: 'Partida',
+            accessorKey: 'budget_item.name',
+        },
+        {
+            header: 'Cantidad',
+            accessorKey: 'quantity',
+            cell: ({ row }) => {
+                return (
+                    <span className='block text-right'>
+                        {row.original.quantity.toLocaleString('es-EC', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })}
+                    </span>
+                )
+            },
+        },
+        {
+            header: 'Costo',
+            accessorKey: 'cost',
+            cell: ({ row }) => {
+                return (
+                    <span className='block text-right'>
+                        {row.original.cost.toLocaleString('es-EC', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })}
+                    </span>
+                )
+            },
+        },
+        {
+            header: 'Total',
+            accessorKey: 'total',
+            cell: ({ row }) => {
+                return (
+                    <span className='block text-right'>
+                        {row.original.total.toLocaleString('es-EC', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })}
+                    </span>
+                )
+            },
+        },
+        {
+            header: '',
+            accessorKey: 'actions',
+            cell: ({ row }) => {
+                return <TrashIcon size={12} className='text-destructive' />
+            },
+        },
+    ]
 
     return (
         <div>
@@ -157,6 +231,15 @@ function RouteComponent() {
                         </Button>
                     </Field>
                 </form>
+            </div>
+
+            <div className='mt-4 w-3/4 mx-auto'>
+                <Button variant='default' className='mb-4'>
+                    <PlusIcon size={10} />
+                    Agregar detalle
+                </Button>
+
+                <DataTable data={detalles} columns={columns} />
             </div>
         </div>
     )
