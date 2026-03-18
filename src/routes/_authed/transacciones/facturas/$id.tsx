@@ -19,6 +19,7 @@ import {
 import { PlusIcon, TrashIcon } from 'lucide-react'
 import DataTable from '@/components/table/DataTable'
 import { ColumnDef } from '@tanstack/react-table'
+import { CreateInvoiceDetailDrawer } from '@/components/drawers/transacciones/factura/create-detail'
 
 export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
     component: RouteComponent,
@@ -234,10 +235,7 @@ function RouteComponent() {
             </div>
 
             <div className='mt-4 w-3/4 mx-auto'>
-                <Button variant='default' className='mb-4'>
-                    <PlusIcon size={10} />
-                    Agregar detalle
-                </Button>
+                <CreateInvoiceDetailDrawer />
 
                 <DataTable data={detalles} columns={columns} />
             </div>
