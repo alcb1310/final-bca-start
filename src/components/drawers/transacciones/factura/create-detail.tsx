@@ -8,7 +8,15 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer'
 
-export function CreateInvoiceDetailDrawer() {
+type CreateInvoiceDetailDrawerProps = {
+    projectId: string
+}
+
+export function CreateInvoiceDetailDrawer({
+    projectId,
+}: CreateInvoiceDetailDrawerProps) {
+    console.log(projectId)
+
     return (
         <Drawer direction='right'>
             <DrawerTrigger asChild>

@@ -235,7 +235,7 @@ function RouteComponent() {
             </div>
 
             <div className='mt-4 w-3/4 mx-auto'>
-                <CreateInvoiceDetailDrawer />
+                <CreateInvoiceDetailDrawer projectId={id} />
 
                 <DataTable data={detalles} columns={columns} />
             </div>
