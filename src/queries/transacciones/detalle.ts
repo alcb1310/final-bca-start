@@ -17,7 +17,15 @@ export const detalleResponseSchema = z.object({
     total: z.number(),
 })
 
+export const detalleCreateSchema = z.object({
+    invoice_id: z.string().uuid({ version: 'v4' }),
+    budget_item_id: z.string().uuid({ version: 'v4' }),
+    quantity: z.coerce.number({ message: 'Ingrese un número valido' }),
+    cost: z.coerce.number({ message: 'Ingrese un número valido' }),
+})
+
 export type DetalleResponseType = z.infer<typeof detalleResponseSchema>
+export type DetalleCreateType = z.infer<typeof detalleCreateSchema>
 
 export const getDetalles = createServerFn({ method: 'GET' })
     .inputValidator((data: { id: string }) => {
