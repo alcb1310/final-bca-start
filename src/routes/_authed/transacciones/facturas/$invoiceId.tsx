@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Field, FieldGroup, FieldSet } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import {
-    DetalleResponseType,
+    type DetalleResponseType,
     getDetalles,
 } from '@/queries/transacciones/detalle'
 import {
@@ -16,54 +16,55 @@ import {
     getFactura,
     updateInvoice,
 } from '@/queries/transacciones/facturas'
-import { PlusIcon, TrashIcon } from 'lucide-react'
+import { TrashIcon } from 'lucide-react'
 import DataTable from '@/components/table/DataTable'
-import { ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import { CreateInvoiceDetailDrawer } from '@/components/drawers/transacciones/factura/create-detail'
 
-export const Route = createFileRoute('/_authed/transacciones/facturas/$id')({
+export const Route = createFileRoute(
+    '/_authed/transacciones/facturas/$invoiceId',
+)({
     component: RouteComponent,
     params: {
         parse: (rawParams) => {
             try {
-                const id = z.uuid().parse(rawParams.id)
-                return { id }
+                const id = z.uuid().parse(rawParams.invoiceId)
+                return { invoiceId: id }
             } catch (error) {
                 throw new Error(`Invalid id: ${error}`)
             }
         },
     },
-    loader: async ({ context: { queryClient }, params: { id } }) => {
+    loader: async ({ context: { queryClient }, params: { invoiceId } }) => {
         queryClient.prefetchQuery({
-            queryKey: ['factura', id],
-            queryFn: () => getFactura({ data: { id } }),
+            queryKey: ['factura', invoiceId],
+            queryFn: () => getFactura({ data: { id: invoiceId } }),
         })
 
         queryClient.ensureQueryData({
-            queryKey: ['detalle', id],
-            queryFn: () => getDetalles({ data: { id } }),
+            queryKey: ['detalle', invoiceId],
+            queryFn: () => getDetalles({ data: { id: invoiceId } }),
         })
     },
 })
 
 function RouteComponent() {
     const navigate = useNavigate()
-    const { id } = Route.useParams()
+    const { invoiceId } = Route.useParams()
     const { data: factura } = useSuspenseQuery({
-        queryKey: ['factura', id],
-        queryFn: () => getFactura({ data: { id } }),
+        queryKey: ['factura', invoiceId],
+        queryFn: () => getFactura({ data: { id: invoiceId } }),
     })
 
     const { data: detalles } = useSuspenseQuery({
-        queryKey: ['detalle', id],
-        queryFn: () => getDetalles({ data: { id } }),
+        queryKey: ['detalle', invoiceId],
+        queryFn: () => getDetalles({ data: { id: invoiceId } }),
     })
     const dt = factura.invoice_date.toString().split('T')
-    console.log(detalles)
 
     const form = useAppForm({
         defaultValues: {
-            id,
+            id: invoiceId,
             project_id: factura.project.id,
             project_name: factura.project.name,
             supplier_id: factura.supplier.id,
@@ -235,7 +236,7 @@ function RouteComponent() {
             </div>
 
             <div className='mt-4 w-3/4 mx-auto'>
-                <CreateInvoiceDetailDrawer projectId={id} />
+                <CreateInvoiceDetailDrawer invoiceId={invoiceId} />
 
                 <DataTable data={detalles} columns={columns} />
             </div>
