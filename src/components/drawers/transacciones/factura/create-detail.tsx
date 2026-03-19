@@ -10,12 +10,14 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import { Field } from '@/components/ui/field'
+import { Field, FieldGroup } from '@/components/ui/field'
 import {
     detalleCreateSchema,
     type DetalleCreateType,
 } from '@/queries/transacciones/detalle'
 import { useAppForm } from '@/hooks/formHook'
+import { useQuery } from '@tanstack/react-query'
+import { getPartidasByAccumulate } from '@/queries/parametros/partidas'
 
 type CreateInvoiceDetailDrawerProps = {
     invoiceId: string
@@ -40,6 +42,19 @@ export function CreateInvoiceDetailDrawer({
         },
     })
 
+    const { data: partidas } = useQuery({
+        queryKey: ['partidas'],
+        queryFn: () => getPartidasByAccumulate({ data: { accum: false } }),
+    })
+    const budgetItems =
+        partidas?.map((budgetItem: any) => {
+            return {
+                label: budgetItem.name,
+                value: budgetItem.id,
+            }
+        }) || []
+    budgetItems.unshift({ label: 'Seleccione una partida', value: '' })
+
     return (
         <Drawer direction='right'>
             <DrawerTrigger asChild>
@@ -63,6 +78,37 @@ export function CreateInvoiceDetailDrawer({
                         </DrawerDescription>
                     </DrawerHeader>
                     <DrawerFooter>
+                        <FieldGroup>
+                            <form.AppField name='budget_item_id'>
+                                {(field) => (
+                                    <field.SelectField
+                                        label='Partida'
+                                        name='budget_item_id'
+                                        options={budgetItems}
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='quantity'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Cantidad'
+                                        name='quantity'
+                                        disabled
+                                        className='text-right'
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.AppField name='cost'>
+                                {(field) => (
+                                    <field.TextField
+                                        label='Costo'
+                                        name='cost'
+                                        disabled
+                                        className='text-right'
+                                    />
+                                )}
+                            </form.AppField>
+                        </FieldGroup>
                         <Field orientation={'horizontal'}>
                             <form.AppForm>
                                 <form.FormButton label='Guardar' />
