@@ -93,7 +93,6 @@ export function CreateInvoiceDetailDrawer({
                                     <field.TextField
                                         label='Cantidad'
                                         name='quantity'
-                                        disabled
                                         className='text-right'
                                     />
                                 )}
@@ -103,7 +102,6 @@ export function CreateInvoiceDetailDrawer({
                                     <field.TextField
                                         label='Costo'
                                         name='cost'
-                                        disabled
                                         className='text-right'
                                     />
                                 )}
