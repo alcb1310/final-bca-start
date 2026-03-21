@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,13 +12,12 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer'
 import { Field, FieldGroup } from '@/components/ui/field'
-import {
-    detalleCreateSchema,
-    type DetalleCreateType,
-} from '@/queries/transacciones/detalle'
 import { useAppForm } from '@/hooks/formHook'
-import { useQuery } from '@tanstack/react-query'
 import { getPartidasByAccumulate } from '@/queries/parametros/partidas'
+import {
+    type DetalleCreateType,
+    detalleCreateSchema,
+} from '@/queries/transacciones/detalle'
 
 type CreateInvoiceDetailDrawerProps = {
     invoiceId: string
