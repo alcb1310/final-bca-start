@@ -39,3 +39,31 @@ export const getDetalles = createServerFn({ method: 'GET' })
         }
         return dataRes as DetalleResponseType[]
     })
+
+export const createDetalles = createServerFn({ method: 'POST' })
+    .inputValidator((data: { data: DetalleCreateType }) => {
+        return {
+            invoice_id: data.data.invoice_id,
+            budget_item_id: data.data.budget_item_id,
+            quantity: Number.parseFloat(String(data.data.quantity)),
+            cost: Number.parseFloat(String(data.data.cost)),
+        }
+    })
+    .handler(async ({ data }) => {
+        const response = await fetch(
+            `${url}/invoices/${data.invoice_id}/details`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            },
+        )
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(resData)
+        }
+        return
+    })
