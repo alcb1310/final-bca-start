@@ -9,8 +9,16 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import type { DetalleResponseType } from '@/queries/transacciones/detalle'
 
-export function DeleteInvoiceDetailDialog() {
+type DeteailDeleteDialogProps = {
+    row: DetalleResponseType
+}
+
+export function DeleteInvoiceDetailDialog({
+    row,
+}: Readonly<DeteailDeleteDialogProps>) {
+    console.log(row)
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
