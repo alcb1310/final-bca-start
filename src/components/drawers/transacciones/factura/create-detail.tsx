@@ -1,5 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
     Drawer,
@@ -15,6 +16,7 @@ import { Field, FieldGroup } from '@/components/ui/field'
 import { useAppForm } from '@/hooks/formHook'
 import { getPartidasByAccumulate } from '@/queries/parametros/partidas'
 import {
+    createDetalles,
     type DetalleCreateType,
     detalleCreateSchema,
 } from '@/queries/transacciones/detalle'
@@ -26,6 +28,7 @@ type CreateInvoiceDetailDrawerProps = {
 export function CreateInvoiceDetailDrawer({
     invoiceId,
 }: CreateInvoiceDetailDrawerProps) {
+    const queryClient = useQueryClient()
     const form = useAppForm({
         defaultValues: {
             invoice_id: invoiceId,
@@ -38,7 +41,38 @@ export function CreateInvoiceDetailDrawer({
             onSubmit: detalleCreateSchema,
         },
         onSubmit: ({ value }) => {
-            console.log(value)
+            mutation.mutate(value)
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: (data: DetalleCreateType) =>
+            createDetalles({ data: { data } }),
+        onSuccess: () => {
+            toast.success('Detalle creado con exito')
+            Promise.all([
+                queryClient.invalidateQueries({
+                    queryKey: ['detalle', invoiceId],
+                }),
+                queryClient.invalidateQueries({
+                    queryKey: ['factura', invoiceId],
+                }),
+            ])
+        },
+        onError: (error) => {
+            const e = JSON.parse(error.message)
+            if (e.code === 409) {
+                toast.error(e.data.message, {
+                    richColors: true,
+                    position: 'top-center',
+                })
+                return
+            }
+
+            toast.error('Error al crear el detalle', {
+                richColors: true,
+                position: 'top-center',
+            })
         },
     })
 
