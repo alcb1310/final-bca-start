@@ -61,12 +61,19 @@ export function CreateInvoiceDetailDrawer({
         },
         onError: (error) => {
             const e = JSON.parse(error.message)
-            if (e.code === 409) {
-                toast.error(e.data.message, {
-                    richColors: true,
-                    position: 'top-center',
-                })
-                return
+            switch (e.code) {
+                case 400:
+                    toast.error(e.data.message, {
+                        richColors: true,
+                        position: 'top-center',
+                    })
+                    return
+                case 404:
+                    toast.error(e.data.message, {
+                        richColors: true,
+                        position: 'top-center',
+                    })
+                    return
             }
 
             toast.error('Error al crear el detalle', {
