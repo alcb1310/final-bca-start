@@ -20,6 +20,7 @@ import {
     getFactura,
     updateInvoice,
 } from '@/queries/transacciones/facturas'
+import { DeleteInvoiceDetailDialog } from '@/components/dialogs/transacciones/invoice-detail'
 
 export const Route = createFileRoute(
     '/_authed/transacciones/facturas/$invoiceId',
@@ -147,7 +148,7 @@ function RouteComponent() {
             header: '',
             accessorKey: 'actions',
             cell: ({ row }) => {
-                return <TrashIcon size={12} className='text-destructive' />
+                return <DeleteInvoiceDetailDialog row={row.original} />
             },
         },
     ]
