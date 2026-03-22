@@ -20,6 +20,7 @@ import {
     type DetalleCreateType,
     detalleCreateSchema,
 } from '@/queries/transacciones/detalle'
+import { useEffect, useState } from 'react'
 
 type CreateInvoiceDetailDrawerProps = {
     invoiceId: string
@@ -28,6 +29,7 @@ type CreateInvoiceDetailDrawerProps = {
 export function CreateInvoiceDetailDrawer({
     invoiceId,
 }: CreateInvoiceDetailDrawerProps) {
+    const [open, setOpen] = useState(false)
     const queryClient = useQueryClient()
     const form = useAppForm({
         defaultValues: {
@@ -96,8 +98,14 @@ export function CreateInvoiceDetailDrawer({
         }) || []
     budgetItems.unshift({ label: 'Seleccione una partida', value: '' })
 
+    useEffect(() => {
+        if (open) {
+            form.reset()
+        }
+    }, [open, form.reset])
+
     return (
-        <Drawer direction='right'>
+        <Drawer direction='right' open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant={'default'} className='my-4'>
                     <PlusIcon size={10} />
