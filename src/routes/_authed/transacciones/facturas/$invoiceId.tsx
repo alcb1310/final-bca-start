@@ -1,7 +1,6 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import z from 'zod'
 import { CreateInvoiceDetailDrawer } from '@/components/drawers/transacciones/factura/create-detail'
