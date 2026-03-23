@@ -69,3 +69,29 @@ export const createDetalles = createServerFn({ method: 'POST' })
         }
         return
     })
+
+export const borraDetalles = createServerFn({ method: 'POST' })
+    .inputValidator(
+        (data: { data: { invoice_id: string; budget_item_id: string } }) => {
+            return {
+                invoice_id: data.data.invoice_id,
+                budget_item_id: data.data.budget_item_id,
+            }
+        },
+    )
+    .handler(async ({ data }) => {
+        const response = await fetch(
+            `${url}/invoices/${data.invoice_id}/details/${data.budget_item_id}`,
+            {
+                method: 'DELETE',
+            },
+        )
+
+        if (!response.ok) {
+            const resData = await response.json()
+            throw new Error(
+                JSON.stringify({ code: response.status, data: resData }),
+            )
+        }
+        return
+    })
