@@ -53,9 +53,14 @@ export function DeleteMaterial({ material }: Readonly<DeleteMaterialProps>) {
                 <AlertDialogHeader>
                     <AlertDialogTitle>Borrar material</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Está seguro que desea borrar el material {material.name}{' '}
-                        con código {material.code}? Esta acción no se puede
-                        deshacer
+                        <p>
+                            Está seguro que desea borrar el material{' '}
+                            {material.name} con código {material.code}?
+                        </p>
+                        <br />
+                        <p className='text-destructive text-lg'>
+                            Esta acción no se puede deshacer
+                        </p>
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
