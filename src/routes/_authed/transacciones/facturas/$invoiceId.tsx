@@ -3,6 +3,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { toast } from 'sonner'
 import z from 'zod'
+import { DeleteInvoiceDetailDialog } from '@/components/dialogs/transacciones/invoice-detail'
 import { CreateInvoiceDetailDrawer } from '@/components/drawers/transacciones/factura/create-detail'
 import { PageTitle } from '@/components/pages/Title'
 import DataTable from '@/components/table/DataTable'
@@ -19,7 +20,6 @@ import {
     getFactura,
     updateInvoice,
 } from '@/queries/transacciones/facturas'
-import { DeleteInvoiceDetailDialog } from '@/components/dialogs/transacciones/invoice-detail'
 
 export const Route = createFileRoute(
     '/_authed/transacciones/facturas/$invoiceId',
