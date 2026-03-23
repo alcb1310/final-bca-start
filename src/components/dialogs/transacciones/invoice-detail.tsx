@@ -6,6 +6,7 @@ import {
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
+    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
@@ -62,6 +63,18 @@ export function DeleteInvoiceDetailDialog({
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Borrar Detalle</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        <p>
+                            Está seguro que desea borrar el detalle{' '}
+                            {row.budget_item.name} de la factura{' '}
+                            {row.invoice.invoice_number} del proveedor{' '}
+                            {row.supplier.name}?
+                        </p>
+                        <br />
+                        <p className='text-destructive text-lg'>
+                            Esta acción no se puede deshacer
+                        </p>
+                    </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancelar</AlertDialogCancel>
