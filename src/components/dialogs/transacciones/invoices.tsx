@@ -59,11 +59,16 @@ export function DeleteInvoiceDialog({
                 <AlertDialogHeader>
                     <AlertDialogTitle>Borrar factura</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Está seguro que desea borrar la factura{' '}
-                        {invoice.invoice_number} del proveedor{' '}
-                        {invoice.supplier.name} para la obra{' '}
-                        {invoice.project.name}? Esta acción no se puede
-                        deshacer.
+                        <p>
+                            Está seguro que desea borrar la factura{' '}
+                            {invoice.invoice_number} del proveedor{' '}
+                            {invoice.supplier.name} para la obra{' '}
+                            {invoice.project.name}?
+                        </p>
+                        <br />
+                        <p className='text-destructive text-lg'>
+                            Esta acción no se puede deshacer.
+                        </p>
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
