@@ -55,17 +55,15 @@ export function DeleteRubroMaterial({
                 <AlertDialogHeader>
                     <AlertDialogTitle>Borrar material</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Esta seguro que desea borrar el material{' '}
-                        <span className='font-bold text-destructive'>
-                            {rubroMaterial.material_name}
-                        </span>{' '}
-                        del rubro{' '}
-                        <span className='font-bold text-destructive'>
-                            {rubroMaterial.item_name}
-                        </span>
-                        ?
+                        <p>
+                            Esta seguro que desea borrar el material{' '}
+                            {rubroMaterial.material_name} del rubro{' '}
+                            {rubroMaterial.item_name}?
+                        </p>
                         <br />
-                        Esta acción no se puede deshacer.
+                        <p className='text-destructive text-lg'>
+                            Esta acción no se puede deshacer.
+                        </p>
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
